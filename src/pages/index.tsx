@@ -1,10 +1,3 @@
-import type { NextPage } from 'next';
-import { Button } from '@mui/material';
+import RootPage from '@features/root/routes/RootPage';
 
-const Home: NextPage = () => (
-  <div>
-    <Button variant="contained">버튼</Button>
-  </div>
-);
-
-export default Home;
+export default RootPage;
