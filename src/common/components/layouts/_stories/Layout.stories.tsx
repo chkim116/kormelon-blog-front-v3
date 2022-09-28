@@ -18,4 +18,6 @@ const Template: ComponentStory<typeof Layout> = ({ ...props }) => (
 );
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  children: <div>페이지의 컴포넌트</div>,
+};

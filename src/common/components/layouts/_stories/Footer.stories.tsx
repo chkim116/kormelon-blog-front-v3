@@ -13,7 +13,7 @@ export default {
   argTypes,
 } as ComponentMeta<typeof Footer>;
 
-const Template: ComponentStory<typeof Footer> = () => <Footer />;
+const Template: ComponentStory<typeof Footer> = (_) => <Footer />;
 
 export const Default = Template.bind({});
 Default.args = {};

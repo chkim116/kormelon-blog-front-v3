@@ -13,7 +13,9 @@ export default {
   argTypes,
 } as ComponentMeta<typeof Header>;
 
-const Template: ComponentStory<typeof Header> = () => <Header />;
+const Template: ComponentStory<typeof Header> = ({ ...props }) => (
+  <Header {...props} />
+);
 
 export const Default = Template.bind({});
 Default.args = {};

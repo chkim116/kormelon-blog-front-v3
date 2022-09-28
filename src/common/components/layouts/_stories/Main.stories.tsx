@@ -8,7 +8,7 @@ type MyArgTypes = Partial<
 const argTypes: MyArgTypes = {};
 
 export default {
-  title: 'common/layout/Main',
+  title: 'common/layouts/Main',
   component: Main,
   argTypes,
 } as ComponentMeta<typeof Main>;
@@ -18,4 +18,6 @@ const Template: ComponentStory<typeof Main> = ({ ...props }) => (
 );
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  children: <div>페이지의 컴포넌트</div>,
+};
