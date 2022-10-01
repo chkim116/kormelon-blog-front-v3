@@ -7,7 +7,7 @@ export function tokenProvider() {
 
   function get<T>(key: TokenType): T {
     const item = localStorage.getItem(key) || '';
-    return JSON.parse(item);
+    return item ? JSON.parse(item) : item;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

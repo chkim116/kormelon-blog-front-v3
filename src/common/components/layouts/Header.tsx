@@ -188,6 +188,7 @@ export const Header = ({
               sx={{ mr: '8px' }}
             >
               <Avatar
+                data-cy="user-menu-button"
                 sx={{
                   width: 32,
                   height: 32,
@@ -266,14 +267,14 @@ export const Header = ({
           </MenuItem>
         )}
         {isLogged ? (
-          <MenuItem onClick={onLogout}>
+          <MenuItem onClick={onLogout} data-cy="logout-button">
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
             Logout
           </MenuItem>
         ) : (
-          <MenuItem>
+          <MenuItem data-cy="login-button">
             <NextLink passHref href="/auth">
               <Link sx={{ display: 'flex', color: 'inherit' }} underline="none">
                 <ListItemIcon>
