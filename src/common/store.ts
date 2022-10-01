@@ -1,12 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import logger from 'redux-logger';
 import { featureReducers } from '@features/feat-reducers';
 import { env } from './env';
 
 export const store = configureStore({
   reducer: featureReducers,
-  middleware: (gDM) => gDM().concat(logger),
+  middleware: (gDM) => gDM(),
   devTools: env.isDevelopment,
 });
 
