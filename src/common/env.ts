@@ -13,4 +13,8 @@ export const env = {
    * 개발 모드 체크
    */
   isDevelopment: process.env.NODE_ENV === 'development',
+  /**
+   * SSR 체크
+   */
+  isSSR: typeof window === 'undefined',
 };
