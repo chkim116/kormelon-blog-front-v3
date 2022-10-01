@@ -7,6 +7,10 @@ const nextConfig = {
   swcMinify: true,
   images: {
     disableStaticImages: true,
+    domains: [
+      'www.gravatar.com',
+      'assets-kormelon-v2.s3.ap-northeast-2.amazonaws.com',
+    ],
   },
 };
 

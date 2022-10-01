@@ -8,6 +8,9 @@ export default defineConfig({
     },
   },
   e2e: {
+    env: {
+      serverApi: 'http://localhost:4000/api',
+    },
     baseUrl: 'http://localhost:3000',
   },
 });

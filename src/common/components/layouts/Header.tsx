@@ -8,6 +8,7 @@ import {
   Login,
   Logout,
   Notifications,
+  Person,
   RssFeed,
   Search,
   Settings,
@@ -18,6 +19,7 @@ import {
   Avatar,
   Badge,
   Box,
+  Divider,
   Drawer,
   IconButton,
   Input,
@@ -29,6 +31,7 @@ import {
   Typography,
 } from '@mui/material';
 import NextLink from 'next/link';
+import { UserEntity, UserRoleEnum } from '@core/entities/auth.entity';
 
 const NAV_ITEM_LIST = [
   {
@@ -46,11 +49,20 @@ const NAV_ITEM_LIST = [
 ];
 
 interface HeaderProps {
+  user: UserEntity;
+  isLogged: boolean;
+  onLogout: () => void;
   onThemeChange: () => void;
   themeMode: boolean;
 }
 
-export const Header = ({ onThemeChange, themeMode }: HeaderProps) => {
+export const Header = ({
+  user,
+  isLogged,
+  themeMode,
+  onThemeChange,
+  onLogout,
+}: HeaderProps) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [userMenuEl, setUserMenuEl] = useState<HTMLElement | null>(null);
 
@@ -147,22 +159,24 @@ export const Header = ({ onThemeChange, themeMode }: HeaderProps) => {
               aria-label="change theme color"
               sx={{
                 display: { xs: 'none', sm: 'inline-flex' },
-                ml: '12px',
+                ml: user.id ? '12px' : 0,
               }}
             >
               {themeMode ? <DarkMode /> : <LightMode />}
             </IconButton>
 
-            <IconButton
-              size="large"
-              aria-label="show new notifications"
-              color="inherit"
-            >
-              {/* TODO: 연동하면서, 토글 메뉴 추가 */}
-              <Badge badgeContent={17} color="error">
-                <Notifications />
-              </Badge>
-            </IconButton>
+            {user.id && (
+              <IconButton
+                size="large"
+                aria-label="show new notifications"
+                color="inherit"
+              >
+                {/* TODO: 연동하면서, 토글 메뉴 추가 */}
+                <Badge badgeContent={17} color="error">
+                  <Notifications />
+                </Badge>
+              </IconButton>
+            )}
 
             <IconButton
               onClick={handleUserMenuOpen}
@@ -174,10 +188,12 @@ export const Header = ({ onThemeChange, themeMode }: HeaderProps) => {
               sx={{ mr: '8px' }}
             >
               <Avatar
+                data-cy="user-menu-button"
                 sx={{
                   width: 32,
                   height: 32,
                 }}
+                src={user.profileImage}
               >
                 U
               </Avatar>
@@ -229,22 +245,46 @@ export const Header = ({ onThemeChange, themeMode }: HeaderProps) => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem>
-          <NextLink passHref href="/settings">
-            <Link sx={{ display: 'flex', color: 'inherit' }} underline="none">
-              <ListItemIcon>
-                <Settings fontSize="small" />
-              </ListItemIcon>
-              Settings
-            </Link>
-          </NextLink>
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
+        {user.username && (
+          <MenuItem>
+            <Person sx={{ mr: 1 }} />
+            {user.username}
+          </MenuItem>
+        )}
+
+        <Divider />
+
+        {user.role === UserRoleEnum.ADMIN && (
+          <MenuItem>
+            <NextLink passHref href="/settings">
+              <Link sx={{ display: 'flex', color: 'inherit' }} underline="none">
+                <ListItemIcon>
+                  <Settings fontSize="small" />
+                </ListItemIcon>
+                Settings
+              </Link>
+            </NextLink>
+          </MenuItem>
+        )}
+        {isLogged ? (
+          <MenuItem onClick={onLogout} data-cy="logout-button">
+            <ListItemIcon>
+              <Logout fontSize="small" />
+            </ListItemIcon>
+            Logout
+          </MenuItem>
+        ) : (
+          <MenuItem data-cy="login-button">
+            <NextLink passHref href="/auth">
+              <Link sx={{ display: 'flex', color: 'inherit' }} underline="none">
+                <ListItemIcon>
+                  <Login fontSize="small" />
+                </ListItemIcon>
+                Login
+              </Link>
+            </NextLink>
+          </MenuItem>
+        )}
       </Menu>
 
       <Drawer
@@ -315,13 +355,18 @@ export const Header = ({ onThemeChange, themeMode }: HeaderProps) => {
               <LocalOffer />
             </IconButton>
           </NextLink>
-          {/* TODO: 로그인에 따라 수정 */}
-          <NextLink href={'/login'} passHref>
-            <IconButton color="inherit">
-              {/* eslint-disable-next-line no-constant-condition */}
-              {true ? <Logout /> : <Login />}
+          {isLogged ? (
+            <IconButton color="inherit" onClick={onLogout}>
+              <Logout />
             </IconButton>
-          </NextLink>
+          ) : (
+            <NextLink href={'/login'} passHref>
+              <IconButton color="inherit">
+                <Login />
+              </IconButton>
+            </NextLink>
+          )}
+
           <IconButton
             onClick={onThemeChange}
             size="large"

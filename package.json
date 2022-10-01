@@ -1,6 +1,6 @@
 {
   "name": "kormelon-blog-front-v3",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -14,13 +14,20 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
+    "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.4",
     "@mui/icons-material": "^5.10.3",
+    "@mui/lab": "^5.0.0-alpha.101",
     "@mui/material": "^5.10.5",
+    "@reduxjs/toolkit": "^1.8.5",
+    "axios": "^0.27.2",
+    "gravatar": "^1.8.2",
     "next": "12.3.0",
     "next-images": "^1.8.4",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-redux": "^8.0.4",
+    "redux": "^4.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
@@ -32,6 +39,7 @@
     "@storybook/manager-webpack5": "^6.5.12",
     "@storybook/react": "^6.5.12",
     "@storybook/testing-library": "^0.0.13",
+    "@types/gravatar": "^1.8.3",
     "@types/node": "18.7.18",
     "@types/react": "18.0.20",
     "@types/react-dom": "18.0.6",
