@@ -1,6 +1,13 @@
-import { STORAGE_TOKEN_KEY, STORAGE_USER_KEY } from '@common/constants';
+import {
+  STORAGE_THEME_KEY,
+  STORAGE_TOKEN_KEY,
+  STORAGE_USER_KEY,
+} from '@common/constants';
 
-type TokenType = typeof STORAGE_TOKEN_KEY | typeof STORAGE_USER_KEY;
+type TokenType =
+  | typeof STORAGE_TOKEN_KEY
+  | typeof STORAGE_USER_KEY
+  | typeof STORAGE_THEME_KEY;
 
 export function tokenProvider() {
   const keys = new Set();
