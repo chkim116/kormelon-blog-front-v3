@@ -4,6 +4,7 @@ import { effCategoriesLoad, effSubCategoriesLoad } from './category.effect';
 
 interface CategorySliceState {
   loading: boolean;
+  createLoading: boolean;
   categories: CategoryEntity[];
   subCategories: SubCategoryEntity[];
 }
@@ -11,6 +12,8 @@ interface CategorySliceState {
 function createCategorySliceState(): CategorySliceState {
   return {
     loading: false,
+    createLoading: false,
+
     categories: [],
     subCategories: [],
   };
@@ -32,16 +35,19 @@ export const categorySlice = createSlice({
     });
 
     builder.addMatcher(
-      (action: AnyAction) => action.type.endsWith('/pending'),
+      (action: AnyAction) =>
+        action.type.includes('create') && action.type.endsWith('/pending'),
       (state) => {
-        state.loading = true;
+        state.createLoading = true;
       },
     );
     builder.addMatcher(
       (action: AnyAction) =>
-        action.type.endsWith('/fulfilled') || action.type.endsWith('/rejected'),
+        action.type.includes('create') &&
+        (action.type.endsWith('/fulfilled') ||
+          action.type.endsWith('/rejected')),
       (state) => {
-        state.loading = false;
+        state.createLoading = false;
       },
     );
   },
