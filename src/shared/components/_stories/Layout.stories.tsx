@@ -8,7 +8,7 @@ type MyArgTypes = Partial<
 const argTypes: MyArgTypes = {};
 
 export default {
-  title: 'common/layouts/Layout',
+  title: 'shared/Layout',
   component: Layout,
   argTypes,
 } as ComponentMeta<typeof Layout>;
