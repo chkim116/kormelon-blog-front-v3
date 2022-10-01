@@ -32,7 +32,7 @@ export function feedbackService(status: StatusType, message: string) {
   const root = createRoot(document.getElementById('feedback') as HTMLElement);
 
   return root.render(
-    <div>
+    <div data-cy="feedback">
       <Feedback status={status} message={message} />
     </div>,
   );

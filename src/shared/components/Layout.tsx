@@ -4,6 +4,8 @@ import { ThemeProvider } from '@emotion/react';
 import { createTheme, CssBaseline } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '@common/store';
 import { authSlice, selIsLogged, selUserData } from '@shared/stores/auth';
+import { tokenProvider } from '@core/tokenProvider';
+import { STORAGE_THEME_KEY } from '@common/constants';
 import { Footer } from '../../common/components/layouts/Footer';
 import { Header } from '../../common/components/layouts/Header';
 import { Main } from '../../common/components/layouts/Main';
@@ -40,8 +42,19 @@ export const Layout = ({ children }: LayoutProps) => {
   };
 
   const handleThemeChange = () => {
-    setThemeMode((prev) => !prev);
+    setThemeMode((prev) => {
+      const currentTheme = !prev ? 'light' : 'dark';
+
+      tokenProvider().set(STORAGE_THEME_KEY, currentTheme);
+
+      return !prev;
+    });
   };
+
+  useEffect(() => {
+    const theme = tokenProvider().get(STORAGE_THEME_KEY);
+    setThemeMode(theme === 'light');
+  }, []);
 
   useEffect(() => {
     dispatch(authSlice.actions.initialize());

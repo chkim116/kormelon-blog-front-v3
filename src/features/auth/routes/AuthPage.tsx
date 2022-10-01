@@ -30,7 +30,12 @@ export const AuthPage = () => {
       ) : (
         <AuthRegisterContainer onSuccess={handleSuccess} />
       )}
-      <Button onClick={handleToggle}>{isLogin ? '회원가입' : '로그인'}</Button>
+      <Button
+        data-cy={isLogin ? 'to-register' : 'to-login'}
+        onClick={handleToggle}
+      >
+        {isLogin ? '회원가입' : '로그인'}
+      </Button>
     </Wrap>
   );
 };

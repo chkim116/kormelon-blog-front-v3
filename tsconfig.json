@@ -15,6 +15,7 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "incremental": true,
+    "typeRoots": ["node_modules/@types"],
     "paths": {
       "@core/*": ["src/core/*"],
       "@common/*": ["src/common/*"],
@@ -22,6 +23,6 @@
       "@shared/*": ["src/shared/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }
