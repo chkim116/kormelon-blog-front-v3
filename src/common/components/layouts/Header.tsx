@@ -86,9 +86,18 @@ export const Header = ({
   };
 
   return (
-    <AppBar position="fixed" enableColorOnDark>
+    <AppBar
+      position="fixed"
+      enableColorOnDark
+      sx={{
+        backgroundColor: 'background.paper',
+        backgroundImage: 'none',
+        boxShadow: 'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px',
+      }}
+    >
       <Toolbar
         sx={{
+          backgroundColor: 'background.paper',
           display: 'flex',
           justifyContent: 'space-between',
           maxWidth: 'xl',
@@ -116,7 +125,7 @@ export const Header = ({
         >
           {NAV_ITEM_LIST.map((item) => (
             <NextLink key={item.href} href={item.href} passHref>
-              <Link color="primary.contrastText" underline="hover">
+              <Link color="text.primary" underline="hover">
                 {item.label}
               </Link>
             </NextLink>
@@ -135,17 +144,21 @@ export const Header = ({
             justifyContent="center"
             gap="5px"
           >
-            <Search color="inherit" />
+            <Search
+              sx={{
+                color: 'text.primary',
+              }}
+            />
             <Input
               aria-label="search input"
               placeholder="Searching.."
               sx={{
                 width: '200px',
-                color: 'primary.contrastText',
+                color: 'text.primary',
                 '&:not(.Mui-disabled):hover::before': {
-                  borderColor: 'primary.contrastText',
+                  borderColor: 'text.primary',
                 },
-                ':before': { borderBottomColor: 'primary.contrastText' },
+                ':before': { borderBottomColor: 'text.primary' },
               }}
             />
           </Box>
@@ -155,7 +168,6 @@ export const Header = ({
               onClick={onThemeChange}
               size="large"
               edge="start"
-              color="inherit"
               aria-label="change theme color"
               sx={{
                 display: { xs: 'none', sm: 'inline-flex' },
@@ -166,11 +178,7 @@ export const Header = ({
             </IconButton>
 
             {user.id && (
-              <IconButton
-                size="large"
-                aria-label="show new notifications"
-                color="inherit"
-              >
+              <IconButton size="large" aria-label="show new notifications">
                 {/* TODO: 연동하면서, 토글 메뉴 추가 */}
                 <Badge badgeContent={17} color="error">
                   <Notifications />
@@ -203,7 +211,6 @@ export const Header = ({
               onClick={handleToggle}
               size="large"
               edge="start"
-              color="inherit"
               aria-label="open navigation"
             >
               <MenuIcon />
@@ -217,6 +224,7 @@ export const Header = ({
         open={isUserMenuOpen}
         onClose={handleUserMenuClose}
         onClick={handleUserMenuClose}
+        disableScrollLock={true}
         PaperProps={{
           sx: {
             overflow: 'visible',

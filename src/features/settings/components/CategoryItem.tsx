@@ -103,6 +103,7 @@ export const CategoryItem = ({
               onChange={handleChange}
               value={newValue}
               autoComplete="off"
+              data-cy="edit-category-input"
             />
             <ExtraAction
               isEditMode={getIsEditable(id)}

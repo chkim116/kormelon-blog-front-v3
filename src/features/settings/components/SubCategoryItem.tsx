@@ -53,6 +53,7 @@ export const SubCategoryItem = ({
             onChange={handleChange}
             value={newValue}
             sx={{ zIndex: 10, backgroundColor: 'background.paper' }}
+            data-cy="edit-sub-category-input"
           />
           <ExtraAction
             isEditMode={getIsEditable(id)}
