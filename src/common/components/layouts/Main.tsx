@@ -1,18 +1,20 @@
 import { ReactNode } from 'react';
-import { Container } from '@mui/material';
-import styled from '@emotion/styled';
+import { Box, Container } from '@mui/material';
 
 interface MainProps {
   children: ReactNode;
 }
 
-const Wrap = styled.main`
-  width: 100%;
-  min-height: calc(100vh - 64px);
-`;
-
 export const Main = ({ children }: MainProps) => (
-  <Wrap>
+  <Box
+    component="main"
+    sx={{
+      bgColor: 'background.paper',
+      width: '100%',
+      height: '100%',
+      minHeight: '100vh',
+    }}
+  >
     <Container maxWidth="xl">{children}</Container>
-  </Wrap>
+  </Box>
 );
