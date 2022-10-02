@@ -47,4 +47,10 @@ export interface SubCategoryCreateParams extends CategoryCreateParams {
   categoryId: number;
 }
 
-export interface SubCategoryUpdateParams extends CategoryUpdateParams {}
+export interface SubCategoryUpdateParams
+  extends Omit<CategoryUpdateParams, 'categoryId'> {
+  /**
+   * 자신의 식별자
+   */
+  id: number;
+}

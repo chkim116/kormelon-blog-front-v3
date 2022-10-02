@@ -8,6 +8,11 @@ export const selCategoryLoading = createSelector(
   (state) => state.loading,
 );
 
+export const selCategoryCreateLoading = createSelector(
+  selCategory,
+  (state) => state.createLoading,
+);
+
 export const selCategories = createSelector(
   selCategory,
   (state) => state.categories,
