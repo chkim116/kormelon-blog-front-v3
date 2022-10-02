@@ -44,25 +44,17 @@ describe('auth flow', () => {
       .dataCy('to-register')
       .click();
 
-    cy.get('input[name="email"]')
-      .type(registerParams.email)
-      .get('input[name="password"]')
-      .type(registerParams.password)
-      .get('input[name="username"]')
-      .type(registerParams.username)
-      .get('button[type="submit"]')
-      .click();
+    cy.register(
+      registerParams.email,
+      registerParams.password,
+      registerParams.username,
+    );
 
     cy.wait('@createUser').then((res) =>
       expect(res.response?.statusCode).to.eq(201),
     );
 
-    cy.get('input[name="email"]')
-      .type(loginParams.email)
-      .get('input[name="password"]')
-      .type(loginParams.password)
-      .get('button[type="submit"]')
-      .click();
+    cy.login(loginParams.email, loginParams.password);
 
     cy.wait('@loginUser').then((res) => {
       expect(res.response?.body.payload.user).to.deep.equal(user);

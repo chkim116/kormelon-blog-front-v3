@@ -56,6 +56,7 @@ export const SettingCategoryCreatorContainer = ({
     >
       <TextField
         fullWidth
+        data-cy="create-category-input"
         id="category"
         name="category"
         label="카테고리 입력"
@@ -64,6 +65,7 @@ export const SettingCategoryCreatorContainer = ({
         onChange={handleChange}
       />
       <LoadingButton
+        data-cy="create-category-submit"
         loading={isLoading}
         type="submit"
         variant="contained"

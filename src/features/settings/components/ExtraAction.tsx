@@ -44,6 +44,7 @@ export const ExtraAction = ({
         edge="start"
         color="success"
         aria-label="edit finish button"
+        data-cy="edit-finish"
         onClick={handleUpdate}
       >
         <Check />
@@ -65,6 +66,7 @@ export const ExtraAction = ({
           color="primary"
           aria-label="create category"
           onClick={handleAdd}
+          data-cy="create-category-modal-open"
         >
           <Add />
         </IconButton>
@@ -74,6 +76,7 @@ export const ExtraAction = ({
         edge="start"
         color="default"
         aria-label="edit category"
+        data-cy="edit-category"
         onClick={handleEditMode}
       >
         <Edit />
@@ -83,6 +86,7 @@ export const ExtraAction = ({
         edge="start"
         color="error"
         aria-label="delete category"
+        data-cy="delete-category"
       >
         <Delete />
       </IconButton>

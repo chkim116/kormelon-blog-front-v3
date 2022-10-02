@@ -43,9 +43,10 @@ export const CreateSubCategoryDialog = ({
   };
 
   return (
-    <Dialog open={isOpen} onClose={handleClose}>
+    <Dialog open={isOpen} onClose={handleClose} data-cy="create-dialog">
       <DialogContent sx={{ p: 6 }}>
         <TextField
+          data-cy="create-subcategory-input"
           autoComplete="off"
           id="subCategory"
           label="서브 카테고리"
@@ -59,7 +60,11 @@ export const CreateSubCategoryDialog = ({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>닫기</Button>
-        <Button onClick={handleOk} variant="contained">
+        <Button
+          onClick={handleOk}
+          variant="contained"
+          data-cy="create-subcategory-submit"
+        >
           확인
         </Button>
       </DialogActions>
