@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Box, Container } from '@mui/material';
+import { Box } from '@mui/material';
 
 interface MainProps {
   children: ReactNode;
@@ -15,6 +15,6 @@ export const Main = ({ children }: MainProps) => (
       minHeight: '100vh',
     }}
   >
-    <Container maxWidth="xl">{children}</Container>
+    {children}
   </Box>
 );

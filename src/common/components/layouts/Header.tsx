@@ -3,6 +3,7 @@ import React, { useMemo, useState } from 'react';
 import {
   CloseOutlined,
   DarkMode,
+  Edit,
   LightMode,
   LocalOffer,
   Login,
@@ -31,7 +32,8 @@ import {
   Typography,
 } from '@mui/material';
 import NextLink from 'next/link';
-import { UserEntity, UserRoleEnum } from '@core/entities/auth.entity';
+import { UserRoleEnum } from '@core/entities/auth.entity';
+import { UserModel } from '@features/auth/models/user.model';
 
 const NAV_ITEM_LIST = [
   {
@@ -49,7 +51,7 @@ const NAV_ITEM_LIST = [
 ];
 
 interface HeaderProps {
-  user: UserEntity;
+  user: UserModel;
   isLogged: boolean;
   onLogout: () => void;
   onThemeChange: () => void;
@@ -263,16 +265,42 @@ export const Header = ({
         <Divider />
 
         {user.role === UserRoleEnum.ADMIN && (
-          <MenuItem>
-            <NextLink passHref href="/settings">
-              <Link sx={{ display: 'flex', color: 'inherit' }} underline="none">
-                <ListItemIcon>
-                  <Settings fontSize="small" />
-                </ListItemIcon>
-                Settings
-              </Link>
-            </NextLink>
-          </MenuItem>
+          <Box>
+            <MenuItem>
+              <NextLink passHref href="/posts/write">
+                <Link
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    color: 'inherit',
+                  }}
+                  underline="none"
+                >
+                  <ListItemIcon>
+                    <Edit fontSize="small" />
+                  </ListItemIcon>
+                  Write
+                </Link>
+              </NextLink>
+            </MenuItem>
+            <MenuItem>
+              <NextLink passHref href="/settings">
+                <Link
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    color: 'inherit',
+                  }}
+                  underline="none"
+                >
+                  <ListItemIcon>
+                    <Settings fontSize="small" />
+                  </ListItemIcon>
+                  Settings
+                </Link>
+              </NextLink>
+            </MenuItem>
+          </Box>
         )}
         {isLogged ? (
           <MenuItem onClick={onLogout} data-cy="logout-button">
