@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { AuthLoginParams } from '@core/entities/auth.entity';
 import { useAppDispatch } from '@common/store';
 import { effAuthLogin, selAuthLoading } from '@shared/stores/auth';
 import { feedbackService } from '@common/components/Feedback';
 import { LoginForm } from '../components/LoginForm';
+import { AuthLoginParamsModel } from '../models/user.model';
 
 export const AuthLoginContainer = () => {
   const dispatch = useAppDispatch();
   const isLoading = useSelector(selAuthLoading);
   const router = useRouter();
 
-  const [form, setForm] = useState<AuthLoginParams>({
+  const [form, setForm] = useState<AuthLoginParamsModel>({
     email: '',
     password: '',
   });
