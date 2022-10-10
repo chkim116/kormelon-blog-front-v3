@@ -1,15 +1,16 @@
 import { ReactNode, useEffect, useMemo, useState } from 'react';
-import styled from '@emotion/styled';
 import { ThemeProvider } from '@emotion/react';
-import { createTheme, CssBaseline } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '@common/store';
-import { authSlice, selIsLogged, selUserData } from '@shared/stores/auth';
-import { tokenProvider } from '@core/tokenProvider';
+import styled from '@emotion/styled';
+import { CssBaseline } from '@mui/material';
 import { STORAGE_THEME_KEY } from '@common/constants';
+import { useAppDispatch, useAppSelector } from '@common/store';
+import { tokenProvider } from '@core/tokenProvider';
+import { authSlice, selIsLogged, selUserData } from '@shared/stores/auth';
+import { getMuiTheme } from '@shared/styles/theme';
+import { feedbackService } from '../../common/components/Feedback';
 import { Footer } from '../../common/components/layouts/Footer';
 import { Header } from '../../common/components/layouts/Header';
 import { Main } from '../../common/components/layouts/Main';
-import { feedbackService } from '../../common/components/Feedback';
 
 const Wrap = styled.div`
   margin-top: 64px;
@@ -26,15 +27,7 @@ export const Layout = ({ children }: LayoutProps) => {
 
   const [themeMode, setThemeMode] = useState(false);
 
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: themeMode ? 'light' : 'dark',
-        },
-      }),
-    [themeMode],
-  );
+  const theme = useMemo(() => getMuiTheme(themeMode), [themeMode]);
 
   const handleLogout = () => {
     dispatch(authSlice.actions.logout());
