@@ -157,7 +157,7 @@ export const PostDetailContainer = ({ post }: PostDetailContainerProps) => {
   }, []);
 
   return (
-    <Box position="relative" maxWidth="xl" m="0 auto">
+    <Box position="relative" maxWidth="lg" m="0 auto">
       <Box ref={getFarAwayHeight}>
         <PostDetailHeader
           id={id}

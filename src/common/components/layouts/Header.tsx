@@ -284,7 +284,7 @@ export const Header = ({
               </NextLink>
             </MenuItem>
             <MenuItem>
-              <NextLink passHref href="/settings">
+              <NextLink passHref href="/settings/category">
                 <Link
                   sx={{
                     display: 'flex',
@@ -312,7 +312,10 @@ export const Header = ({
         ) : (
           <MenuItem data-cy="login-button">
             <NextLink passHref href="/auth">
-              <Link sx={{ display: 'flex', color: 'inherit' }} underline="none">
+              <Link
+                sx={{ display: 'flex', alignItems: 'center', color: 'inherit' }}
+                underline="none"
+              >
                 <ListItemIcon>
                   <Login fontSize="small" />
                 </ListItemIcon>
