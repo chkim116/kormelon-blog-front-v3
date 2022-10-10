@@ -5,6 +5,7 @@ import {
   useImperativeHandle,
   useRef,
   DragEventHandler,
+  KeyboardEventHandler,
 } from 'react';
 import { Box, IconButton, InputLabel, Modal, TextField } from '@mui/material';
 import { Preview } from '@mui/icons-material';
@@ -28,6 +29,37 @@ export const PostWriteContent = forwardRef<
   const refEditor = useRef<HTMLTextAreaElement | null>(null);
 
   const [isPreview, setIsPreview] = useState(false);
+
+  const handleTabKey: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
+    const editor = refEditor.current;
+
+    if (!editor) {
+      return;
+    }
+
+    const { selectionStart, selectionEnd, value } = editor;
+
+    if (e.key !== 'Tab') {
+      return;
+    }
+
+    e.preventDefault();
+
+    if (selectionStart === selectionEnd) {
+      if (!e.shiftKey) {
+        return editor.setRangeText('\t', selectionStart, selectionEnd, 'end');
+      }
+
+      if (selectionStart > 0 && value[selectionStart - 1] === '\t') {
+        return editor.setRangeText(
+          '',
+          selectionStart - 1,
+          selectionEnd,
+          'start',
+        );
+      }
+    }
+  };
 
   const handlePreview = () => {
     setIsPreview((prev) => !prev);
@@ -74,6 +106,7 @@ export const PostWriteContent = forwardRef<
         <TextField
           inputRef={refEditor}
           onDrop={handleDrop}
+          inputProps={{ onKeyDown: handleTabKey }}
           value={content}
           name="content"
           id="content"
