@@ -1,17 +1,32 @@
-import { useState, ChangeEventHandler } from 'react';
+import {
+  useState,
+  ChangeEventHandler,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  DragEventHandler,
+} from 'react';
 import { Box, IconButton, InputLabel, Modal, TextField } from '@mui/material';
 import { Preview } from '@mui/icons-material';
 import { MuiMarkdown } from '@common/components/MuiMarkdown';
 
 interface PostWriteContentProps {
   content: string;
+  onDrop: (file: File) => void;
   onChange: (name: string, value: string) => void;
 }
 
-export const PostWriteContent = ({
-  content,
-  onChange,
-}: PostWriteContentProps) => {
+export interface PostWriteContentHandle {
+  focus: () => void;
+  setImage: (image: string) => void;
+}
+
+export const PostWriteContent = forwardRef<
+  PostWriteContentHandle,
+  PostWriteContentProps
+>(({ content, onDrop, onChange }, ref) => {
+  const refEditor = useRef<HTMLTextAreaElement | null>(null);
+
   const [isPreview, setIsPreview] = useState(false);
 
   const handlePreview = () => {
@@ -21,6 +36,31 @@ export const PostWriteContent = ({
   const handleChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     onChange(e.target.name, e.target.value);
   };
+
+  const handleDrop: DragEventHandler<HTMLDivElement> = (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+
+    onDrop(file);
+  };
+
+  useImperativeHandle(ref, () => {
+    const editor = refEditor.current;
+
+    return {
+      focus() {
+        editor?.focus();
+      },
+      setImage(image: string) {
+        editor?.setRangeText(
+          `\n![alt](${image})`,
+          editor.selectionStart,
+          editor.selectionEnd,
+          'end',
+        );
+      },
+    };
+  });
 
   return (
     <Box>
@@ -32,6 +72,8 @@ export const PostWriteContent = ({
           </IconButton>
         </Box>
         <TextField
+          inputRef={refEditor}
+          onDrop={handleDrop}
           value={content}
           name="content"
           id="content"
@@ -75,4 +117,6 @@ export const PostWriteContent = ({
       </Modal>
     </Box>
   );
-};
+});
+
+PostWriteContent.displayName = 'PostWriteContent';

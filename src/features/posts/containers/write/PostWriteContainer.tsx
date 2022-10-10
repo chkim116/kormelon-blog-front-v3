@@ -1,4 +1,5 @@
-import { FormEventHandler, useEffect, useMemo, useState } from 'react';
+/* eslint-disable indent */
+import { FormEventHandler, useEffect, useMemo, useRef, useState } from 'react';
 import { Box } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useDebouncedCallback } from 'use-debounce';
@@ -19,6 +20,7 @@ import {
   PostConfirm,
   PostTagSearch,
   PostWriteContent,
+  PostWriteContentHandle,
   PostWriteMeta,
   PostWriteThumbnail,
 } from '../../components/write';
@@ -28,6 +30,8 @@ export const PostWriteContainer = () => {
   const categories = useAppSelector(selCategories);
   const postDetail = useAppSelector(selPostDetail);
   const router = useRouter();
+
+  const refEditor = useRef<PostWriteContentHandle>(null);
 
   const isEditMode = useMemo(() => !!router.query.edit, [router.query.edit]);
   const editId = useMemo(() => router.query.edit, [router.query.edit]);
@@ -54,6 +58,15 @@ export const PostWriteContainer = () => {
     } = await repo.post.uploadImage(file);
 
     setForm((prev) => ({ ...prev, thumbnail: payload }));
+  };
+
+  const handleImageDrop = async (file: File) => {
+    const {
+      data: { payload },
+    } = await repo.post.uploadImage(file);
+
+    refEditor.current?.setImage(payload);
+    refEditor.current?.focus();
   };
 
   const handleChange = (name: string, value: string) => {
@@ -220,7 +233,12 @@ export const PostWriteContainer = () => {
         onDelete={handleTagDelete}
         onSelect={handleSelect}
       />
-      <PostWriteContent content={form.content} onChange={handleChange} />
+      <PostWriteContent
+        ref={refEditor}
+        content={form.content}
+        onDrop={handleImageDrop}
+        onChange={handleChange}
+      />
       <PostConfirm isPrivate={form.isPrivate} onPrivate={handlePrivate} />
     </Box>
   );
