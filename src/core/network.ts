@@ -14,7 +14,8 @@ export const apiClient = axios.create({
 
 apiClient.interceptors.request.use((config) => {
   if (config.headers) {
-    config.headers['Authorization'] = tokenProvider().get(STORAGE_TOKEN_KEY);
+    config.headers['Authorization'] =
+      tokenProvider().get(STORAGE_TOKEN_KEY) || '';
   }
 
   return config;
