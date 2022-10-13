@@ -40,7 +40,10 @@ export const PostFloating = ({
           p: 2,
           maxWidth: 204,
           bgcolor: 'background.paper',
-          display: { xs: 'none', lg: 'flex' },
+          display: 'none',
+          ['@media (min-width: 1400px)']: {
+            display: 'flex',
+          },
           flexDirection: 'column',
         }}
       >

@@ -153,7 +153,9 @@ export const PostDetailContainer = ({ post }: PostDetailContainerProps) => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    setAnchors(extractHeadingText());
+    setTimeout(() => {
+      setAnchors(extractHeadingText());
+    }, 1000);
   }, []);
 
   return (

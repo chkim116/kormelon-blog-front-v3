@@ -34,7 +34,7 @@ export const PostListPage = (_: PostListPageProps) => {
     <Box>
       <PostHeroContainer />
 
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <PostCategoryContainer categories={categories} posts={posts} />
         <PostPaginationContainer />
       </Container>

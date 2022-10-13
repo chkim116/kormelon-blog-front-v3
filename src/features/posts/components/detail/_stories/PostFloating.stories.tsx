@@ -1,6 +1,11 @@
 import { ComponentProps } from 'react';
 import { ComponentStory, ComponentMeta, ArgTypes } from '@storybook/react';
+import { AnchorModel } from '@features/posts/models/post.model';
 import { PostFloating } from '../PostFloating';
+
+function createAnchorModel(values: string[]): AnchorModel[] {
+  return values.map((value) => ({ id: value, value }));
+}
 
 type MyArgTypes = Partial<
   Record<keyof ComponentProps<typeof PostFloating>, ArgTypes[string]>
@@ -21,14 +26,14 @@ const Template: ComponentStory<typeof PostFloating> = ({ ...props }) => (
       height: '500px',
     }}
   >
-    <div>최소 1440px 이상일 시 렌더링됨.</div>
+    <div>최소 1400px 이상일 시 렌더링됨.</div>
     <PostFloating {...props} />
   </div>
 );
 
 export const Default = Template.bind({});
 Default.args = {
-  anchors: ['1. variant', '2. state', '3. effect'],
+  anchors: createAnchorModel(['1. variant', '2. state', '3. effect']),
 };
 
 export const Liked = Template.bind({});

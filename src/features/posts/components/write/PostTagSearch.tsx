@@ -18,19 +18,19 @@ export const PostTagSearch = ({
   onDelete,
   onSelect,
 }: PostTagSearchProps) => {
-  const [value, setValue] = useState<TagEntity>({id: 0, value: '', posts: []});
+  const [value, setValue] = useState<TagEntity>({id: 0, value: ''});
 
   const handleChange = (_: SyntheticEvent, value: string, reason :AutocompleteInputChangeReason) => {
     if (reason === 'reset') {
       return;
     }
 
-    setValue({id: 0, value, posts: []});
+    setValue({id: 0, value});
     onSearch(value);
   };
 
   const handleSelect = <T = TagEntity>(_: SyntheticEvent, value: T) => {
-    setValue({id: 0, value: '', posts: []});
+    setValue({id: 0, value: ''});
     onSelect(value as TagEntity);
   };
 

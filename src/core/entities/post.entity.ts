@@ -11,7 +11,7 @@ export interface PostCategoryEntity {
   value: string;
 }
 
-export interface PostTag {
+export interface PostTagEntity {
   id: number;
   value: string;
 }
@@ -122,7 +122,7 @@ export interface PostDetailEntity extends PostEntity {
   /**
    * 게시글에 연결된 태그
    */
-  tags: PostTag[];
+  tags: PostTagEntity[];
   /**
    * 게시글의 비밀 여부
    */

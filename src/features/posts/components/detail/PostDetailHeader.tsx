@@ -16,11 +16,11 @@ import {
   IconButton,
 } from '@mui/material';
 import NextLink from 'next/link';
-import { PostTag, UserEntity } from '@core/entities';
+import { PostTagEntity, UserEntity } from '@core/entities';
 import { PostCategoryModel } from '@features/posts/models/post.model';
 
 interface PostDetailHeaderProps {
-  tags: PostTag[];
+  tags: PostTagEntity[];
   id: number;
   preview: string;
   title: string;
