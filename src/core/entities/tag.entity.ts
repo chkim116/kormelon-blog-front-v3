@@ -1,6 +1,6 @@
-import { PostTag } from './post.entity';
+import { PostTagEntity } from './post.entity';
 
-export interface TagEntity extends PostTag {}
+export interface TagEntity extends PostTagEntity {}
 
 export interface TagMetaEntity {
   /**

@@ -153,11 +153,13 @@ export const PostDetailContainer = ({ post }: PostDetailContainerProps) => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    setAnchors(extractHeadingText());
+    setTimeout(() => {
+      setAnchors(extractHeadingText());
+    }, 1000);
   }, []);
 
   return (
-    <Box position="relative" maxWidth="lg" m="0 auto">
+    <Box position="relative" maxWidth="xl" m="0 auto">
       <Box ref={getFarAwayHeight}>
         <PostDetailHeader
           id={id}
