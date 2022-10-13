@@ -1,3 +1,4 @@
+import { STORAGE_TOKEN_KEY, STORAGE_USER_KEY } from '@common/constants';
 import {
   AuthEntity,
   AuthLoginParams,
@@ -46,6 +47,7 @@ export const authRepository = {
    * 유저 로그아웃
    */
   logout() {
-    tokenProvider().clear();
+    tokenProvider().remove(STORAGE_TOKEN_KEY);
+    tokenProvider().remove(STORAGE_USER_KEY);
   },
 };
