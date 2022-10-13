@@ -1,15 +1,31 @@
 import {
+  STORAGE_LIKE_KEY,
   STORAGE_THEME_KEY,
   STORAGE_TOKEN_KEY,
   STORAGE_USER_KEY,
 } from '@common/constants';
+import { env } from '@common/env';
 
 type TokenType =
   | typeof STORAGE_TOKEN_KEY
   | typeof STORAGE_USER_KEY
-  | typeof STORAGE_THEME_KEY;
+  | typeof STORAGE_THEME_KEY
+  | typeof STORAGE_LIKE_KEY;
+
+function noop() {
+  return undefined;
+}
 
 export function tokenProvider() {
+  if (env.isSSR) {
+    return {
+      get: noop,
+      set: noop,
+      remove: noop,
+      clear: noop,
+    };
+  }
+
   const keys = new Set();
 
   function get<T>(key: TokenType): T {

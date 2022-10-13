@@ -10,6 +10,7 @@ const nextConfig = {
     domains: [
       'www.gravatar.com',
       'assets-kormelon-v2.s3.ap-northeast-2.amazonaws.com',
+      'images.unsplash.com',
     ],
   },
 };

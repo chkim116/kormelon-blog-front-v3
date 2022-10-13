@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "incremental": true,
     "typeRoots": ["node_modules/@types"],
+    "downlevelIteration": true,
     "paths": {
       "@core/*": ["src/core/*"],
       "@common/*": ["src/common/*"],

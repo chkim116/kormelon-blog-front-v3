@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import gravatar from 'gravatar';
-import { AuthRegisterParams } from '@core/entities/auth.entity';
 import { repo } from '@core/repo';
 import { useAppDispatch, useAppSelector } from '@common/store';
 import { effAuthRegister, selAuthLoading } from '@shared/stores/auth';
 import { feedbackService } from '@common/components/Feedback';
 import { RegisterForm } from '../components/RegisterForm';
+import { AuthRegisterParamsModel } from '../models/user.model';
 
 const defaultProfileImage = gravatar.url('default', {
   s: '100',
@@ -25,7 +25,7 @@ export const AuthRegisterContainer = ({
 
   const isLoading = useAppSelector(selAuthLoading);
 
-  const [form, setForm] = useState<AuthRegisterParams>({
+  const [form, setForm] = useState<AuthRegisterParamsModel>({
     email: '',
     password: '',
     profileImage: defaultProfileImage,

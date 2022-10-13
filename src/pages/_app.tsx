@@ -5,6 +5,7 @@ import { CacheProvider } from '@emotion/react';
 import { EmotionCache } from '@emotion/cache';
 import { Provider } from 'react-redux';
 import type { AppProps } from 'next/app';
+import '@shared/styles/global.css';
 
 import { Layout } from '@shared/components/Layout';
 import store from '@common/store';
