@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { UserEntity } from '@core/entities/auth.entity';
-import { tokenProvider } from '@core/tokenProvider';
 import {
   createInitialUser,
   createUserByLocalStorage,
 } from '@shared/manipulates/auth.create';
+import { repo } from '@core/repo';
 import { effAuthLogin, effAuthRegister } from './auth.effect';
 
 interface AuthSliceState {
@@ -26,9 +26,9 @@ export const authSlice = createSlice({
   initialState: createAuthSliceState(),
   reducers: {
     logout(state) {
+      repo.auth.logout();
       state.isLogged = false;
       state.user = createInitialUser();
-      tokenProvider().clear();
     },
     initialize(state) {
       state.user = createUserByLocalStorage();

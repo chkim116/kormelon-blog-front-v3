@@ -1,14 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import {
-  AuthLoginParams,
-  AuthRegisterParams,
-  UserEntity,
-} from '@core/entities/auth.entity';
+import { UserEntity } from '@core/entities/auth.entity';
 import { repo } from '@core/repo';
 import { tokenProvider } from '@core/tokenProvider';
 import { STORAGE_TOKEN_KEY, STORAGE_USER_KEY } from '@common/constants';
+import {
+  AuthLoginParamsModel,
+  AuthRegisterParamsModel,
+} from '@features/auth/models/user.model';
 
-export const effAuthLogin = createAsyncThunk<UserEntity, AuthLoginParams>(
+export const effAuthLogin = createAsyncThunk<UserEntity, AuthLoginParamsModel>(
   'authLogin',
   async (params, { rejectWithValue }) => {
     try {
@@ -26,7 +26,7 @@ export const effAuthLogin = createAsyncThunk<UserEntity, AuthLoginParams>(
   },
 );
 
-export const effAuthRegister = createAsyncThunk<void, AuthRegisterParams>(
+export const effAuthRegister = createAsyncThunk<void, AuthRegisterParamsModel>(
   'authRegister',
   async (params, { rejectWithValue }) => {
     try {
