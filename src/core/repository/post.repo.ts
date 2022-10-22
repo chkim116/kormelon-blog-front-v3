@@ -1,12 +1,12 @@
 import { STORAGE_LIKE_KEY } from '@common/constants';
 import {
   PagingMeta,
-  PostCreateParams,
-  PostDetailResultEntityPayload,
-  PostEntity,
-  PostRecommendEntity,
-  PostSearchParams,
-  PostUpdateParams,
+  BlogPostCreateParams,
+  BlogPostDetailResultEntityPayload,
+  BlogPostEntity,
+  BlogPostRecommendEntity,
+  BlogPostSearchParams,
+  BlogPostUpdateParams,
   Response,
 } from '@core/entities';
 import { apiClient } from '@core/network';
@@ -14,7 +14,7 @@ import { tokenProvider } from '@core/tokenProvider';
 
 export const postRepository = {
   fetchRecommendPosts(limit = 3) {
-    return apiClient.get<Response<PostRecommendEntity[], PagingMeta>>(
+    return apiClient.get<Response<BlogPostRecommendEntity[], PagingMeta>>(
       `/post/recommend?limit=${limit}`,
     );
   },
@@ -25,8 +25,8 @@ export const postRepository = {
    * @param params
    * @returns
    */
-  fetchPosts(params: PostSearchParams) {
-    return apiClient.get<Response<PostEntity[], PagingMeta>>('/post', {
+  fetchPosts(params: BlogPostSearchParams) {
+    return apiClient.get<Response<BlogPostEntity[], PagingMeta>>('/post', {
       params,
     });
   },
@@ -37,7 +37,7 @@ export const postRepository = {
    * @param params
    * @returns
    */
-  createPost(params: PostCreateParams) {
+  createPost(params: BlogPostCreateParams) {
     return apiClient.post<Response>('/post', params);
   },
 
@@ -47,7 +47,7 @@ export const postRepository = {
    * @param params
    * @returns
    */
-  updatePost(params: PostUpdateParams) {
+  updatePost(params: BlogPostUpdateParams) {
     return apiClient.put<Response>('/post', params);
   },
 
@@ -68,7 +68,7 @@ export const postRepository = {
    * @returns
    */
   fetchPostById(id: number) {
-    return apiClient.get<Response<PostDetailResultEntityPayload>>(
+    return apiClient.get<Response<BlogPostDetailResultEntityPayload>>(
       `/post/${id}`,
     );
   },

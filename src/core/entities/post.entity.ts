@@ -1,6 +1,6 @@
 import { UserEntity } from './auth.entity';
 
-export interface PostCategoryEntity {
+export interface BlogPostCategoryEntity {
   /**
    * 카테고리 식별자
    */
@@ -11,19 +11,19 @@ export interface PostCategoryEntity {
   value: string;
 }
 
-export interface PostTagEntity {
+export interface BlogPostTagEntity {
   id: number;
   value: string;
 }
 
-export interface PostCommentEntity {
+export interface BlogPostCommentEntity {
   /**
    * 댓글 식별자
    */
   id: string;
 }
 
-export interface PostEntity {
+export interface BlogPostEntity {
   /**
    * 게시글 식별자
    */
@@ -50,9 +50,9 @@ export interface PostEntity {
   createdAt: string;
 }
 
-export interface PostRecommendEntity extends PostEntity {}
+export interface BlogPostRecommendEntity extends BlogPostEntity {}
 
-export interface PostCreateParams {
+export interface BlogPostCreateParams {
   /**
    * 게시글의 미리보기 내용
    */
@@ -87,14 +87,14 @@ export interface PostCreateParams {
   isPrivate: boolean;
 }
 
-export interface PostUpdateParams extends PostCreateParams {
+export interface BlogPostUpdateParams extends BlogPostCreateParams {
   /**
    * 게시글의 식별자
    */
   id: number;
 }
 
-export interface PostDetailEntity extends PostEntity {
+export interface BlogPostDetailEntity extends BlogPostEntity {
   /**
    * 게시글 조회수
    */
@@ -106,11 +106,11 @@ export interface PostDetailEntity extends PostEntity {
   /**
    * 게시글 카테고리
    */
-  category: PostCategoryEntity;
+  category: BlogPostCategoryEntity;
   /**
    * 게시글 서브 카테고리
    */
-  subCategory: PostCategoryEntity;
+  subCategory: BlogPostCategoryEntity;
   /**
    * 게시글의 컨텐츠
    */
@@ -122,43 +122,43 @@ export interface PostDetailEntity extends PostEntity {
   /**
    * 게시글에 연결된 태그
    */
-  tags: PostTagEntity[];
+  tags: BlogPostTagEntity[];
   /**
    * 게시글의 비밀 여부
    */
   isPrivate: boolean;
 }
 
-export type PostDetailNearPost = Omit<
-  PostEntity,
+export type BlogPostDetailNearPost = Omit<
+  BlogPostEntity,
   'preview' | 'readTime'
 > | null;
 
-export interface PostNearEntity {
-  prev: PostDetailNearPost;
-  next: PostDetailNearPost;
+export interface BlogPostNearEntity {
+  prev: BlogPostDetailNearPost;
+  next: BlogPostDetailNearPost;
 }
 
-export interface PostDetailResultEntityPayload {
+export interface BlogPostDetailResultEntityPayload {
   /**
    * 현재 게시글의 상세
    */
-  post: PostDetailEntity;
+  post: BlogPostDetailEntity;
   /**
    * 이전 게시글
    *
    * 기준은 카테고리 기준 다음 글이다.
    */
-  prev: PostDetailNearPost;
+  prev: BlogPostDetailNearPost;
   /**
    * 다음 게시글
    *
    * 기준은 카테고리 기준 다음 글이다.
    */
-  next: PostDetailNearPost;
+  next: BlogPostDetailNearPost;
 }
 
-export interface PostSearchParams {
+export interface BlogPostSearchParams {
   /**
    * 페이지
    *
