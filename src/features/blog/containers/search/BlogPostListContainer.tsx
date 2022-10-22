@@ -1,11 +1,10 @@
 import { SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Box } from '@mui/material';
+import { Box, Tab } from '@mui/material';
 import { DEFAULT_PAGE } from '@common/constants';
 import { useAppSelector } from '@common/store';
 import { CategoryEntity, SubCategoryEntity } from '@core/entities';
 import { useQueryPush } from '@shared/hooks/useQueryPush';
-import { BlogPostCategoryTab } from '@features/blog/components/search/BlogPostCategoryTab';
 import { BlogPostCardListByCategory } from '@features/blog/components/search/BlogPostCardListByCategory';
 import {
   selBlogPostLoading,
@@ -93,7 +92,13 @@ export const BlogPostListContainer = (_: BlogPostListContainerProps) => {
           variant="scrollable"
           onChange={handleTabChange}
         >
-          <BlogPostCategoryTab categories={categories} />
+          {categories.map((category) => (
+            <Tab
+              key={category.id}
+              label={category.value}
+              value={category.id.toString()}
+            />
+          ))}
         </TabList>
 
         <Box mt={4}>
