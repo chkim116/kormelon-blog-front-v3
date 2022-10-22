@@ -8,7 +8,7 @@ interface PostThumbnailProps {
 }
 
 export const PostThumbnail = ({ src, alt }: PostThumbnailProps) => (
-  <Box position="relative" width="98%" height="100%" pb="56.25%" m="0 auto">
+  <Box position="relative" width="94%" pb="56.25%" maxWidth="lg" m="0 auto">
     <Box
       position="absolute"
       width="100%"

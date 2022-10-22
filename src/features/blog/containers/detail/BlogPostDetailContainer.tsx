@@ -178,23 +178,25 @@ export const BlogPostDetailContainer = ({
         <PostThumbnail src={thumbnail} alt={`${title} thumbnail`} />
       </Box>
 
-      <PostContent content={content} />
+      <Box maxWidth="md" m="0 auto">
+        <PostContent content={content} />
 
-      <Box
-        position="absolute"
-        top={`${farAwayHeight}px`}
-        right="1%"
-        width="204px"
-        height={`calc(100% - ${farAwayHeight}px)`}
-      >
-        <PostFloating
-          activeAnchorId={activeAnchorId}
-          anchors={anchors}
-          isLiked={isLiked}
-          onAnchorClick={handleAnchorClick}
-          onShare={handleShare}
-          onLike={handleLike}
-        />
+        <Box
+          position="absolute"
+          top={`${farAwayHeight}px`}
+          right="1%"
+          width="204px"
+          height={`calc(100% - ${farAwayHeight}px)`}
+        >
+          <PostFloating
+            activeAnchorId={activeAnchorId}
+            anchors={anchors}
+            isLiked={isLiked}
+            onAnchorClick={handleAnchorClick}
+            onShare={handleShare}
+            onLike={handleLike}
+          />
+        </Box>
       </Box>
 
       <PostContentFooter
