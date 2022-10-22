@@ -9,7 +9,7 @@ type MyArgTypes = Partial<
 const argTypes: MyArgTypes = {};
 
 export default {
-  title: 'posts/detail/PostThumbnail',
+  title: 'blog/detail/PostThumbnail',
   component: PostThumbnail,
   argTypes,
 } as ComponentMeta<typeof PostThumbnail>;

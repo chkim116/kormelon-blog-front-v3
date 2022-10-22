@@ -13,7 +13,7 @@ type MyArgTypes = Partial<
 const argTypes: MyArgTypes = {};
 
 export default {
-  title: 'posts/detail/PostFloating',
+  title: 'blog/detail/PostFloating',
   component: PostFloating,
   argTypes,
 } as ComponentMeta<typeof PostFloating>;
