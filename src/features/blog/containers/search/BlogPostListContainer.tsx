@@ -1,27 +1,27 @@
 import { SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Box, Tab } from '@mui/material';
+import { Box } from '@mui/material';
+import { DEFAULT_PAGE } from '@common/constants';
+import { useAppSelector } from '@common/store';
 import { CategoryEntity, SubCategoryEntity } from '@core/entities';
 import { useQueryPush } from '@shared/hooks/useQueryPush';
-import { useAppSelector } from '@common/store';
-import { DEFAULT_PAGE } from '@common/constants';
-import { PostCardListByCategory } from '@features/blog/components/search/PostCardListByCategory';
-import { BlogPostModel } from '@features/blog/models/blog.model';
+import { BlogPostCategoryTab } from '@features/blog/components/search/BlogPostCategoryTab';
+import { BlogPostCardListByCategory } from '@features/blog/components/search/BlogPostCardListByCategory';
 import {
   selBlogPostLoading,
+  selBlogPosts,
   selBlogPostSearchParams,
 } from '@features/blog/stores';
+import { selCategories } from '@features/settings/stores';
 
-interface BlogPostCategoryContainerProps {
-  categories: CategoryEntity[];
-  posts: BlogPostModel[];
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface BlogPostListContainerProps {}
 
-export const BlogPostCategoryContainer = ({
-  categories: outCategories,
-  posts,
-}: BlogPostCategoryContainerProps) => {
-  const navigate = useQueryPush();
+export type SubCategoryModel = Omit<SubCategoryEntity, 'posts'>;
+
+export const BlogPostListContainer = (_: BlogPostListContainerProps) => {
+  const posts = useAppSelector(selBlogPosts);
+  const loadedCategories = useAppSelector(selCategories);
   const loading = useAppSelector(selBlogPostLoading);
   const {
     page = DEFAULT_PAGE,
@@ -29,10 +29,11 @@ export const BlogPostCategoryContainer = ({
     subCategoryId = 0,
   } = useAppSelector(selBlogPostSearchParams);
 
-  const [categories, setCategories] = useState<CategoryEntity[]>(outCategories);
-  const [subCategories, setSubCategories] = useState<
-    Omit<SubCategoryEntity, 'posts'>[]
-  >([]);
+  const navigate = useQueryPush();
+
+  const [categories, setCategories] =
+    useState<CategoryEntity[]>(loadedCategories);
+  const [subCategories, setSubCategories] = useState<SubCategoryModel[]>([]);
 
   const findSubCategoriesByCategoryId = useCallback(
     (id: number) => {
@@ -52,25 +53,23 @@ export const BlogPostCategoryContainer = ({
       Number(value),
     );
 
+    const queries = {
+      categoryId: value,
+      subCategoryId: String(subCategoryId || ''),
+      page: String(DEFAULT_PAGE),
+    };
+
     setSubCategories(subCategories);
-    navigate(
-      {
-        categoryId: value,
-        subCategoryId: String(subCategoryId || ''),
-        page: String(DEFAULT_PAGE),
-      },
-      false,
-    );
+    navigate(queries, false);
   };
 
   const handleMove = (subCategoryId: number) => {
-    navigate(
-      {
-        subCategoryId: String(subCategoryId || ''),
-        page: String(DEFAULT_PAGE),
-      },
-      false,
-    );
+    const queries = {
+      subCategoryId: String(subCategoryId || ''),
+      page: String(DEFAULT_PAGE),
+    };
+
+    navigate(queries, false);
   };
 
   useEffect(() => {
@@ -82,25 +81,19 @@ export const BlogPostCategoryContainer = ({
   useEffect(() => {
     setCategories([
       { id: 0, value: 'All', subCategories: [] },
-      ...outCategories,
+      ...loadedCategories,
     ]);
-  }, [outCategories]);
+  }, [loadedCategories]);
 
   return (
     <Box minHeight="200px" component="section">
       <TabContext value={String(categoryId)}>
         <TabList
-          aria-label="scrollable force tabs example"
+          aria-label="scrollable force tabs"
           variant="scrollable"
           onChange={handleTabChange}
         >
-          {categories.map((category) => (
-            <Tab
-              key={category.id}
-              label={category.value}
-              value={category.id.toString()}
-            />
-          ))}
+          <BlogPostCategoryTab categories={categories} />
         </TabList>
 
         <Box mt={4}>
@@ -112,12 +105,12 @@ export const BlogPostCategoryContainer = ({
                 p: 0,
               }}
             >
-              <PostCardListByCategory
-                page={page}
+              <BlogPostCardListByCategory
                 loading={loading}
-                posts={posts}
+                page={page}
                 openId={subCategoryId}
                 subCategories={subCategories}
+                posts={posts}
                 onMove={handleMove}
               />
             </TabPanel>

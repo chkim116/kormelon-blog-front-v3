@@ -18,7 +18,7 @@ const POST = {
 };
 
 export default {
-  title: 'posts/search/FirstPostCard',
+  title: 'blog/search/FirstPostCard',
   component: FirstPostCard,
   argTypes,
 } as ComponentMeta<typeof FirstPostCard>;

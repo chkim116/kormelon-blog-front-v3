@@ -2,6 +2,7 @@ import {
   BlogPostDetailEntity,
   BlogPostDetailNearPost as BlogPostDetailNearPost,
   BlogPostEntity,
+  CategoryEntity,
 } from '@core/entities';
 
 export interface BlogPostModel extends Omit<BlogPostEntity, 'readTime'> {

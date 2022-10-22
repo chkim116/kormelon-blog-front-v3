@@ -1,29 +1,29 @@
 import React, { useMemo } from 'react';
 import { Box, Grid } from '@mui/material';
-import { SubCategoryEntity } from '@core/entities';
 import { DEFAULT_PAGE } from '@common/constants';
 import { BlogPostModel } from '@features/blog/models/blog.model';
+import { SubCategoryModel } from '@features/blog/containers/search';
 import { CategoryStack } from './CategoryStack';
 import { FirstPostCard } from './FirstPostCard';
 import { PostCard } from './PostCard';
 
-interface PostCardListByCategoryProps {
+interface BlogPostCardListByCategoryProps {
   page: number;
-  loading: boolean;
   openId: number;
-  subCategories: Omit<SubCategoryEntity, 'posts'>[];
-  onMove: (id: number) => void;
+  loading: boolean;
+  subCategories: SubCategoryModel[];
   posts: BlogPostModel[];
+  onMove: (id: number) => void;
 }
 
-export const PostCardListByCategory = ({
+export const BlogPostCardListByCategory = ({
   page,
   loading,
   onMove,
   openId,
   posts,
   subCategories,
-}: PostCardListByCategoryProps) => {
+}: BlogPostCardListByCategoryProps) => {
   const { firstPost, restPost } = useMemo(() => {
     const [firstPost, ...restPost] = posts;
 

@@ -1,17 +1,20 @@
 import { ComponentProps } from 'react';
 import { ComponentStory, ComponentMeta, ArgTypes } from '@storybook/react';
-import { PostCardListByCategory } from '../PostCardListByCategory';
+import { BlogPostCardListByCategory } from '../BlogPostCardListByCategory';
 
 type MyArgTypes = Partial<
-  Record<keyof ComponentProps<typeof PostCardListByCategory>, ArgTypes[string]>
+  Record<
+    keyof ComponentProps<typeof BlogPostCardListByCategory>,
+    ArgTypes[string]
+  >
 >;
 const argTypes: MyArgTypes = {};
 
 export default {
-  title: 'posts/search/PostCardListByCategory',
-  component: PostCardListByCategory,
+  title: 'blog/search/BlogPostCardListByCategory',
+  component: BlogPostCardListByCategory,
   argTypes,
-} as ComponentMeta<typeof PostCardListByCategory>;
+} as ComponentMeta<typeof BlogPostCardListByCategory>;
 
 const POST = {
   id: 1,
@@ -23,9 +26,9 @@ const POST = {
   readTime: '5 minute read',
 };
 
-const Template: ComponentStory<typeof PostCardListByCategory> = ({
+const Template: ComponentStory<typeof BlogPostCardListByCategory> = ({
   ...props
-}) => <PostCardListByCategory {...props} />;
+}) => <BlogPostCardListByCategory {...props} />;
 
 export const Default = Template.bind({});
 Default.args = {
