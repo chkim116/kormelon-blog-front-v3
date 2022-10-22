@@ -14,6 +14,10 @@ import { useAppDispatch, useAppSelector } from '@common/store';
 import { tokenProvider } from '@core/tokenProvider';
 import { authSlice, selIsLogged, selUserData } from '@shared/stores/auth';
 import { getMuiTheme } from '@shared/styles/theme';
+import {
+  effNotificationLoad,
+  selNotifications,
+} from '@shared/stores/notification';
 import { feedbackService } from '../../common/components/Feedback';
 import { Footer } from '../../common/components/layouts/Footer';
 import { Header } from '../../common/components/layouts/Header';
@@ -36,6 +40,7 @@ export const Layout = ({ children }: LayoutProps) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selUserData);
   const isLogged = useAppSelector(selIsLogged);
+  const notifications = useAppSelector(selNotifications);
 
   const refHeader = useRef<HeaderHandle>(null);
   const refCurrentScrollY = useRef<number>(0);
@@ -66,6 +71,7 @@ export const Layout = ({ children }: LayoutProps) => {
 
   useEffect(() => {
     dispatch(authSlice.actions.initialize());
+    dispatch(effNotificationLoad());
   }, [dispatch]);
 
   const handleScroll = useCallback(() => {
@@ -94,7 +100,9 @@ export const Layout = ({ children }: LayoutProps) => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Wrap>
+        {/* TODO: 헤더 분할 */}
         <Header
+          notifications={notifications}
           ref={refHeader}
           themeMode={themeMode}
           isLogged={isLogged}

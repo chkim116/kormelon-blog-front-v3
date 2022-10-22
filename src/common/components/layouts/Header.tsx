@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 // TODO: 분할 필요 - 220927
 import React, {
   forwardRef,
@@ -37,6 +38,7 @@ import {
 import NextLink from 'next/link';
 import { UserRoleEnum } from '@core/entities/auth.entity';
 import { HeaderHandle } from '@shared/components/Layout';
+import { NotificationSearchModel } from '@shared/models/notification.model';
 import { UserModel } from '@features/auth/models/user.model';
 
 const NAV_ITEM_LIST = [
@@ -56,6 +58,7 @@ const NAV_ITEM_LIST = [
 
 interface HeaderProps {
   user: UserModel;
+  notifications: NotificationSearchModel[];
   isLogged: boolean;
   onLogout: () => void;
   onThemeChange: () => void;
@@ -63,23 +66,34 @@ interface HeaderProps {
 }
 
 export const Header = forwardRef<HeaderHandle, HeaderProps>(
-  ({ user, isLogged, themeMode, onThemeChange, onLogout }, ref) => {
+  (
+    { user, isLogged, themeMode, notifications, onThemeChange, onLogout },
+    ref,
+  ) => {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [userMenuEl, setUserMenuEl] = useState<HTMLElement | null>(null);
+    const [notiMenuEl, setNotiMenuEl] = useState<HTMLElement | null>(null);
     const [isFadeIn, setIsFadeIn] = useState(true);
 
     const isUserMenuOpen = useMemo(() => Boolean(userMenuEl), [userMenuEl]);
+    const isNotiMenuOpen = useMemo(() => Boolean(notiMenuEl), [notiMenuEl]);
 
     const handleToggle = () => {
       setDrawerOpen((prev) => !prev);
     };
 
+    const handleNotiMenuOpen: React.MouseEventHandler<HTMLElement> = (e) => {
+      setNotiMenuEl(e.currentTarget);
+    };
     const handleUserMenuOpen: React.MouseEventHandler<HTMLElement> = (e) => {
       setUserMenuEl(e.currentTarget);
     };
 
     const handleUserMenuClose = () => {
       setUserMenuEl(null);
+    };
+    const handleNotiMenuClose = () => {
+      setNotiMenuEl(null);
     };
 
     useImperativeHandle(
@@ -172,9 +186,13 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                 </IconButton>
 
                 {user.id && (
-                  <IconButton size="medium" aria-label="show new notifications">
+                  <IconButton
+                    size="medium"
+                    aria-label="show new notifications"
+                    onClick={handleNotiMenuOpen}
+                  >
                     {/* TODO: 연동하면서, 토글 메뉴 추가 */}
-                    <Badge badgeContent={17} color="error">
+                    <Badge badgeContent={notifications.length} color="error">
                       <Notifications />
                     </Badge>
                   </IconButton>
@@ -212,6 +230,55 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
               </Box>
             </Box>
           </Toolbar>
+          <Menu
+            anchorEl={notiMenuEl}
+            open={isNotiMenuOpen}
+            onClose={handleNotiMenuClose}
+            onClick={handleNotiMenuClose}
+            disableScrollLock={true}
+            PaperProps={{
+              sx: {
+                overflow: 'visible',
+                p: 2,
+                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                mt: 1.5,
+                '& .MuiAvatar-root': {
+                  width: 32,
+                  height: 32,
+                  ml: -0.5,
+                  mr: 1,
+                },
+                '&:before': {
+                  content: '""',
+                  display: 'block',
+                  position: 'absolute',
+                  top: 0,
+                  right: 14,
+                  width: 10,
+                  height: 10,
+                  bgcolor: 'background.paper',
+                  transform: 'translateY(-50%) rotate(45deg)',
+                  zIndex: 0,
+                },
+              },
+            }}
+            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+          >
+            {notifications.length
+              ? notifications.map(({ postId, id, message }) => (
+                  <Box maxWidth="300px" borderBottom="1px solid" key={id}>
+                    <div>{message}</div>
+                    <NextLink
+                      href={`/blog/${postId}?notification=${id}`}
+                      passHref
+                    >
+                      <Link>바로가기</Link>
+                    </NextLink>
+                  </Box>
+                ))
+              : '아직 알림이 없습니다.'}
+          </Menu>
 
           <Menu
             anchorEl={userMenuEl}
