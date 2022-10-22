@@ -1,5 +1,6 @@
 import { ComponentProps } from 'react';
 import { ComponentStory, ComponentMeta, ArgTypes } from '@storybook/react';
+import { SAMPLE_IMAGE } from '@common/constants';
 import { PostWriteThumbnail } from '../PostWriteThumbnail';
 
 type MyArgTypes = Partial<
@@ -8,7 +9,7 @@ type MyArgTypes = Partial<
 const argTypes: MyArgTypes = {};
 
 export default {
-  title: 'posts/write/PostWriteThumbnail',
+  title: 'blog/write/PostWriteThumbnail',
   component: PostWriteThumbnail,
   argTypes,
 } as ComponentMeta<typeof PostWriteThumbnail>;
@@ -18,4 +19,6 @@ const Template: ComponentStory<typeof PostWriteThumbnail> = ({ ...props }) => (
 );
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  previewThumbnail: SAMPLE_IMAGE,
+};

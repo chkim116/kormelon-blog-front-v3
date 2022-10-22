@@ -42,7 +42,6 @@ export const PostTagSearch = ({
     if (e.key === 'Enter') {
       e.preventDefault();
     } 
-
   };
 
   return (

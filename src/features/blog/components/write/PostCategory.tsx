@@ -1,11 +1,10 @@
-import { useMemo } from 'react';
 import {
+  Box,
   FormControl,
   InputLabel,
-  Select,
   MenuItem,
+  Select,
   SelectChangeEvent,
-  Box,
 } from '@mui/material';
 import { CategoryEntity } from '@core/entities';
 
@@ -22,19 +21,6 @@ export const PostCategory = ({
   subCategoryId,
   onChangeCategory,
 }: PostCategoryProps) => {
-  const categoryValue = useMemo(
-    () => categories.find((category) => category.id === categoryId)?.value,
-    [categories, categoryId],
-  );
-  const subCategoryValue = useMemo(
-    () =>
-      categories
-        .find((category) => category.id === categoryId)
-        ?.subCategories.find((subCategory) => subCategory.id === subCategoryId)
-        ?.value,
-    [categories, categoryId, subCategoryId],
-  );
-
   const handleCategoryChange = (e: SelectChangeEvent) => {
     onChangeCategory(e.target.name, Number(e.target.value));
   };
@@ -46,9 +32,9 @@ export const PostCategory = ({
         <Select
           labelId="categoryId"
           name="categoryId"
-          value={categoryValue}
+          value={categoryId.toString()}
           onChange={handleCategoryChange}
-          label="Age"
+          label="category"
         >
           {categories.map((category) => (
             <MenuItem key={category.id} value={category.id}>
@@ -62,7 +48,7 @@ export const PostCategory = ({
         <Select
           labelId="subCategoryId"
           name="subCategoryId"
-          value={subCategoryValue}
+          value={subCategoryId.toString()}
           onChange={handleCategoryChange}
         >
           {categories

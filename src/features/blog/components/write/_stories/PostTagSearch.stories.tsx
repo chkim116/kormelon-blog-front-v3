@@ -8,7 +8,7 @@ type MyArgTypes = Partial<
 const argTypes: MyArgTypes = {};
 
 export default {
-  title: 'posts/write/PostTagSearch',
+  title: 'blog/write/PostTagSearch',
   component: PostTagSearch,
   argTypes,
 } as ComponentMeta<typeof PostTagSearch>;

@@ -1,13 +1,10 @@
 /* eslint-disable indent */
-import { FormEventHandler, useEffect, useMemo, useRef, useState } from 'react';
+import { FormEventHandler, useEffect, useMemo, useState } from 'react';
 import { Box } from '@mui/material';
 import { useRouter } from 'next/router';
-import { useDebouncedCallback } from 'use-debounce';
 import { feedbackService } from '@common/components/Feedback';
 import { useAppDispatch, useAppSelector } from '@common/store';
 import { BlogPostCreateParams, TagEntity } from '@core/entities';
-import { repo } from '@core/repo';
-import { PostCategory } from '@features/blog/components/write/PostCategory';
 import { createBlogPostCreateParams } from '@features/blog/manipulates/blog.create';
 import {
   effBlogPostCreate,
@@ -16,22 +13,17 @@ import {
   selBlogPostDetail,
 } from '@features/blog/stores';
 import { effCategoriesLoad, selCategories } from '@features/settings/stores';
-import {
-  PostConfirm,
-  PostTagSearch,
-  PostWriteContent,
-  PostWriteContentHandle,
-  PostWriteMeta,
-  PostWriteThumbnail,
-} from '../../components/write';
+import { PostConfirm } from '../../components/write';
+import { BlogPostContentWriteContainer } from './BlogPostContentWriteContainer';
+import { BlogPostMetaWriteContainer } from './BlogPostMetaWriteContainer';
+import { BlogPostTagSearchContainer } from './BlogPostTagSearchContainer';
 
 export const BlogPostWriteContainer = () => {
+  const router = useRouter();
+
   const dispatch = useAppDispatch();
   const categories = useAppSelector(selCategories);
   const postDetail = useAppSelector(selBlogPostDetail);
-  const router = useRouter();
-
-  const refEditor = useRef<PostWriteContentHandle>(null);
 
   const isEditMode = useMemo(() => !!router.query.edit, [router.query.edit]);
   const editId = useMemo(() => router.query.edit, [router.query.edit]);
@@ -39,88 +31,10 @@ export const BlogPostWriteContainer = () => {
   const [form, setForm] = useState<BlogPostCreateParams>(
     createBlogPostCreateParams(),
   );
-  const [searchedTags, setSearchedTags] = useState<TagEntity[]>([]);
   const [selectedTags, setSelectedTags] = useState<TagEntity[]>([]);
 
-  const debounced = useDebouncedCallback(async (text: string) => {
-    const {
-      data: { payload },
-    } = await repo.tag.getTagByValue(text);
-
-    const searchTags = payload.filter(
-      (item) => !selectedTags.some((tag) => tag.id === item.id),
-    );
-
-    setSearchedTags(searchTags.length ? searchTags : [{ id: -1, value: text }]);
-  }, 300);
-
-  const handleUploadImage = async (file: File) => {
-    const {
-      data: { payload },
-    } = await repo.post.uploadImage(file);
-
-    setForm((prev) => ({ ...prev, thumbnail: payload }));
-  };
-
-  const handleImageDrop = async (file: File) => {
-    const {
-      data: { payload },
-    } = await repo.post.uploadImage(file);
-
-    refEditor.current?.setImage(payload);
-    refEditor.current?.focus();
-  };
-
-  const handleChange = (name: string, value: string) => {
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleChangeCategory = (name: string, id: number) => {
-    setForm((prev) => ({ ...prev, [name]: id }));
-  };
-
-  const handleSearch = async (text: string) => {
-    debounced(text);
-  };
-
-  const handleTagDelete = (id: number) => {
-    setSelectedTags((prev) => prev.filter((item) => item.id !== id));
-  };
-
-  const handleSelect = async (tag: TagEntity) => {
-    if (tag?.id === -1) {
-      const {
-        data: { payload },
-      } = await repo.tag.createTag(tag.value);
-
-      setSelectedTags((prev) => {
-        if (!prev.length) {
-          return [payload];
-        }
-
-        if (prev.some((item) => payload.id === item.id)) {
-          return prev.filter((item) => item.id !== payload.id);
-        }
-
-        return [...prev, payload];
-      });
-
-      return;
-    }
-
-    if (tag) {
-      setSelectedTags((prev) => {
-        if (!prev.length) {
-          return [tag];
-        }
-
-        if (prev.some((item) => tag.id === item.id)) {
-          return prev.filter((item) => item.id !== tag.id);
-        }
-
-        return [...prev, tag];
-      });
-    }
+  const handleChange = (dto: Partial<BlogPostCreateParams>) => {
+    setForm((prev) => ({ ...prev, ...dto }));
   };
 
   const handlePrivate = () => {
@@ -140,18 +54,14 @@ export const BlogPostWriteContainer = () => {
       }
     }
 
-    dispatch(
-      isEditMode
-        ? effBlogPostUpdate({
-            ...form,
-            id: postDetail.id,
-            tags: selectedTags.map((tag) => tag.id),
-          })
-        : effBlogPostCreate({
-            ...form,
-            tags: selectedTags.map((tag) => tag.id),
-          }),
-    )
+    const effect = isEditMode
+      ? effBlogPostUpdate({
+          ...form,
+          id: postDetail.id,
+        })
+      : effBlogPostCreate(form);
+
+    dispatch(effect)
       .unwrap()
       .then(() => {
         router.push(
@@ -213,32 +123,20 @@ export const BlogPostWriteContainer = () => {
       component="form"
       onSubmit={handleSubmit}
     >
-      <PostWriteThumbnail
-        previewThumbnail={form.thumbnail}
-        onUploadImage={handleUploadImage}
-      />
-      <PostCategory
-        categories={categories}
-        categoryId={form.categoryId}
-        subCategoryId={form.subCategoryId}
-        onChangeCategory={handleChangeCategory}
-      />
-      <PostWriteMeta
+      <BlogPostMetaWriteContainer
         title={form.title}
         preview={form.preview}
+        thumbnail={form.thumbnail}
+        categoryId={form.categoryId}
+        subCategoryId={form.subCategoryId}
         onChange={handleChange}
       />
-      <PostTagSearch
-        searchedTags={searchedTags}
+      <BlogPostTagSearchContainer
         selectedTags={selectedTags}
-        onSearch={handleSearch}
-        onDelete={handleTagDelete}
-        onSelect={handleSelect}
+        onChange={handleChange}
       />
-      <PostWriteContent
-        ref={refEditor}
+      <BlogPostContentWriteContainer
         content={form.content}
-        onDrop={handleImageDrop}
         onChange={handleChange}
       />
       <PostConfirm isPrivate={form.isPrivate} onPrivate={handlePrivate} />
