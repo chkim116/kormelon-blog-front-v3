@@ -44,8 +44,8 @@ import { UserModel } from '@features/auth/models/user.model';
 
 const NAV_ITEM_LIST = [
   {
-    label: 'Posts',
-    href: '/posts',
+    label: 'Blog',
+    href: '/blog',
   },
   {
     label: 'Resume',
@@ -284,7 +284,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
             {user.role === UserRoleEnum.ADMIN && (
               <Box>
                 <MenuItem>
-                  <NextLink passHref href="/posts/write">
+                  <NextLink passHref href="/blog/write">
                     <Link
                       sx={{
                         display: 'flex',
