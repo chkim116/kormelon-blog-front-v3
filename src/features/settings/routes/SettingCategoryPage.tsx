@@ -3,14 +3,14 @@ import { Box, CircularProgress, Container } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '@common/store';
 import { selUserData } from '@shared/stores/auth';
 import { UserRoleEnum } from '@core/entities';
+import {
+  selCategoryLoading,
+  selCategoryCreateLoading,
+  selCategories,
+  effCategoriesLoad,
+} from '@shared/stores/category';
 import { SettingCategoryCreatorContainer } from '../containers/SettingCategoryCreatorContainer';
 import { SettingCategoryListContainer } from '../containers/SettingCategoryListContainer';
-import {
-  effCategoriesLoad,
-  selCategories,
-  selCategoryCreateLoading,
-  selCategoryLoading,
-} from '../stores';
 
 export const SettingCategoryPage = () => {
   const dispatch = useAppDispatch();

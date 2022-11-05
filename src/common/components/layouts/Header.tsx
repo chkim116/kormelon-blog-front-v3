@@ -37,7 +37,7 @@ import {
 } from '@mui/material';
 import NextLink from 'next/link';
 import { UserRoleEnum } from '@core/entities/auth.entity';
-import { HeaderHandle } from '@shared/components/Layout';
+import { HeaderHandle } from '@shared/containers/Layout';
 import { NotificationSearchModel } from '@shared/models/notification.model';
 import { UserModel } from '@features/auth/models/user.model';
 

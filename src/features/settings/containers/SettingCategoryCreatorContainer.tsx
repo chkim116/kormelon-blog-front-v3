@@ -3,7 +3,7 @@ import { Box, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useAppDispatch } from '@common/store';
 import { feedbackService } from '@common/components/Feedback';
-import { effCategoriesCreate } from '../stores';
+import { effCategoriesCreate } from '@shared/stores/category';
 
 interface SettingCategoryCreatorContainerProps {
   isLoading: boolean;

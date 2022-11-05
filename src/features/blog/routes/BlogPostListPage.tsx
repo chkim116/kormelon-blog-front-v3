@@ -3,7 +3,7 @@ import { Box, Container } from '@mui/material';
 import { batch } from 'react-redux';
 import { useAppDispatch } from '@common/store';
 import { useQueryParser } from '@shared/hooks/useQueryParser';
-import { effCategoriesLoad } from '@features/settings/stores';
+import { effCategoriesLoad } from '@shared/stores/category';
 import {
   BlogPostListContainer,
   BlogPostHeroContainer,
