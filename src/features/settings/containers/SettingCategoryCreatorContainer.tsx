@@ -33,6 +33,7 @@ export const SettingCategoryCreatorContainer = ({
     value.trim();
 
     dispatch(effCategoriesCreate({ value }))
+      .unwrap()
       .then(() => {
         feedbackService('success', `카테고리 ${value} 생성`);
         setValue('');
