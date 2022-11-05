@@ -36,3 +36,14 @@ export const effAuthRegister = createAsyncThunk<void, AuthRegisterParamsModel>(
     }
   },
 );
+
+export const effAuthProfileUpload = createAsyncThunk<string, File>(
+  'authProfileUpload',
+  async (file) => {
+    const {
+      data: { payload },
+    } = await repo.auth.uploadProfileImage(file);
+
+    return payload;
+  },
+);

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import gravatar from 'gravatar';
-import { repo } from '@core/repo';
 import { useAppDispatch, useAppSelector } from '@common/store';
-import { effAuthRegister, selAuthLoading } from '@shared/stores/auth';
+import {
+  effAuthProfileUpload,
+  effAuthRegister,
+  selAuthLoading,
+} from '@shared/stores/auth';
 import { feedbackService } from '@common/components/Feedback';
 import { RegisterForm } from '../components/RegisterForm';
 import { AuthRegisterParamsModel } from '../models/user.model';
@@ -60,9 +63,7 @@ export const AuthRegisterContainer = ({
   };
 
   const handleUpload = async (file: File) => {
-    const profileImage = await repo.auth
-      .uploadProfileImage(file)
-      .then((res) => res.data.payload);
+    const profileImage = await dispatch(effAuthProfileUpload(file)).unwrap();
 
     setForm((prev) => ({ ...prev, profileImage }));
   };
