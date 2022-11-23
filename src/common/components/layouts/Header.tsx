@@ -14,9 +14,7 @@ import {
   Login,
   Logout,
   Notifications,
-  Person,
   RssFeed,
-  Search,
   Settings,
 } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -29,7 +27,6 @@ import {
   Drawer,
   Slide,
   IconButton,
-  Input,
   Link,
   ListItemIcon,
   Menu,
@@ -85,11 +82,6 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
       setUserMenuEl(null);
     };
 
-    const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-      // TODO: 검색
-      e.preventDefault();
-    };
-
     useImperativeHandle(
       ref,
       () => ({
@@ -109,6 +101,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
           position="fixed"
           enableColorOnDark
           sx={{
+            fontSize: '1.1rem',
             backgroundColor: 'background.paper',
             backgroundImage: 'none',
             boxShadow: 'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px',
@@ -128,12 +121,16 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
             }}
           >
             {/* TODO: 로고 교체 */}
-            <Typography variant="h5" noWrap component="div">
-              <NextLink href="/">LOGO</NextLink>
+            <Typography variant="h5" noWrap component="div" flex={1}>
+              <NextLink href="/" passHref>
+                <Link underline="none" color="text.primary" fontWeight="bold">
+                  K-DEV
+                </Link>
+              </NextLink>
             </Typography>
 
             <Box
-              flex={1}
+              flex={2}
               display={{
                 xs: 'none',
                 md: 'flex',
@@ -144,52 +141,30 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
             >
               {NAV_ITEM_LIST.map((item) => (
                 <NextLink key={item.href} href={item.href} passHref>
-                  <Link color="text.primary" underline="hover">
+                  <Link
+                    color="text.secondary"
+                    underline="none"
+                    sx={{
+                      transition: 'color 300ms',
+                      ':hover': {
+                        color: 'text.primary',
+                      },
+                    }}
+                  >
                     {item.label}
                   </Link>
                 </NextLink>
               ))}
             </Box>
 
-            <Box display="flex" justifyContent="flex-end">
-              <Box
-                onSubmit={handleSubmit}
-                component="form"
-                display={{
-                  xs: 'none',
-                  sm: 'flex',
-                }}
-                alignItems="center"
-                justifyContent="center"
-                gap="5px"
-              >
-                <Search
-                  sx={{
-                    color: 'text.primary',
-                  }}
-                />
-                <Input
-                  aria-label="search input"
-                  placeholder="Searching.."
-                  sx={{
-                    width: '200px',
-                    color: 'text.primary',
-                    '&:not(.Mui-disabled):hover::before': {
-                      borderColor: 'text.primary',
-                    },
-                    ':before': { borderBottomColor: 'text.primary' },
-                  }}
-                />
-              </Box>
-
+            <Box display="flex" justifyContent="flex-end" flex={1}>
               <Box>
                 <IconButton
                   onClick={onThemeChange}
-                  size="large"
+                  size="medium"
                   edge="start"
                   aria-label="change theme color"
                   sx={{
-                    display: { xs: 'none', sm: 'inline-flex' },
                     ml: user.id ? '12px' : 0,
                   }}
                 >
@@ -197,7 +172,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                 </IconButton>
 
                 {user.id && (
-                  <IconButton size="large" aria-label="show new notifications">
+                  <IconButton size="medium" aria-label="show new notifications">
                     {/* TODO: 연동하면서, 토글 메뉴 추가 */}
                     <Badge badgeContent={17} color="error">
                       <Notifications />
@@ -274,7 +249,15 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
           >
             {user.username && (
               <MenuItem>
-                <Person sx={{ mr: 1 }} />
+                <Avatar
+                  aria-describedby="user profile"
+                  sx={{
+                    mr: 1,
+                  }}
+                  src={user.profileImage}
+                >
+                  U
+                </Avatar>
                 {user.username}
               </MenuItem>
             )}
@@ -296,7 +279,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                       <ListItemIcon>
                         <Edit fontSize="small" />
                       </ListItemIcon>
-                      Write
+                      글작성
                     </Link>
                   </NextLink>
                 </MenuItem>
@@ -313,7 +296,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                       <ListItemIcon>
                         <Settings fontSize="small" />
                       </ListItemIcon>
-                      Settings
+                      설정
                     </Link>
                   </NextLink>
                 </MenuItem>
@@ -324,7 +307,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                 <ListItemIcon>
                   <Logout fontSize="small" />
                 </ListItemIcon>
-                Logout
+                로그아웃
               </MenuItem>
             ) : (
               <MenuItem data-cy="login-button">
@@ -340,7 +323,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                     <ListItemIcon>
                       <Login fontSize="small" />
                     </ListItemIcon>
-                    Login
+                    로그인
                   </Link>
                 </NextLink>
               </MenuItem>

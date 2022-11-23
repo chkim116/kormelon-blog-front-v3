@@ -1,5 +1,6 @@
 import { authRepository } from './repository/auth.repo';
 import { categoryRepository } from './repository/category.repo';
+import { notificationRepository } from './repository/notification.repo';
 import { postRepository } from './repository/post.repo';
 import { tagRepository } from './repository/tag.repo';
 
@@ -8,4 +9,5 @@ export const repo = {
   category: categoryRepository,
   post: postRepository,
   tag: tagRepository,
+  notification: notificationRepository,
 };
