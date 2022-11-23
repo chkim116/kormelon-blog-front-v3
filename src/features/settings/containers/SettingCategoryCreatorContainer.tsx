@@ -3,7 +3,7 @@ import { Box, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useAppDispatch } from '@common/store';
 import { feedbackService } from '@common/components/Feedback';
-import { effCategoriesCreate } from '../stores';
+import { effCategoriesCreate } from '@shared/stores/category';
 
 interface SettingCategoryCreatorContainerProps {
   isLoading: boolean;
@@ -33,6 +33,7 @@ export const SettingCategoryCreatorContainer = ({
     value.trim();
 
     dispatch(effCategoriesCreate({ value }))
+      .unwrap()
       .then(() => {
         feedbackService('success', `카테고리 ${value} 생성`);
         setValue('');

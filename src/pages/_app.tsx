@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import type { AppProps } from 'next/app';
 import '@shared/styles/global.css';
 
-import { Layout } from '@shared/components/Layout';
+import { Layout } from '@shared/containers/Layout';
 import store from '@common/store';
 import { createEmotionCache } from '@shared/createEmotionCache';
 

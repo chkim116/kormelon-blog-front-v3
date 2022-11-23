@@ -8,14 +8,14 @@ import {
   CategoryUpdateParams,
   SubCategoryUpdateParams,
 } from '@core/entities';
-import { CategoryItem } from '../components/CategoryItem';
 import {
+  effSubCategoriesDelete,
   effCategoriesDelete,
+  effSubCategoriesUpdate,
   effCategoriesUpdate,
   effSubCategoriesCreate,
-  effSubCategoriesDelete,
-  effSubCategoriesUpdate,
-} from '../stores';
+} from '@shared/stores/category';
+import { CategoryItem } from '../components/CategoryItem';
 
 interface SettingCategoryListContainerProps {
   categories: CategoryEntity[];

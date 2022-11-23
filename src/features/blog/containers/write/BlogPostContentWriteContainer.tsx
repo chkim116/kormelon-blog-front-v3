@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import { repo } from '@core/repo';
 import { BlogPostCreateParams } from '@core/entities';
 import {
   PostWriteContent,

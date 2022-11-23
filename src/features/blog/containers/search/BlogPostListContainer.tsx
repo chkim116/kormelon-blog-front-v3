@@ -5,13 +5,13 @@ import { DEFAULT_PAGE } from '@common/constants';
 import { useAppSelector } from '@common/store';
 import { CategoryEntity, SubCategoryEntity } from '@core/entities';
 import { useQueryPush } from '@shared/hooks/useQueryPush';
+import { selCategories } from '@shared/stores/category';
 import { BlogPostCardListByCategory } from '@features/blog/components/search/BlogPostCardListByCategory';
 import {
   selBlogPostLoading,
   selBlogPosts,
   selBlogPostSearchParams,
 } from '@features/blog/stores';
-import { selCategories } from '@features/settings/stores';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface BlogPostListContainerProps {}

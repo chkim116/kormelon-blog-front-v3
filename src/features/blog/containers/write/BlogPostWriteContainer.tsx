@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { feedbackService } from '@common/components/Feedback';
 import { useAppDispatch, useAppSelector } from '@common/store';
 import { BlogPostCreateParams, TagEntity } from '@core/entities';
+import { effCategoriesLoad, selCategories } from '@shared/stores/category';
 import { createBlogPostCreateParams } from '@features/blog/manipulates/blog.create';
 import {
   effBlogPostCreate,
@@ -12,7 +13,6 @@ import {
   effBlogPostUpdate,
   selBlogPostDetail,
 } from '@features/blog/stores';
-import { effCategoriesLoad, selCategories } from '@features/settings/stores';
 import { PostConfirm } from '../../components/write';
 import { BlogPostContentWriteContainer } from './BlogPostContentWriteContainer';
 import { BlogPostMetaWriteContainer } from './BlogPostMetaWriteContainer';

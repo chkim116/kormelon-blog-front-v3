@@ -1,12 +1,12 @@
 import { useAppSelector } from '@common/store';
 import { BlogPostCreateParams } from '@core/entities';
 import { repo } from '@core/repo';
+import { selCategories } from '@shared/stores/category';
 import {
   PostCategory,
   PostWriteMeta,
   PostWriteThumbnail,
 } from '@features/blog/components/write';
-import { selCategories } from '@features/settings/stores';
 
 interface BlogPostMetaWriteContainerProps {
   thumbnail: string;

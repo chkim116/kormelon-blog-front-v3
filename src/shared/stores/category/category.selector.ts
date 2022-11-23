@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '@common/store';
 
-const selCategory = (state: RootState) => state.category;
+const selCategory = (state: RootState) => state.shared.category;
 
 export const selCategoryLoading = createSelector(
   selCategory,
