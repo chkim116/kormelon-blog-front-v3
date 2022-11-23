@@ -52,7 +52,7 @@ export const AuthRegisterContainer = ({
     dispatch(effAuthRegister(form))
       .unwrap()
       .then(() => onSuccess())
-      .catch((err) => feedbackService('error', err.response.data.message));
+      .catch((err) => feedbackService('error', err.response?.data.message));
   };
 
   const handleChange = (name: string, value: string) => {

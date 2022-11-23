@@ -30,6 +30,7 @@ export const PostCategory = ({
       <FormControl variant="standard" sx={{ m: 1, minWidth: 200 }}>
         <InputLabel id="categoryId">Category</InputLabel>
         <Select
+          data-cy="category-select"
           labelId="categoryId"
           name="categoryId"
           value={categoryId.toString()}
@@ -37,7 +38,11 @@ export const PostCategory = ({
           label="category"
         >
           {categories.map((category) => (
-            <MenuItem key={category.id} value={category.id}>
+            <MenuItem
+              data-cy={category.value}
+              key={category.id}
+              value={category.id}
+            >
               {category.value}
             </MenuItem>
           ))}
@@ -46,6 +51,7 @@ export const PostCategory = ({
       <FormControl variant="standard" sx={{ m: 1, minWidth: 200 }}>
         <InputLabel id="subCategoryId">subCategory</InputLabel>
         <Select
+          data-cy="sub-category-select"
           labelId="subCategoryId"
           name="subCategoryId"
           value={subCategoryId.toString()}
@@ -54,7 +60,11 @@ export const PostCategory = ({
           {categories
             .find((category) => category.id === categoryId)
             ?.subCategories.map((subCategory) => (
-              <MenuItem key={subCategory.id} value={subCategory.id}>
+              <MenuItem
+                data-cy={subCategory.value}
+                key={subCategory.id}
+                value={subCategory.id}
+              >
                 {subCategory.value}
               </MenuItem>
             ))}

@@ -341,6 +341,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                         alignItems: 'center',
                         color: 'inherit',
                       }}
+                      data-cy="blog-write-button"
                       underline="none"
                     >
                       <ListItemIcon>
@@ -353,6 +354,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                 <MenuItem>
                   <NextLink passHref href="/settings/category">
                     <Link
+                      data-cy="setting-button"
                       sx={{
                         display: 'flex',
                         alignItems: 'center',
