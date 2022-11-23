@@ -10,6 +10,10 @@ export const effNotificationLoad = createAsyncThunk<
     data: { payload },
   } = await repo.notification.fetchList();
 
+  if (!payload) {
+    return [];
+  }
+
   return payload;
 });
 

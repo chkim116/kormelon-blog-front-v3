@@ -75,8 +75,8 @@ export const Layout = ({ children }: LayoutProps) => {
   }, [dispatch]);
 
   const handleScroll = useCallback(() => {
-    if (100 > window.scrollY) {
-      return;
+    if (50 > window.scrollY) {
+      return refHeader.current?.open();
     }
 
     if (refCurrentScrollY.current > window.scrollY) {

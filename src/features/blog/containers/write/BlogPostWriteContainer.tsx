@@ -41,6 +41,7 @@ export const BlogPostWriteContainer = () => {
     setForm((prev) => ({ ...prev, isPrivate: !prev.isPrivate }));
   };
 
+  // TODO: validate 리팩터링
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
@@ -50,6 +51,14 @@ export const BlogPostWriteContainer = () => {
         !form[key as keyof BlogPostCreateParams]
       ) {
         feedbackService('error', '제목 또는 본문을 입력해 주세요.');
+        return;
+      }
+
+      if (
+        ['categoryId', 'subCategoryId'].includes(key) &&
+        !form[key as keyof BlogPostCreateParams]
+      ) {
+        feedbackService('error', '카테고리를 선택해 주세요.');
         return;
       }
     }
@@ -72,7 +81,7 @@ export const BlogPostWriteContainer = () => {
           `게시글이 ${isEditMode ? '수정' : '작성'}되었습니다.`,
         );
       })
-      .catch((err) => feedbackService('error', err.response.data.message));
+      .catch((err) => feedbackService('error', err.response?.data.message));
   };
 
   useEffect(() => {

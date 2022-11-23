@@ -22,18 +22,18 @@ export const Feedback = ({ message, status }: FeedbackProps) => {
       autoHideDuration={4000}
       anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
       onClose={handleClose}
+      data-cy="feedback"
     >
       <Alert severity={status}>{message}</Alert>
     </Snackbar>
   );
 };
 
-export function feedbackService(status: StatusType, message: string) {
+export function feedbackService(
+  status: StatusType,
+  message = '알 수 없는 에러입니다.',
+) {
   const root = createRoot(document.getElementById('feedback') as HTMLElement);
 
-  return root.render(
-    <div data-cy="feedback">
-      <Feedback status={status} message={message} />
-    </div>,
-  );
+  return root.render(<Feedback status={status} message={message} />);
 }

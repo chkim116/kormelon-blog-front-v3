@@ -5,11 +5,11 @@ describe('category CRUD flow', () => {
   let createParams: CategoryCreateParams;
 
   before(() => {
-    cy.visit('/settings/category');
-
     cy.fixture('category/createParams.json').then(
       (params) => (createParams = params),
     );
+    cy.auth();
+    cy.visit('/');
   });
 
   beforeEach(() => {
@@ -22,50 +22,50 @@ describe('category CRUD flow', () => {
         },
       ],
     });
+    cy.ignoreNotifications();
   });
 
-  it('create and update category', () => {
-    cy.intercept('POST', SERVER_URL + '/category', { statusCode: 201 }).as(
+  it('move to category setting', () => {
+    cy.dataCy('user-menu-button').click().dataCy('setting-button').click();
+    cy.location('href').should('contain', 'settings/category');
+  });
+
+  it('create category', () => {
+    cy.intercept('POST', SERVER_URL + '/category', { statusCode: 200 }).as(
       'createCategory',
     );
-    it('update category', () => {
-      cy.intercept('PUT', SERVER_URL + '/category', { statusCode: 200 }).as(
-        'updateCategory',
-      );
 
-      cy.dataCy('create-category-input')
-        .type(createParams.value)
-        .get('create-category-submit')
-        .click();
+    cy.dataCy('create-category-input')
+      .type(createParams.value)
+      .dataCy('create-category-submit')
+      .click();
 
-      cy.wait('@createCategory').then((res) => {
-        expect(res.response?.statusCode).to.eq(201);
-        cy.dataCy('feedback').should('exist');
-      });
-
-      cy.dataCy('edit-category')
-        .first()
-        .click()
-        .dataCy('edit-category-input')
-        .type(createParams.value)
-        .dataCy('edit-finish')
-        .click();
-
-      cy.on('window:confirm', () => true);
-
-      cy.wait('@updateCategory').then((res) => {
-        expect(res.response?.statusCode).to.eq(200);
-        cy.dataCy('feedback').should('exist');
-      });
-    });
+    cy.wait('@createCategory');
+    cy.feedback(`${createParams.value} 카테고리 생성`);
   });
 
-  it('create and update sub category', () => {
+  it('update category', () => {
+    cy.intercept('PUT', SERVER_URL + '/category', { statusCode: 200 }).as(
+      'updateCategory',
+    );
+
+    cy.dataCy('edit-category')
+      .first()
+      .click()
+      .dataCy('edit-category-input')
+      .type(createParams.value)
+      .dataCy('edit-finish')
+      .click();
+
+    cy.on('window:confirm', () => true);
+
+    cy.wait('@updateCategory');
+    cy.feedback('수정 완료');
+  });
+
+  it('create sub category', () => {
     cy.intercept('POST', SERVER_URL + '/subCategory', { statusCode: 201 }).as(
       'createSubCategory',
-    );
-    cy.intercept('PUT', SERVER_URL + '/subCategory', { statusCode: 200 }).as(
-      'updateSubCategory',
     );
 
     cy.dataCy('create-category-modal-open')
@@ -80,10 +80,14 @@ describe('category CRUD flow', () => {
 
     cy.on('window:confirm', () => true);
 
-    cy.wait('@createSubCategory').then((res) => {
-      expect(res.response?.statusCode).to.eq(201);
-      cy.dataCy('feedback').should('exist');
-    });
+    cy.wait('@createSubCategory');
+    cy.feedback(`서브 카테고리 ${createParams.value} 생성 완료`);
+  });
+
+  it('update sub category', () => {
+    cy.intercept('PUT', SERVER_URL + '/subCategory', { statusCode: 200 }).as(
+      'updateSubCategory',
+    );
 
     cy.dataCy('edit-category')
       .eq(1)
@@ -95,10 +99,8 @@ describe('category CRUD flow', () => {
 
     cy.on('window:confirm', () => true);
 
-    cy.wait('@updateSubCategory').then((res) => {
-      expect(res.response?.statusCode).to.eq(200);
-      cy.dataCy('feedback').should('exist');
-    });
+    cy.wait('@updateSubCategory');
+    cy.feedback('수정 완료');
   });
 
   it('delete category and sub category', () => {
@@ -112,17 +114,13 @@ describe('category CRUD flow', () => {
     cy.dataCy('delete-category').eq(1).click();
     cy.on('window:confirm', () => true);
 
-    cy.wait('@deleteSubCategory').then((res) => {
-      expect(res.response?.statusCode).to.eq(200);
-      cy.dataCy('feedback').should('exist');
-    });
+    cy.wait('@deleteSubCategory');
+    cy.feedback('삭제 완료');
 
     cy.dataCy('delete-category').eq(0).click();
     cy.on('window:confirm', () => true);
 
-    cy.wait('@deleteCategory').then((res) => {
-      expect(res.response?.statusCode).to.eq(200);
-      cy.dataCy('feedback').should('exist');
-    });
+    cy.wait('@deleteCategory');
+    cy.feedback('삭제 완료');
   });
 });

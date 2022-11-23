@@ -1,0 +1,10 @@
+{
+  "preview": "미리보기",
+  "thumbnail": "image url",
+  "title": "title",
+  "content": "content",
+  "tags": [],
+  "categoryId": 1,
+  "subCategoryId": 2,
+  "isPrivate": false
+}
