@@ -16,6 +16,10 @@ export interface NotificationSearchEntity {
    */
   isRead: boolean;
   /**
+   * 알림의 메시지
+   */
+  message: string;
+  /**
    * 생성일
    */
   createdAt: string;

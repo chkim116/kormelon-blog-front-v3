@@ -15,7 +15,9 @@ export const effNotificationLoad = createAsyncThunk<
 
 export const effNotificationRead = createAsyncThunk<void, number>(
   'notificationRead',
-  async (id) => {
+  async (id, { dispatch }) => {
     await repo.notification.readNoti(id);
+
+    dispatch(effNotificationLoad());
   },
 );
