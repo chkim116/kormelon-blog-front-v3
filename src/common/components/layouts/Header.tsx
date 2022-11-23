@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 // TODO: 분할 필요 - 220927
 import React, {
   forwardRef,
@@ -14,9 +15,7 @@ import {
   Login,
   Logout,
   Notifications,
-  Person,
   RssFeed,
-  Search,
   Settings,
 } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -29,7 +28,6 @@ import {
   Drawer,
   Slide,
   IconButton,
-  Input,
   Link,
   ListItemIcon,
   Menu,
@@ -40,6 +38,7 @@ import {
 import NextLink from 'next/link';
 import { UserRoleEnum } from '@core/entities/auth.entity';
 import { HeaderHandle } from '@shared/components/Layout';
+import { NotificationSearchModel } from '@shared/models/notification.model';
 import { UserModel } from '@features/auth/models/user.model';
 
 const NAV_ITEM_LIST = [
@@ -59,6 +58,7 @@ const NAV_ITEM_LIST = [
 
 interface HeaderProps {
   user: UserModel;
+  notifications: NotificationSearchModel[];
   isLogged: boolean;
   onLogout: () => void;
   onThemeChange: () => void;
@@ -66,17 +66,25 @@ interface HeaderProps {
 }
 
 export const Header = forwardRef<HeaderHandle, HeaderProps>(
-  ({ user, isLogged, themeMode, onThemeChange, onLogout }, ref) => {
+  (
+    { user, isLogged, themeMode, notifications, onThemeChange, onLogout },
+    ref,
+  ) => {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [userMenuEl, setUserMenuEl] = useState<HTMLElement | null>(null);
+    const [notiMenuEl, setNotiMenuEl] = useState<HTMLElement | null>(null);
     const [isFadeIn, setIsFadeIn] = useState(true);
 
     const isUserMenuOpen = useMemo(() => Boolean(userMenuEl), [userMenuEl]);
+    const isNotiMenuOpen = useMemo(() => Boolean(notiMenuEl), [notiMenuEl]);
 
     const handleToggle = () => {
       setDrawerOpen((prev) => !prev);
     };
 
+    const handleNotiMenuOpen: React.MouseEventHandler<HTMLElement> = (e) => {
+      setNotiMenuEl(e.currentTarget);
+    };
     const handleUserMenuOpen: React.MouseEventHandler<HTMLElement> = (e) => {
       setUserMenuEl(e.currentTarget);
     };
@@ -84,10 +92,8 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
     const handleUserMenuClose = () => {
       setUserMenuEl(null);
     };
-
-    const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-      // TODO: 검색
-      e.preventDefault();
+    const handleNotiMenuClose = () => {
+      setNotiMenuEl(null);
     };
 
     useImperativeHandle(
@@ -109,6 +115,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
           position="fixed"
           enableColorOnDark
           sx={{
+            fontSize: '1.1rem',
             backgroundColor: 'background.paper',
             backgroundImage: 'none',
             boxShadow: 'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px',
@@ -128,12 +135,16 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
             }}
           >
             {/* TODO: 로고 교체 */}
-            <Typography variant="h5" noWrap component="div">
-              <NextLink href="/">LOGO</NextLink>
+            <Typography variant="h5" noWrap component="div" flex={1}>
+              <NextLink href="/" passHref>
+                <Link underline="none" color="text.primary" fontWeight="bold">
+                  K-DEV
+                </Link>
+              </NextLink>
             </Typography>
 
             <Box
-              flex={1}
+              flex={2}
               display={{
                 xs: 'none',
                 md: 'flex',
@@ -144,52 +155,30 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
             >
               {NAV_ITEM_LIST.map((item) => (
                 <NextLink key={item.href} href={item.href} passHref>
-                  <Link color="text.primary" underline="hover">
+                  <Link
+                    color="text.secondary"
+                    underline="none"
+                    sx={{
+                      transition: 'color 300ms',
+                      ':hover': {
+                        color: 'text.primary',
+                      },
+                    }}
+                  >
                     {item.label}
                   </Link>
                 </NextLink>
               ))}
             </Box>
 
-            <Box display="flex" justifyContent="flex-end">
-              <Box
-                onSubmit={handleSubmit}
-                component="form"
-                display={{
-                  xs: 'none',
-                  sm: 'flex',
-                }}
-                alignItems="center"
-                justifyContent="center"
-                gap="5px"
-              >
-                <Search
-                  sx={{
-                    color: 'text.primary',
-                  }}
-                />
-                <Input
-                  aria-label="search input"
-                  placeholder="Searching.."
-                  sx={{
-                    width: '200px',
-                    color: 'text.primary',
-                    '&:not(.Mui-disabled):hover::before': {
-                      borderColor: 'text.primary',
-                    },
-                    ':before': { borderBottomColor: 'text.primary' },
-                  }}
-                />
-              </Box>
-
+            <Box display="flex" justifyContent="flex-end" flex={1}>
               <Box>
                 <IconButton
                   onClick={onThemeChange}
-                  size="large"
+                  size="medium"
                   edge="start"
                   aria-label="change theme color"
                   sx={{
-                    display: { xs: 'none', sm: 'inline-flex' },
                     ml: user.id ? '12px' : 0,
                   }}
                 >
@@ -197,9 +186,13 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                 </IconButton>
 
                 {user.id && (
-                  <IconButton size="large" aria-label="show new notifications">
+                  <IconButton
+                    size="medium"
+                    aria-label="show new notifications"
+                    onClick={handleNotiMenuOpen}
+                  >
                     {/* TODO: 연동하면서, 토글 메뉴 추가 */}
-                    <Badge badgeContent={17} color="error">
+                    <Badge badgeContent={notifications.length} color="error">
                       <Notifications />
                     </Badge>
                   </IconButton>
@@ -237,6 +230,55 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
               </Box>
             </Box>
           </Toolbar>
+          <Menu
+            anchorEl={notiMenuEl}
+            open={isNotiMenuOpen}
+            onClose={handleNotiMenuClose}
+            onClick={handleNotiMenuClose}
+            disableScrollLock={true}
+            PaperProps={{
+              sx: {
+                overflow: 'visible',
+                p: 2,
+                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                mt: 1.5,
+                '& .MuiAvatar-root': {
+                  width: 32,
+                  height: 32,
+                  ml: -0.5,
+                  mr: 1,
+                },
+                '&:before': {
+                  content: '""',
+                  display: 'block',
+                  position: 'absolute',
+                  top: 0,
+                  right: 14,
+                  width: 10,
+                  height: 10,
+                  bgcolor: 'background.paper',
+                  transform: 'translateY(-50%) rotate(45deg)',
+                  zIndex: 0,
+                },
+              },
+            }}
+            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+          >
+            {notifications.length
+              ? notifications.map(({ postId, id, message }) => (
+                  <Box maxWidth="300px" borderBottom="1px solid" key={id}>
+                    <div>{message}</div>
+                    <NextLink
+                      href={`/blog/${postId}?notification=${id}`}
+                      passHref
+                    >
+                      <Link>바로가기</Link>
+                    </NextLink>
+                  </Box>
+                ))
+              : '아직 알림이 없습니다.'}
+          </Menu>
 
           <Menu
             anchorEl={userMenuEl}
@@ -274,7 +316,15 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
           >
             {user.username && (
               <MenuItem>
-                <Person sx={{ mr: 1 }} />
+                <Avatar
+                  aria-describedby="user profile"
+                  sx={{
+                    mr: 1,
+                  }}
+                  src={user.profileImage}
+                >
+                  U
+                </Avatar>
                 {user.username}
               </MenuItem>
             )}
@@ -296,7 +346,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                       <ListItemIcon>
                         <Edit fontSize="small" />
                       </ListItemIcon>
-                      Write
+                      글작성
                     </Link>
                   </NextLink>
                 </MenuItem>
@@ -313,7 +363,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                       <ListItemIcon>
                         <Settings fontSize="small" />
                       </ListItemIcon>
-                      Settings
+                      설정
                     </Link>
                   </NextLink>
                 </MenuItem>
@@ -324,7 +374,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                 <ListItemIcon>
                   <Logout fontSize="small" />
                 </ListItemIcon>
-                Logout
+                로그아웃
               </MenuItem>
             ) : (
               <MenuItem data-cy="login-button">
@@ -340,7 +390,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                     <ListItemIcon>
                       <Login fontSize="small" />
                     </ListItemIcon>
-                    Login
+                    로그인
                   </Link>
                 </NextLink>
               </MenuItem>
