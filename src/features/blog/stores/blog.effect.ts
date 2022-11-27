@@ -94,3 +94,14 @@ export const effBlogPostAddView = createAsyncThunk<void, number>(
     await repo.post.addPostView(id);
   },
 );
+
+export const effBlogPostImageUpload = createAsyncThunk<string, File>(
+  'blogPostImageUpload',
+  async (file) => {
+    const {
+      data: { payload },
+    } = await repo.post.uploadImage(file);
+
+    return payload;
+  },
+);

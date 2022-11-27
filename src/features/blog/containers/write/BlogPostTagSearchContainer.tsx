@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { BlogPostCreateParams, TagEntity } from '@core/entities';
-import { repo } from '@core/repo';
+import { useAppDispatch } from '@common/store';
+import { effTagCreate, effTagSearchLoad } from '@shared/stores/tag';
 import { PostTagSearch } from '@features/blog/components/write';
 
 function makeNextTags(prev: TagEntity[], newTag: TagEntity) {
@@ -25,14 +26,14 @@ export const BlogPostTagSearchContainer = ({
   selectedTags: outSelectedTags,
   onChange,
 }: BlogPostTagSearchContainerProps) => {
+  const dispatch = useAppDispatch();
+
   const [searchedTags, setSearchedTags] = useState<TagEntity[]>([]);
   const [selectedTags, setSelectedTags] =
     useState<TagEntity[]>(outSelectedTags);
 
   const debounced = useDebouncedCallback(async (text: string) => {
-    const {
-      data: { payload },
-    } = await repo.tag.getTagByValue(text);
+    const payload = await dispatch(effTagSearchLoad(text)).unwrap();
 
     const searchTags = payload.filter(
       (item) => !selectedTags.some((tag) => tag.id === item.id),
@@ -56,12 +57,10 @@ export const BlogPostTagSearchContainer = ({
 
   const handleSelect = async (tag: TagEntity) => {
     if (tag?.id === -1) {
-      const {
-        data: { payload },
-      } = await repo.tag.createTag(tag.value);
+      const newTag = await dispatch(effTagCreate(tag.value)).unwrap();
 
       setSelectedTags((prev) => {
-        const newTags = makeNextTags(prev, payload);
+        const newTags = makeNextTags(prev, newTag);
 
         onChange({ tags: newTags.map((tag) => tag.id) });
         return newTags;

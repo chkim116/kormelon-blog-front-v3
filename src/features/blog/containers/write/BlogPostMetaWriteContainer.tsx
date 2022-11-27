@@ -1,12 +1,12 @@
-import { useAppSelector } from '@common/store';
+import { useAppDispatch, useAppSelector } from '@common/store';
 import { BlogPostCreateParams } from '@core/entities';
-import { repo } from '@core/repo';
 import { selCategories } from '@shared/stores/category';
 import {
   PostCategory,
   PostWriteMeta,
   PostWriteThumbnail,
 } from '@features/blog/components/write';
+import { effBlogPostImageUpload } from '@features/blog/stores';
 
 interface BlogPostMetaWriteContainerProps {
   thumbnail: string;
@@ -25,12 +25,11 @@ export const BlogPostMetaWriteContainer = ({
   subCategoryId,
   onChange,
 }: BlogPostMetaWriteContainerProps) => {
+  const dispatch = useAppDispatch();
   const categories = useAppSelector(selCategories);
 
   const handleUploadImage = async (file: File) => {
-    const {
-      data: { payload },
-    } = await repo.post.uploadImage(file);
+    const payload = await dispatch(effBlogPostImageUpload(file)).unwrap();
 
     onChange({ thumbnail: payload });
   };
