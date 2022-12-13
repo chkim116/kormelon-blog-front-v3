@@ -1,19 +1,12 @@
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { DEFAULT_PAGE, DEFAULT_PER } from '@common/constants';
 import {
   BlogPostCategoryEntity,
-  BlogPostDetailEntity,
   BlogPostEntity,
   BlogPostSearchParams,
 } from '@core/entities';
-import { DEFAULT_PAGE, DEFAULT_PER } from '@common/constants';
-import { env } from '@common/env';
-import {
-  BlogPostAnchorModel,
-  BlogPostCategoryModel,
-  BlogPostDetailModel,
-  BlogPostModel,
-} from '../models/blog.model';
+import { BlogPostCategoryModel, BlogPostModel } from '../models/blog.model';
 
 dayjs.extend(localizedFormat);
 
@@ -59,31 +52,4 @@ export function toBlogPostCategoryModel(
     subCategoryId: subCategoryEntity.id,
     subCategoryValue: subCategoryEntity.value,
   };
-}
-
-export function toBlogPostDetailModel(
-  detail: BlogPostDetailEntity,
-): BlogPostDetailModel {
-  return {
-    ...detail,
-    category: toBlogPostCategoryModel(detail.category, detail.subCategory),
-    createdAt: refinePostCreatedAt(detail.createdAt),
-    readTime: refinePostReadingTime(detail.readTime),
-  };
-}
-
-export function extractHeadingText(): BlogPostAnchorModel[] {
-  if (env.isSSR) {
-    return [];
-  }
-
-  const anchors: BlogPostAnchorModel[] = [];
-
-  document
-    .querySelectorAll('h1')
-    .forEach((element) =>
-      anchors.push({ id: element.id, value: element.textContent || '' }),
-    );
-
-  return anchors.slice(1, anchors.length);
 }

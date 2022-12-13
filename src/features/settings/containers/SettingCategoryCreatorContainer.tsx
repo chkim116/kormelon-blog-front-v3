@@ -38,7 +38,7 @@ export const SettingCategoryCreatorContainer = ({
         feedbackService('success', `카테고리 ${value} 생성`);
         setValue('');
       })
-      .catch((err) => feedbackService('error', err.response?.data.message));
+      .catch((err) => feedbackService('error', err.message));
   };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {

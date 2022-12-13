@@ -19,18 +19,3 @@ export const selBlogPostSearchParams = createSelector(
   selPost,
   (state) => state.params,
 );
-
-export const selBlogPostDetail = createSelector(
-  selPost,
-  (state) => state.postDetail,
-);
-
-export const selBlogPostDetailNear = createSelector(
-  selPost,
-  (state) => state.postNear,
-);
-
-export const selBlogPostUpdateLoading = createSelector(
-  selPost,
-  (state) => state.updateLoading,
-);

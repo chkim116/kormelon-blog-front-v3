@@ -81,7 +81,7 @@ export const BlogPostWriteContainer = () => {
           `게시글이 ${isEditMode ? '수정' : '작성'}되었습니다.`,
         );
       })
-      .catch((err) => feedbackService('error', err.response?.data.message));
+      .catch((err) => feedbackService('error', err.message));
   };
 
   useEffect(() => {

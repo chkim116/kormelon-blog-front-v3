@@ -17,13 +17,13 @@ import { createContentAnchorPositionMap } from '@features/blog/manipulates/blog.
 import {
   BlogPostAnchorModel,
   BlogPostDetailModel,
-} from '@features/blog/models/blog.model';
+} from '@features/blog/models';
 import {
   effBlogPostAddView,
   effBlogPostDelete,
   effBlogPostLike,
 } from '@features/blog/stores';
-import { extractHeadingText } from '@features/blog/manipulates/blog.convert';
+import { extractHeadingText } from '@features/blog/manipulates';
 
 interface BlogPostDetailContainerProps {
   post: BlogPostDetailModel;
@@ -123,7 +123,7 @@ export const BlogPostDetailContainer = ({
     setIsLiked((prev) => !prev);
     dispatch(effBlogPostLike(id))
       .unwrap()
-      .catch((err) => feedbackService('error', err.response?.data.message));
+      .catch((err) => feedbackService('error', err.message));
   };
 
   const handleDelete = (id: number) => {
@@ -161,7 +161,7 @@ export const BlogPostDetailContainer = ({
   }, []);
 
   return (
-    <Box position="relative" maxWidth="xl" m="0 auto">
+    <Box position="relative" maxWidth="xl" m="0 auto" component="article">
       <Box ref={getFarAwayHeight}>
         <PostDetailHeader
           id={id}

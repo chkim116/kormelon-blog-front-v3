@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { env } from '@common/env';
 import { STORAGE_TOKEN_KEY } from '@common/constants';
 import { tokenProvider } from './tokenProvider';
@@ -20,3 +20,22 @@ apiClient.interceptors.request.use((config) => {
 
   return config;
 });
+
+interface AxiosResponseError {
+  message: string;
+}
+
+function isAxiosError(err: unknown): err is AxiosError<AxiosResponseError> {
+  return err instanceof AxiosError;
+}
+
+apiClient.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    if (isAxiosError(err) && err.response?.data.message) {
+      throw new Error(err.response.data.message);
+    }
+
+    throw new Error('알 수 없는 오류입니다.');
+  },
+);

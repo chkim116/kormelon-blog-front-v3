@@ -10,6 +10,7 @@ export const BlogPostNear = ({ postNear }: BlogPostNearContainerProps) => (
   <Stack
     maxWidth="md"
     px={4}
+    pb={12}
     m="0 auto"
     direction={{ xs: 'column', md: 'row' }}
     justifyContent="space-between"

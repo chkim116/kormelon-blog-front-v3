@@ -49,7 +49,7 @@ export const SettingCategoryListContainer = ({
         .then(() => {
           feedbackService('success', '삭제 완료');
         })
-        .catch((err) => feedbackService('error', err.response?.data.message));
+        .catch((err) => feedbackService('error', err.message));
     }
   };
 
@@ -64,17 +64,13 @@ export const SettingCategoryListContainer = ({
             .then(() => {
               feedbackService('success', '수정 완료');
             })
-            .catch((err) =>
-              feedbackService('error', err.response?.data.message),
-            )
+            .catch((err) => feedbackService('error', err.message))
         : dispatch(effCategoriesUpdate(params as CategoryUpdateParams))
             .unwrap()
             .then(() => {
               feedbackService('success', '수정 완료');
             })
-            .catch((err) =>
-              feedbackService('error', err.response?.data.message),
-            );
+            .catch((err) => feedbackService('error', err.message));
     }
   };
 
@@ -84,7 +80,7 @@ export const SettingCategoryListContainer = ({
       .then(() => {
         feedbackService('success', `서브 카테고리 ${value} 생성 완료`);
       })
-      .catch((err) => feedbackService('error', err.response?.data.message));
+      .catch((err) => feedbackService('error', err.message));
   };
 
   useEffect(() => {
