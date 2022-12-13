@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { repo } from '@core/repo';
 import { BlogPostDetailPage } from '@features/blog/routes/BlogPostDetailPage';
-import { toBlogPostDetailModel } from '@features/blog/manipulates/blog.convert';
+import { toBlogPostDetailModel } from '@features/blog/manipulates';
 
 export default BlogPostDetailPage;
 

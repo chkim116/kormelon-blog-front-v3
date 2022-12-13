@@ -1,16 +1,17 @@
-import React, { useEffect, useMemo } from 'react';
-import { useRouter } from 'next/router';
-import { Box, Divider } from '@mui/material';
+import { Divider } from '@mui/material';
 import dynamic from 'next/dynamic';
-import { BlogPostNearEntity } from '@core/entities';
+import { useRouter } from 'next/router';
 import { env } from '@common/env';
-import { useAppDispatch } from '@common/store';
-import { effNotificationRead } from '@shared/stores/notification';
+import { BlogPostNearEntity } from '@core/entities';
+import { useQueryParser } from '@shared/hooks/useQueryParser';
 import {
+  BlogPostCommentContainer,
   BlogPostDetailContainer,
   BlogPostNearContainer,
 } from '../containers/detail';
-import { BlogPostDetailModel } from '../models/blog.model';
+import { BlogPostDetailCommentParamsCtxProvider } from '../contexts';
+import { refineBlogPostDetailCommentParams } from '../manipulates';
+import { BlogPostDetailModel } from '../models';
 
 const BlogPostDetailSkeleton = dynamic(() =>
   import('../components/detail/PostDetailSkeleton').then(
@@ -28,18 +29,7 @@ export const BlogPostDetailPage = ({
   postNear,
 }: BlogPostDetailPageProps) => {
   const router = useRouter();
-  const dispatch = useAppDispatch();
-
-  const notificationId = useMemo(
-    () => router.query['notification'],
-    [router.query],
-  );
-
-  useEffect(() => {
-    if (notificationId) {
-      dispatch(effNotificationRead(Number(notificationId)));
-    }
-  }, [dispatch, notificationId]);
+  const queries = useQueryParser(refineBlogPostDetailCommentParams);
 
   if (router.isFallback) {
     if (env.isSSR) {
@@ -50,7 +40,7 @@ export const BlogPostDetailPage = ({
   }
 
   return (
-    <Box component="article">
+    <BlogPostDetailCommentParamsCtxProvider value={queries}>
       <BlogPostDetailContainer post={post} />
       <Divider
         sx={{
@@ -59,7 +49,8 @@ export const BlogPostDetailPage = ({
           my: 8,
         }}
       />
+      <BlogPostCommentContainer />
       <BlogPostNearContainer postNear={postNear} />
-    </Box>
+    </BlogPostDetailCommentParamsCtxProvider>
   );
 };
