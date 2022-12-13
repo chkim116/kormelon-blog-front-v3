@@ -123,7 +123,7 @@ export const BlogPostDetailContainer = ({
     setIsLiked((prev) => !prev);
     dispatch(effBlogPostLike(id))
       .unwrap()
-      .catch((err) => feedbackService('error', err.response?.data.message));
+      .catch((err) => feedbackService('error', err.message));
   };
 
   const handleDelete = (id: number) => {

@@ -29,7 +29,7 @@ export const BlogPostCommentCreatorContainer = ({
         feedbackService('success', '댓글이 작성되었습니다.');
       })
       .catch((err) => {
-        feedbackService('error', err.response?.data.message);
+        feedbackService('error', err.message);
       });
   };
 

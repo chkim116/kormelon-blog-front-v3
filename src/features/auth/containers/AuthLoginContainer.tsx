@@ -38,7 +38,7 @@ export const AuthLoginContainer = () => {
       .unwrap()
       .then(() => router.push('/'))
       .catch((err) => {
-        feedbackService('error', err.response?.data.message);
+        feedbackService('error', err.message);
       });
   };
 
