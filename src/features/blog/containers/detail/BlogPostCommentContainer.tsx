@@ -43,8 +43,6 @@ export const BlogPostCommentContainer = () => {
     <Box maxWidth="md" m="0 auto" pt={4} pb={24} px={4} ref={refCommentElement}>
       <BlogPostCommentCreatorContainer postId={postId} />
 
-      <Divider sx={{ pb: 2, mb: 2 }} />
-
       {postComments.map(
         ({
           commentReplies,

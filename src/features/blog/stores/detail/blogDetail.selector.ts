@@ -22,3 +22,8 @@ export const selBlogPostDetailNear = createSelector(
   selPostDetail,
   (state) => state.postNear,
 );
+
+export const selBlogPostRecommend = createSelector(
+  selPostDetail,
+  (state) => state.recommendPosts,
+);
