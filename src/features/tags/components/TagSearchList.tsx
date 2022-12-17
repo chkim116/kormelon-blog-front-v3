@@ -21,7 +21,11 @@ export const TagSearchList = ({ tags }: TagSearchListProps) => (
       flexWrap="wrap"
     >
       {tags.map((tag) => (
-        <NextLink key={tag.id} href={`/search?tag=${tag.id}`} passHref>
+        <NextLink
+          key={tag.id}
+          href={`/search?tagId=${tag.id}&tagValue=${tag.value}`}
+          passHref
+        >
           <Chip
             component="a"
             clickable

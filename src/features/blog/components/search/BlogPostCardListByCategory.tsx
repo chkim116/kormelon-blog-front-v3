@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
 import { Box, Grid } from '@mui/material';
 import { DEFAULT_PAGE } from '@common/constants';
+import { PostCard } from '@common/components';
 import { BlogPostModel } from '@features/blog/models/blog.model';
 import { SubCategoryModel } from '@features/blog/containers/search';
 import { CategoryStack } from './CategoryStack';
 import { FirstPostCard } from './FirstPostCard';
-import { PostCard } from './PostCard';
 
 interface BlogPostCardListByCategoryProps {
   page: number;
