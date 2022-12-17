@@ -1,7 +1,7 @@
 import { DEFAULT_IMAGE } from '@common/constants';
 import { env } from '@common/env';
 import { BlogPostCreateParams } from '@core/entities';
-import { BlogPostAnchorModel, BlogPostDetailModel } from '../models/blog.model';
+import { BlogPostAnchorModel, BlogPostDetailModel } from '../models';
 import { refinePostReadingTime } from './blog.convert';
 
 export function createBlogPostDetailModel(): BlogPostDetailModel {

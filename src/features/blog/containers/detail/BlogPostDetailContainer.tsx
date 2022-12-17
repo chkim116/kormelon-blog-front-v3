@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Box } from '@mui/material';
 import copy from 'copy-to-clipboard';
-import { useRouter } from 'next/router';
 import { feedbackService } from '@common/components/Feedback';
 import { STORAGE_LIKE_KEY } from '@common/constants';
 import { useAppDispatch } from '@common/store';
 import { tokenProvider } from '@core/tokenProvider';
+import { useQueryPush } from '@shared/hooks';
+import { intersectionObserver } from '@shared/utils';
 import {
   PostContent,
   PostContentFooter,
@@ -46,8 +47,9 @@ export const BlogPostDetailContainer = ({
     user,
   } = post;
   const dispatch = useAppDispatch();
-  const router = useRouter();
+  const router = useQueryPush();
 
+  const refContentBoundary = useRef<HTMLDivElement>(null);
   const [anchors, setAnchors] = useState<BlogPostAnchorModel[]>([]);
   const anchorPosition = createContentAnchorPositionMap(anchors);
 
@@ -131,9 +133,10 @@ export const BlogPostDetailContainer = ({
       dispatch(effBlogPostDelete(id))
         .unwrap()
         .then(() => {
-          router.push(
-            `/blog?categoryId=${category.id}&subCategoryId=${category.subCategoryId}`,
-          );
+          router({
+            categoryId: category.id,
+            subCategoryId: category.subCategoryId,
+          });
         });
     }
   };
@@ -150,15 +153,11 @@ export const BlogPostDetailContainer = ({
   }, [id]);
 
   useEffect(() => {
-    // TODO: 조회 중복 체크하기
-    dispatch(effBlogPostAddView(id));
-  }, [dispatch, id]);
-
-  useEffect(() => {
-    setTimeout(() => {
+    intersectionObserver(refContentBoundary.current, { threshold: 0 }, () => {
       setAnchors(extractHeadingText());
-    }, 1000);
-  }, []);
+      dispatch(effBlogPostAddView(id));
+    });
+  }, [dispatch, id]);
 
   return (
     <Box position="relative" maxWidth="xl" m="0 auto" component="article">
@@ -178,7 +177,7 @@ export const BlogPostDetailContainer = ({
         <PostThumbnail src={thumbnail} alt={`${title} thumbnail`} />
       </Box>
 
-      <Box maxWidth="md" m="0 auto">
+      <Box maxWidth="md" m="0 auto" ref={refContentBoundary}>
         <PostContent content={content} />
 
         <Box

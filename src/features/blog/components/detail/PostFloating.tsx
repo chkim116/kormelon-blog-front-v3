@@ -1,6 +1,6 @@
 import { MouseEventHandler, useCallback } from 'react';
 import { Box, List, ListItem, ListItemText, Typography } from '@mui/material';
-import { BlogPostAnchorModel } from '@features/blog/models/blog.model';
+import { BlogPostAnchorModel } from '@features/blog/models';
 import { PostUtils } from './PostUtils';
 
 interface PostFloatingProps {
