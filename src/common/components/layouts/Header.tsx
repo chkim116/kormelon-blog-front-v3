@@ -191,14 +191,17 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                 >
                   {themeMode ? <DarkMode /> : <LightMode />}
                 </IconButton>
-
+                <NextLink href={'/tags'} passHref>
+                  <IconButton LinkComponent="a">
+                    <LocalOffer />
+                  </IconButton>
+                </NextLink>
                 {user.id && (
                   <IconButton
                     size="medium"
                     aria-label="show new notifications"
                     onClick={handleNotiMenuOpen}
                   >
-                    {/* TODO: 연동하면서, 토글 메뉴 추가 */}
                     <Badge badgeContent={notifications.length} color="error">
                       <Notifications />
                     </Badge>

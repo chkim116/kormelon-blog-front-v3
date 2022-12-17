@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Typography } from '@mui/material';
+import { PostCard } from '@common/components';
 import { BlogPostModel } from '@features/blog/models';
-import { PostCard } from '../search/PostCard';
 
 interface BlogPostRecommendPostProps {
   posts: BlogPostModel[];
