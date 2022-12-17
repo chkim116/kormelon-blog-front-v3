@@ -1,10 +1,11 @@
 import { ChangeEventHandler, useState } from 'react';
 import { Edit, Delete } from '@mui/icons-material';
-import { Box, Typography, IconButton, TextField } from '@mui/material';
+import { Box, Typography, IconButton, TextField, Avatar } from '@mui/material';
 import { Dialog } from '@common/components';
 
 interface BlogPostCommentHeaderProps {
   username: string;
+  userProfile: string;
   createdAt: string;
   isAnonymous: boolean;
   isAuthor: boolean;
@@ -16,6 +17,7 @@ interface BlogPostCommentHeaderProps {
 
 export const BlogPostCommentHeader = ({
   username,
+  userProfile,
   createdAt,
   isAnonymous,
   isAuthor,
@@ -64,7 +66,14 @@ export const BlogPostCommentHeader = ({
   return (
     <Box mt={6} display="flex" justifyContent="space-between">
       <Box pb={2}>
-        <Box>{username}</Box>
+        <Box display="flex" gap={1} alignItems="center">
+          <Avatar
+            src={userProfile}
+            sx={{ width: 32, height: 32 }}
+            alt={username}
+          />
+          <Box>{username}</Box>
+        </Box>
         <Typography mt={1} variant="subtitle1">
           {createdAt}
         </Typography>

@@ -47,6 +47,7 @@ export const BlogPostCommentReply = ({
   return (
     <Box>
       <BlogPostCommentHeader
+        userProfile={reply.userProfile}
         username={reply.username}
         createdAt={reply.createdAt}
         isAnonymous={reply.isAnonymous}

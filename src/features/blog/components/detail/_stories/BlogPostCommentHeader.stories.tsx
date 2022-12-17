@@ -1,6 +1,7 @@
 import { ComponentProps } from 'react';
 import { ComponentStory, ComponentMeta, ArgTypes } from '@storybook/react';
 import { Box } from '@mui/material';
+import { SAMPLE_IMAGE } from '@common/constants';
 import { BlogPostCommentHeader } from '../BlogPostCommentHeader';
 
 type MyArgTypes = Partial<
@@ -24,6 +25,7 @@ const Template: ComponentStory<typeof BlogPostCommentHeader> = ({
 
 export const Default = Template.bind({});
 Default.args = {
+  userProfile: SAMPLE_IMAGE,
   username: 'smile',
   isAuthor: false,
   createdAt: '2022-04-12',

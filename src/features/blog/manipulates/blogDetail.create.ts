@@ -1,3 +1,4 @@
+import gravatar from 'gravatar';
 import { BaseCommentCreateParamsModel } from '../models';
 
 export function createBlogPostCommentCreateParamsModel(): BaseCommentCreateParamsModel {
@@ -6,4 +7,13 @@ export function createBlogPostCommentCreateParamsModel(): BaseCommentCreateParam
     password: '',
     username: '',
   };
+}
+
+export function createCommentProfileImage(name: string) {
+  return gravatar.url(name, {
+    s: '100',
+    r: 'pg',
+    d: 'retro',
+    protocol: 'http',
+  });
 }
