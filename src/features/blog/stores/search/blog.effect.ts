@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BlogPostSearchParams } from '@core/entities';
 import { repo } from '@core/repo';
-import { toBlogPostModels } from '../../manipulates';
+import { toBlogPostModels, toBlogPrivatePostModels } from '../../manipulates';
 import { BlogPostSearchResultPayload } from '../../models/blog.model';
 
 export const effBlogPostsLoad = createAsyncThunk<
@@ -17,6 +17,17 @@ export const effBlogPostsLoad = createAsyncThunk<
   } catch (err) {
     return rejectWithValue(err);
   }
+});
+
+export const effBlogPrivatePostsLoad = createAsyncThunk<
+  BlogPostSearchResultPayload,
+  void
+>('blogPrivatePostsLoad', async (_) => {
+  const {
+    data: { payload, meta },
+  } = await repo.post.fetchPrivatePosts();
+
+  return { posts: toBlogPrivatePostModels(payload), total: meta.total };
 });
 
 export const effBlogPostImageUpload = createAsyncThunk<string, File>(

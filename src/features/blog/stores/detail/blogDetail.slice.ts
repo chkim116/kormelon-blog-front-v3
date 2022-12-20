@@ -10,6 +10,7 @@ import {
   effBlogPostCommentsLoad,
   effBlogPostDetailLoad,
   effBlogPostRecommendLoad,
+  effBlogPrivatePostDetailLoad,
 } from './blogDetail.effect';
 
 interface PostSliceState {
@@ -52,6 +53,24 @@ export const blogDetailSlice = createSlice({
       };
     });
     builder.addCase(effBlogPostDetailLoad.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(effBlogPrivatePostDetailLoad.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(
+      effBlogPrivatePostDetailLoad.fulfilled,
+      (state, { payload }) => {
+        state.loading = false;
+        state.postDetail = payload.post;
+        state.postNear = {
+          next: payload.next,
+          prev: payload.prev,
+        };
+      },
+    );
+    builder.addCase(effBlogPrivatePostDetailLoad.rejected, (state) => {
       state.loading = false;
     });
 

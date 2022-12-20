@@ -1,24 +1,31 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { BlogPostSearchParams } from '@core/entities';
 import { BlogPostModel } from '@features/blog/models';
-import { effBlogPostsLoad } from './blog.effect';
+import { effBlogPostsLoad, effBlogPrivatePostsLoad } from './blog.effect';
 
 interface PostSliceState {
   loading: boolean;
   updateLoading: boolean;
 
+  params: BlogPostSearchParams;
   posts: BlogPostModel[];
   total: number;
-  params: BlogPostSearchParams;
+
+  privatePosts: BlogPostModel[];
+  privateTotal: number;
 }
 
 function createBlogSliceState(): PostSliceState {
   return {
     loading: false,
     updateLoading: false,
+
+    params: {},
     posts: [],
     total: 0,
-    params: {},
+
+    privateTotal: 0,
+    privatePosts: [],
   };
 }
 
@@ -37,6 +44,18 @@ export const blogSlice = createSlice({
       state.params = meta.arg;
     });
     builder.addCase(effBlogPostsLoad.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(effBlogPrivatePostsLoad.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(effBlogPrivatePostsLoad.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.privatePosts = payload.posts;
+      state.privateTotal = payload.total;
+    });
+    builder.addCase(effBlogPrivatePostsLoad.rejected, (state) => {
       state.loading = false;
     });
   },

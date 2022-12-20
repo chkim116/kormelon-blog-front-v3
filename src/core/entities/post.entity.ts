@@ -50,6 +50,13 @@ export interface BlogPostEntity {
   createdAt: string;
 }
 
+export interface BlogPrivatePostEntity extends BlogPostEntity {
+  /**
+   * 비밀 모드
+   */
+  isPrivate: boolean;
+}
+
 export interface BlogPostRecommendEntity extends BlogPostEntity {}
 
 export interface BlogPostCreateParams {

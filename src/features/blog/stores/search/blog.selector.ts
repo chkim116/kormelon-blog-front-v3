@@ -10,9 +10,19 @@ export const selBlogPostLoading = createSelector(
 
 export const selBlogPosts = createSelector(selPost, (state) => state.posts);
 
+export const selBlogPrivatePosts = createSelector(
+  selPost,
+  (state) => state.privatePosts,
+);
+
 export const selBlogPostTotalCount = createSelector(
   selPost,
   (state) => state.total,
+);
+
+export const selBlogPrivatePostTotalCount = createSelector(
+  selPost,
+  (state) => state.privateTotal,
 );
 
 export const selBlogPostSearchParams = createSelector(

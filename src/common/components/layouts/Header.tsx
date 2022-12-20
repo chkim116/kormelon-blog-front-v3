@@ -17,6 +17,7 @@ import {
   Logout,
   Notifications,
   RssFeed,
+  Security,
   Settings,
 } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -376,6 +377,23 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                         <Settings fontSize="small" />
                       </ListItemIcon>
                       설정
+                    </Link>
+                  </NextLink>
+                </MenuItem>
+                <MenuItem>
+                  <NextLink passHref href="/blog/private">
+                    <Link
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        color: 'inherit',
+                      }}
+                      underline="none"
+                    >
+                      <ListItemIcon>
+                        <Security fontSize="small" />
+                      </ListItemIcon>
+                      비밀글
                     </Link>
                   </NextLink>
                 </MenuItem>

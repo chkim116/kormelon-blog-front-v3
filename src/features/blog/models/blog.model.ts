@@ -7,6 +7,13 @@ export interface BlogPostModel extends Omit<BlogPostEntity, 'readTime'> {
   readTime: string;
 }
 
+export interface BlogPrivatePostModel extends BlogPostModel {
+  /**
+   * 비밀 모드
+   */
+  isPrivate: boolean;
+}
+
 export interface BlogPostSearchResultPayload {
   posts: BlogPostModel[];
   total: number;
