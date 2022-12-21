@@ -8,6 +8,7 @@ import {
   BlogPostCommentContainer,
   BlogPostDetailContainer,
   BlogPostNearContainer,
+  BlogPostRecommendContainer,
 } from '../containers/detail';
 import { BlogPostDetailCommentParamsCtxProvider } from '../contexts';
 import { refineBlogPostDetailCommentParams } from '../manipulates';
@@ -51,6 +52,7 @@ export const BlogPostDetailPage = ({
       />
       <BlogPostCommentContainer />
       <BlogPostNearContainer postNear={postNear} />
+      <BlogPostRecommendContainer />
     </BlogPostDetailCommentParamsCtxProvider>
   );
 };

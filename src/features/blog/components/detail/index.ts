@@ -14,3 +14,4 @@ export * from './BlogPostCommentReplyOpenButton';
 export * from './BlogPostCommentReply';
 export * from './BlogPostCommentEditButtons';
 export * from './BlogPostCommentCreator';
+export * from './BlogPostRecommendPost';

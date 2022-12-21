@@ -4,6 +4,7 @@ import { repo } from '@core/repo';
 import {
   toBlogPostCommentSearchModels,
   toBlogPostDetailModel,
+  toBlogPostModels,
   toCommentCreateParams,
   toCommentDeleteParams,
   toCommentReplyCreateParams,
@@ -20,6 +21,7 @@ import {
   BlogPostCommentSearchModel,
   BlogPostCommentUpdateParamsModel,
   BlogPostDetailResultPayload,
+  BlogPostModel,
 } from '../../models';
 
 export const effBlogPostDetailLoad = createAsyncThunk<
@@ -40,6 +42,17 @@ export const effBlogPostDetailLoad = createAsyncThunk<
     return rejectWithValue(err);
   }
 });
+
+export const effBlogPostRecommendLoad = createAsyncThunk<BlogPostModel[], void>(
+  'blogPostRecommendLoad',
+  async () => {
+    const {
+      data: { payload },
+    } = await repo.post.fetchRecommendPosts();
+
+    return toBlogPostModels(payload);
+  },
+);
 
 export const effBlogPostLike = createAsyncThunk<void, number>(
   'blogPostLike',

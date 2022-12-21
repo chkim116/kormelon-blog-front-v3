@@ -13,7 +13,7 @@ import { apiClient } from '@core/network';
 import { tokenProvider } from '@core/tokenProvider';
 
 export const postRepository = {
-  fetchRecommendPosts(limit = 3) {
+  fetchRecommendPosts(limit = 4) {
     return apiClient.get<Response<BlogPostRecommendEntity[], PagingMeta>>(
       `/post/recommend?limit=${limit}`,
     );

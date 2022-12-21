@@ -1,17 +1,20 @@
-import { AnyAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { BlogPostNearEntity } from '@core/entities';
 import { createBlogPostDetailModel } from '@features/blog/manipulates';
 import {
   BlogPostCommentSearchModel,
   BlogPostDetailModel,
+  BlogPostModel,
 } from '@features/blog/models';
 import {
   effBlogPostCommentsLoad,
   effBlogPostDetailLoad,
+  effBlogPostRecommendLoad,
 } from './blogDetail.effect';
 
 interface PostSliceState {
   loading: boolean;
+  recommendPosts: BlogPostModel[];
   postDetail: BlogPostDetailModel;
   postNear: BlogPostNearEntity;
   postComments: BlogPostCommentSearchModel[];
@@ -21,6 +24,7 @@ interface PostSliceState {
 function createBlogSliceState(): PostSliceState {
   return {
     loading: false,
+    recommendPosts: [],
     postNear: {
       next: null,
       prev: null,
@@ -54,5 +58,12 @@ export const blogDetailSlice = createSlice({
     builder.addCase(effBlogPostCommentsLoad.fulfilled, (state, { payload }) => {
       state.postComments = payload;
     });
+
+    builder.addCase(
+      effBlogPostRecommendLoad.fulfilled,
+      (state, { payload }) => {
+        state.recommendPosts = payload;
+      },
+    );
   },
 });
