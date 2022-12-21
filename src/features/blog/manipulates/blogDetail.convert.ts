@@ -1,4 +1,5 @@
 import { env } from 'process';
+import dayjs from 'dayjs';
 import {
   BlogPostDetailEntity,
   CommentCreateParams,
@@ -27,6 +28,7 @@ import {
   refinePostCreatedAt,
   refinePostReadingTime,
 } from './blog.convert';
+import { createCommentProfileImage } from './blogDetail.create';
 
 export function refineBlogPostDetailCommentParams(raw: Record<string, string>) {
   return {
@@ -73,14 +75,19 @@ export function toBlogPostCommentReplySearchModels(
       isAnonymous,
       userId,
       value,
+      user,
       username = '익명',
     } = entity;
 
+    const userProfile =
+      user?.profileImage ?? createCommentProfileImage(username);
+
     return {
-      createdAt,
+      createdAt: dayjs(createdAt).format('YYYY-MM-DD'),
       deletedAt: deletedAt ?? '',
       id,
       isAnonymous,
+      userProfile,
       password: '',
       userId: userId ?? '',
       username,
@@ -101,14 +108,19 @@ export function toBlogPostCommentSearchModels(
       isAnonymous,
       userId,
       value,
+      user,
       username = '익명',
     } = entity;
+
+    const userProfile =
+      user?.profileImage ?? createCommentProfileImage(username);
 
     return {
       id,
       isAnonymous,
       commentReplies: toBlogPostCommentReplySearchModels(commentReplies),
-      createdAt,
+      userProfile,
+      createdAt: dayjs(createdAt).format('YYYY-MM-DD'),
       username,
       value,
       deletedAt: deletedAt ?? '',

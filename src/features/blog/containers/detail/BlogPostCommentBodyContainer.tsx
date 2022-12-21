@@ -21,6 +21,7 @@ import {
 
 interface BlogPostCommentBodyContainerProps {
   postId: number;
+  userProfile: string;
   commentId: string;
   commentAuthorId: string | null;
   username: string;
@@ -35,6 +36,7 @@ interface BlogPostCommentBodyContainerProps {
  */
 export const BlogPostCommentBodyContainer = ({
   commentAuthorId,
+  userProfile,
   username,
   isAnonymous,
   commentValue,
@@ -125,6 +127,7 @@ export const BlogPostCommentBodyContainer = ({
   return (
     <Box>
       <BlogPostCommentHeader
+        userProfile={userProfile}
         username={username}
         createdAt={createdAt}
         isAnonymous={isAnonymous}

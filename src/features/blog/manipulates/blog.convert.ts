@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { DEFAULT_PAGE, DEFAULT_PER } from '@common/constants';
 import {
   BlogPostCategoryEntity,
@@ -7,8 +6,6 @@ import {
   BlogPostSearchParams,
 } from '@core/entities';
 import { BlogPostCategoryModel, BlogPostModel } from '../models/blog.model';
-
-dayjs.extend(localizedFormat);
 
 export function refineBlogPostSearchParams(
   params: Record<string, string>,

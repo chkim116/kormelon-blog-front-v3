@@ -48,12 +48,14 @@ export const BlogPostCommentContainer = () => {
           userId,
           username,
           value,
+          userProfile,
           deletedAt,
         }) => (
           <>
             <BlogPostCommentBodyContainer
               key={id}
               postId={postId}
+              userProfile={userProfile}
               commentId={id}
               commentReplies={commentReplies}
               createdAt={createdAt}
