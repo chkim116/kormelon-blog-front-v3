@@ -1,5 +1,5 @@
 export function intersectionObserver(
-  target: HTMLElement,
+  target: HTMLElement | null,
   config: IntersectionObserverInit,
   callback: () => void,
 ) {

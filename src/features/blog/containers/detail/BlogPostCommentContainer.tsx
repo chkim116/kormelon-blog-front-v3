@@ -27,11 +27,7 @@ export const BlogPostCommentContainer = () => {
   }, [dispatch, notificationId]);
 
   const handleCommentLoad = useCallback(() => {
-    if (!refCommentElement.current) {
-      return;
-    }
-
-    intersectionObserver(refCommentElement.current, {}, () => {
+    intersectionObserver(refCommentElement.current, { threshold: 0.1 }, () => {
       dispatch(effBlogPostCommentsLoad(postId)).unwrap();
     });
   }, [dispatch, postId]);
