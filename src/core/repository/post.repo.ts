@@ -10,6 +10,7 @@ import {
   Response,
   BlogPostSearchByTagParams,
   TagMetaEntity,
+  BlogPrivatePostEntity,
 } from '@core/entities';
 import { apiClient } from '@core/network';
 import { tokenProvider } from '@core/tokenProvider';
@@ -41,6 +42,17 @@ export const postRepository = {
     return apiClient.get<Response<BlogPostEntity[], PagingMeta>>('/post', {
       params,
     });
+  },
+
+  /**
+   * 비밀 게시글 조회
+   *
+   * @returns
+   */
+  fetchPrivatePosts() {
+    return apiClient.get<Response<BlogPrivatePostEntity[], PagingMeta>>(
+      '/private',
+    );
   },
 
   /**
@@ -82,6 +94,18 @@ export const postRepository = {
   fetchPostById(id: number) {
     return apiClient.get<Response<BlogPostDetailResultEntityPayload>>(
       `/post/${id}`,
+    );
+  },
+
+  /**
+   * 비밀 게시글 상세 조회
+   *
+   * @param id
+   * @returns
+   */
+  fetchPrivatePostById(id: number) {
+    return apiClient.get<Response<BlogPostDetailResultEntityPayload>>(
+      `/private/${id}`,
     );
   },
 

@@ -43,6 +43,21 @@ export const effBlogPostDetailLoad = createAsyncThunk<
   }
 });
 
+export const effBlogPrivatePostDetailLoad = createAsyncThunk<
+  BlogPostDetailResultPayload,
+  number
+>('blogPostPrivateDetailLoad', async (id) => {
+  const {
+    data: { payload },
+  } = await repo.post.fetchPrivatePostById(id);
+
+  return {
+    next: payload.next,
+    prev: payload.prev,
+    post: toBlogPostDetailModel(payload.post),
+  };
+});
+
 export const effBlogPostRecommendLoad = createAsyncThunk<BlogPostModel[], void>(
   'blogPostRecommendLoad',
   async () => {
@@ -70,12 +85,8 @@ export const effBlogPostAddView = createAsyncThunk<void, number>(
 
 export const effBlogPostDelete = createAsyncThunk<void, number>(
   'blogPostDelete',
-  async (id, { rejectWithValue }) => {
-    try {
-      await repo.post.deletePost(id);
-    } catch (err) {
-      return rejectWithValue(err);
-    }
+  async (id) => {
+    await repo.post.deletePost(id);
   },
 );
 

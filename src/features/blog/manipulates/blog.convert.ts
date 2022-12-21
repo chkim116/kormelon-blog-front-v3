@@ -4,8 +4,13 @@ import {
   BlogPostCategoryEntity,
   BlogPostEntity,
   BlogPostSearchParams,
+  BlogPrivatePostEntity,
 } from '@core/entities';
-import { BlogPostCategoryModel, BlogPostModel } from '../models/blog.model';
+import {
+  BlogPostCategoryModel,
+  BlogPostModel,
+  BlogPrivatePostModel,
+} from '../models/blog.model';
 
 export function refineBlogPostSearchParams(
   params: Record<string, string>,
@@ -32,6 +37,16 @@ export function refinePostCreatedAt(createdAt: string) {
 }
 
 export function toBlogPostModels(entities: BlogPostEntity[]): BlogPostModel[] {
+  return entities.map((entity) => ({
+    ...entity,
+    createdAt: refinePostCreatedAt(entity.createdAt),
+    readTime: refinePostReadingTime(entity.readTime),
+  }));
+}
+
+export function toBlogPrivatePostModels(
+  entities: BlogPrivatePostEntity[],
+): BlogPrivatePostModel[] {
   return entities.map((entity) => ({
     ...entity,
     createdAt: refinePostCreatedAt(entity.createdAt),
