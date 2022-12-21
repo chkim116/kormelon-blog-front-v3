@@ -6,13 +6,16 @@ import { feedbackService } from '@common/components/Feedback';
 import { useAppDispatch, useAppSelector } from '@common/store';
 import { BlogPostCreateParams, TagEntity } from '@core/entities';
 import { effCategoriesLoad, selCategories } from '@shared/stores/category';
+import { useQueryParser } from '@shared/hooks';
 import { createBlogPostCreateParams } from '@features/blog/manipulates/blog.create';
 import {
   effBlogPostCreate,
   effBlogPostDetailLoad,
   effBlogPostUpdate,
+  effBlogPrivatePostDetailLoad,
   selBlogPostDetail,
 } from '@features/blog/stores';
+import { refineBlogWriteParams } from '@features/blog/manipulates';
 import { PostConfirm } from '../../components/write';
 import { BlogPostContentWriteContainer } from './BlogPostContentWriteContainer';
 import { BlogPostMetaWriteContainer } from './BlogPostMetaWriteContainer';
@@ -20,13 +23,13 @@ import { BlogPostTagSearchContainer } from './BlogPostTagSearchContainer';
 
 export const BlogPostWriteContainer = () => {
   const router = useRouter();
+  const { editId, isPrivateMode } = useQueryParser(refineBlogWriteParams);
 
   const dispatch = useAppDispatch();
   const categories = useAppSelector(selCategories);
   const postDetail = useAppSelector(selBlogPostDetail);
 
-  const isEditMode = useMemo(() => !!router.query.edit, [router.query.edit]);
-  const editId = useMemo(() => router.query.edit, [router.query.edit]);
+  const isEditMode = useMemo(() => !!editId, [editId]);
 
   const [form, setForm] = useState<BlogPostCreateParams>(
     createBlogPostCreateParams(),
@@ -92,7 +95,11 @@ export const BlogPostWriteContainer = () => {
 
   useEffect(() => {
     if (isEditMode) {
-      dispatch(effBlogPostDetailLoad(Number(editId)))
+      const effect = isPrivateMode
+        ? effBlogPrivatePostDetailLoad(editId)
+        : effBlogPostDetailLoad(editId);
+
+      dispatch(effect)
         .unwrap()
         .then(
           ({
@@ -122,7 +129,7 @@ export const BlogPostWriteContainer = () => {
           },
         );
     }
-  }, [dispatch, editId, isEditMode]);
+  }, [dispatch, editId, isEditMode, isPrivateMode]);
 
   return (
     <Box

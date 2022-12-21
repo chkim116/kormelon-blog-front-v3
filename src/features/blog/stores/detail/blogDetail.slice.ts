@@ -1,17 +1,21 @@
-import { AnyAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { BlogPostNearEntity } from '@core/entities';
 import { createBlogPostDetailModel } from '@features/blog/manipulates';
 import {
   BlogPostCommentSearchModel,
   BlogPostDetailModel,
+  BlogPostModel,
 } from '@features/blog/models';
 import {
   effBlogPostCommentsLoad,
   effBlogPostDetailLoad,
+  effBlogPostRecommendLoad,
+  effBlogPrivatePostDetailLoad,
 } from './blogDetail.effect';
 
 interface PostSliceState {
   loading: boolean;
+  recommendPosts: BlogPostModel[];
   postDetail: BlogPostDetailModel;
   postNear: BlogPostNearEntity;
   postComments: BlogPostCommentSearchModel[];
@@ -21,6 +25,7 @@ interface PostSliceState {
 function createBlogSliceState(): PostSliceState {
   return {
     loading: false,
+    recommendPosts: [],
     postNear: {
       next: null,
       prev: null,
@@ -51,8 +56,33 @@ export const blogDetailSlice = createSlice({
       state.loading = false;
     });
 
+    builder.addCase(effBlogPrivatePostDetailLoad.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(
+      effBlogPrivatePostDetailLoad.fulfilled,
+      (state, { payload }) => {
+        state.loading = false;
+        state.postDetail = payload.post;
+        state.postNear = {
+          next: payload.next,
+          prev: payload.prev,
+        };
+      },
+    );
+    builder.addCase(effBlogPrivatePostDetailLoad.rejected, (state) => {
+      state.loading = false;
+    });
+
     builder.addCase(effBlogPostCommentsLoad.fulfilled, (state, { payload }) => {
       state.postComments = payload;
     });
+
+    builder.addCase(
+      effBlogPostRecommendLoad.fulfilled,
+      (state, { payload }) => {
+        state.recommendPosts = payload;
+      },
+    );
   },
 });

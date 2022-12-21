@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react';
 import { ComponentStory, ComponentMeta, ArgTypes } from '@storybook/react';
-import { BlogPostAnchorModel } from '@features/blog/models/blog.model';
+import { BlogPostAnchorModel } from '@features/blog/models';
 import { PostFloating } from '../PostFloating';
 
 function createAnchorModel(values: string[]): BlogPostAnchorModel[] {

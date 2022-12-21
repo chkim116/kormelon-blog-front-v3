@@ -162,15 +162,22 @@ export const PostDetailHeader = ({
         flexWrap="wrap"
       >
         {tags.map((tag) => (
-          <Chip
+          <NextLink
             key={tag.id}
-            icon={<LocalOfferOutlined fontSize="small" />}
-            label={tag.value}
-            variant="outlined"
-            sx={{
-              px: 1,
-            }}
-          />
+            href={`/search?tagId=${tag.id}&tagValue=${tag.value}`}
+            passHref
+          >
+            <Chip
+              clickable
+              component="a"
+              icon={<LocalOfferOutlined fontSize="small" />}
+              label={tag.value}
+              variant="outlined"
+              sx={{
+                px: 1,
+              }}
+            />
+          </NextLink>
         ))}
       </Stack>
     </Box>

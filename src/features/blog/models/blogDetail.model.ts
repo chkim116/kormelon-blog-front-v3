@@ -73,6 +73,10 @@ export interface BlogPostCommentReplySearchModel {
    */
   username: string;
   /**
+   * 유저의 프로필 이미지
+   */
+  userProfile: string;
+  /**
    * 비밀번호
    * 항상 빈 스트링 값이다. 실제 비교는 서버에서 진행함.
    */

@@ -1,4 +1,9 @@
-import { Response, TagEntity, TagMetaEntity } from '@core/entities';
+import {
+  Response,
+  TagEntity,
+  TagMetaEntity,
+  TagWithPostEntity,
+} from '@core/entities';
 import { apiClient } from '@core/network';
 
 export const tagRepository = {
@@ -20,5 +25,14 @@ export const tagRepository = {
    */
   createTag(value: string) {
     return apiClient.post<Response<TagEntity>>('/tag', { value });
+  },
+
+  /**
+   * 모든 태그를 조회한다.
+   *
+   * @returns
+   */
+  getAllTags() {
+    return apiClient.get<Response<TagWithPostEntity[], TagMetaEntity>>('/tag');
   },
 };

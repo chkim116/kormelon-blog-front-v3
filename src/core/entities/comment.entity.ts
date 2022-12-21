@@ -1,3 +1,10 @@
+interface CommentUserEntity {
+  /**
+   * 댓글 작성자의 프로필 이미지
+   */
+  profileImage: string;
+}
+
 export interface BaseCommentCreateParams {
   /**
    * 댓글 값
@@ -88,7 +95,11 @@ export interface CommentReplySearchEntity {
    * 익명이라면 '익명'이 기본이다.
    */
   username: string;
-
+  /**
+   * 유저 정보
+   * 유저의 이미지를 갖고 있다.
+   */
+  user: CommentUserEntity | null;
   /**
    * 생성 일자
    */

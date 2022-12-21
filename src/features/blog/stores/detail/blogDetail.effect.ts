@@ -4,6 +4,7 @@ import { repo } from '@core/repo';
 import {
   toBlogPostCommentSearchModels,
   toBlogPostDetailModel,
+  toBlogPostModels,
   toCommentCreateParams,
   toCommentDeleteParams,
   toCommentReplyCreateParams,
@@ -20,6 +21,7 @@ import {
   BlogPostCommentSearchModel,
   BlogPostCommentUpdateParamsModel,
   BlogPostDetailResultPayload,
+  BlogPostModel,
 } from '../../models';
 
 export const effBlogPostDetailLoad = createAsyncThunk<
@@ -41,6 +43,32 @@ export const effBlogPostDetailLoad = createAsyncThunk<
   }
 });
 
+export const effBlogPrivatePostDetailLoad = createAsyncThunk<
+  BlogPostDetailResultPayload,
+  number
+>('blogPostPrivateDetailLoad', async (id) => {
+  const {
+    data: { payload },
+  } = await repo.post.fetchPrivatePostById(id);
+
+  return {
+    next: payload.next,
+    prev: payload.prev,
+    post: toBlogPostDetailModel(payload.post),
+  };
+});
+
+export const effBlogPostRecommendLoad = createAsyncThunk<BlogPostModel[], void>(
+  'blogPostRecommendLoad',
+  async () => {
+    const {
+      data: { payload },
+    } = await repo.post.fetchRecommendPosts();
+
+    return toBlogPostModels(payload);
+  },
+);
+
 export const effBlogPostLike = createAsyncThunk<void, number>(
   'blogPostLike',
   async (id) => {
@@ -57,12 +85,8 @@ export const effBlogPostAddView = createAsyncThunk<void, number>(
 
 export const effBlogPostDelete = createAsyncThunk<void, number>(
   'blogPostDelete',
-  async (id, { rejectWithValue }) => {
-    try {
-      await repo.post.deletePost(id);
-    } catch (err) {
-      return rejectWithValue(err);
-    }
+  async (id) => {
+    await repo.post.deletePost(id);
   },
 );
 

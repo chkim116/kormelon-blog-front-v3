@@ -27,11 +27,7 @@ export const BlogPostCommentContainer = () => {
   }, [dispatch, notificationId]);
 
   const handleCommentLoad = useCallback(() => {
-    if (!refCommentElement.current) {
-      return;
-    }
-
-    intersectionObserver(refCommentElement.current, {}, () => {
+    intersectionObserver(refCommentElement.current, { threshold: 0.1 }, () => {
       dispatch(effBlogPostCommentsLoad(postId)).unwrap();
     });
   }, [dispatch, postId]);
@@ -43,8 +39,6 @@ export const BlogPostCommentContainer = () => {
     <Box maxWidth="md" m="0 auto" pt={4} pb={24} px={4} ref={refCommentElement}>
       <BlogPostCommentCreatorContainer postId={postId} />
 
-      <Divider sx={{ pb: 2, mb: 2 }} />
-
       {postComments.map(
         ({
           commentReplies,
@@ -54,12 +48,14 @@ export const BlogPostCommentContainer = () => {
           userId,
           username,
           value,
+          userProfile,
           deletedAt,
         }) => (
           <>
             <BlogPostCommentBodyContainer
               key={id}
               postId={postId}
+              userProfile={userProfile}
               commentId={id}
               commentReplies={commentReplies}
               createdAt={createdAt}

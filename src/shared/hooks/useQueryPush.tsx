@@ -6,7 +6,7 @@ export const useQueryPush = () => {
   const { pathname, push, query } = useRouter();
 
   const navigate = useCallback(
-    (object: Record<string, string>, isScroll = true) => {
+    (object: Record<string, string | number>, isScroll = true) => {
       const queries = { ...query, ...object };
 
       for (const key in queries) {
