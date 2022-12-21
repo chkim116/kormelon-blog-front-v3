@@ -152,7 +152,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
             </Typography>
 
             <Box
-              flex={2}
+              flex={1}
               display={{
                 xs: 'none',
                 md: 'flex',
@@ -179,7 +179,12 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
               ))}
             </Box>
 
-            <Box display="flex" justifyContent="flex-end" flex={1}>
+            <Box
+              display="flex"
+              justifyContent="flex-end"
+              flex={1}
+              flexGrow={{ xs: 2, sm: 1 }}
+            >
               <Box>
                 <IconButton
                   onClick={onThemeChange}
@@ -193,7 +198,15 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                   {themeMode ? <DarkMode /> : <LightMode />}
                 </IconButton>
                 <NextLink href={'/tags'} passHref>
-                  <IconButton LinkComponent="a">
+                  <IconButton
+                    LinkComponent="a"
+                    sx={{
+                      display: {
+                        xs: 'none',
+                        sm: 'inline-flex',
+                      },
+                    }}
+                  >
                     <LocalOffer />
                   </IconButton>
                 </NextLink>
