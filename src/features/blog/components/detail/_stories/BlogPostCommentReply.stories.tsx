@@ -1,6 +1,7 @@
 import { ComponentProps } from 'react';
 import { ComponentStory, ComponentMeta, ArgTypes } from '@storybook/react';
 import { Box } from '@mui/material';
+import { SAMPLE_IMAGE } from '@common/constants';
 import { BlogPostCommentReplySearchModel } from '@features/blog/models';
 import { BlogPostCommentReply } from '../BlogPostCommentReply';
 
@@ -26,6 +27,7 @@ function createReplies(isUser = true): BlogPostCommentReplySearchModel {
       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit cupiditate facere recusandae! Minima, dicta labore possimus soluta fugiat, aliquid maxime officiis dolorum autem suscipit expedita necessitatibus vitae? Minima, temporibus repellendus!',
     deletedAt: '',
     password: '',
+    userProfile: SAMPLE_IMAGE,
   };
 }
 

@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react';
 import { ComponentStory, ComponentMeta, ArgTypes } from '@storybook/react';
-import { PostCard } from '../../../features/blog/components/search/PostCard';
+import { PostCard } from '../PostCard';
 
 type MyArgTypes = Partial<
   Record<keyof ComponentProps<typeof PostCard>, ArgTypes[string]>
