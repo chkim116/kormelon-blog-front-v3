@@ -8,6 +8,8 @@ import {
   BlogPostSearchParams,
   BlogPostUpdateParams,
   Response,
+  BlogPostSearchByTagParams,
+  TagMetaEntity,
 } from '@core/entities';
 import { apiClient } from '@core/network';
 import { tokenProvider } from '@core/tokenProvider';
@@ -16,6 +18,16 @@ export const postRepository = {
   fetchRecommendPosts(take = 4) {
     return apiClient.get<Response<BlogPostRecommendEntity[], PagingMeta>>(
       `/post/recommend?take=${take}`,
+    );
+  },
+
+  /**
+   * 태그로 게시글 조회
+   */
+  fetchPostsByTagId(params: BlogPostSearchByTagParams) {
+    return apiClient.get<Response<BlogPostEntity[], TagMetaEntity>>(
+      '/post/search/tag',
+      { params },
     );
   },
 

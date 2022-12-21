@@ -2,6 +2,7 @@
 // TODO: 분할 필요 - 220927
 import React, {
   forwardRef,
+  useEffect,
   useImperativeHandle,
   useMemo,
   useState,
@@ -36,6 +37,7 @@ import {
   Typography,
 } from '@mui/material';
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 import { UserRoleEnum } from '@core/entities/auth.entity';
 import { HeaderHandle } from '@shared/containers/Layout';
 import { NotificationSearchModel } from '@shared/models/notification.model';
@@ -74,6 +76,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
     const [userMenuEl, setUserMenuEl] = useState<HTMLElement | null>(null);
     const [notiMenuEl, setNotiMenuEl] = useState<HTMLElement | null>(null);
     const [isFadeIn, setIsFadeIn] = useState(true);
+    const { pathname } = useRouter();
 
     const isUserMenuOpen = useMemo(() => Boolean(userMenuEl), [userMenuEl]);
     const isNotiMenuOpen = useMemo(() => Boolean(notiMenuEl), [notiMenuEl]);
@@ -108,6 +111,10 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
       }),
       [],
     );
+
+    useEffect(() => {
+      setDrawerOpen(false);
+    }, [pathname]);
 
     return (
       <Slide mountOnEnter unmountOnExit in={isFadeIn}>
@@ -184,14 +191,17 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                 >
                   {themeMode ? <DarkMode /> : <LightMode />}
                 </IconButton>
-
+                <NextLink href={'/tags'} passHref>
+                  <IconButton LinkComponent="a">
+                    <LocalOffer />
+                  </IconButton>
+                </NextLink>
                 {user.id && (
                   <IconButton
                     size="medium"
                     aria-label="show new notifications"
                     onClick={handleNotiMenuOpen}
                   >
-                    {/* TODO: 연동하면서, 토글 메뉴 추가 */}
                     <Badge badgeContent={notifications.length} color="error">
                       <Notifications />
                     </Badge>

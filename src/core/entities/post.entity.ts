@@ -186,3 +186,10 @@ export interface BlogPostSearchParams {
    */
   categoryId?: number;
 }
+
+export interface BlogPostSearchByTagParams {
+  /**
+   * 태그의 아이디
+   */
+  tagId: number;
+}
