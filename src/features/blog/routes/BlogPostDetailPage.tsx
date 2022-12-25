@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { env } from '@common/env';
 import { BlogPostNearEntity } from '@core/entities';
 import { useQueryParser } from '@shared/hooks/useQueryParser';
+import { PageSeo } from '@common/head';
 import {
   BlogPostCommentContainer,
   BlogPostDetailContainer,
@@ -42,6 +43,12 @@ export const BlogPostDetailPage = ({
 
   return (
     <BlogPostDetailCommentParamsCtxProvider value={queries}>
+      <PageSeo
+        url={`https://www.kormelon.com/blog/post/${post.id}`}
+        image={post.thumbnail}
+        desc={post.preview}
+        title={post.title}
+      />
       <BlogPostDetailContainer post={post} />
       <Divider
         sx={{

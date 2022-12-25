@@ -1,6 +1,6 @@
 {
   "name": "kormelon-blog-front-v3",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,7 +10,8 @@
     "cy": "cypress open",
     "cy:run": "cypress run",
     "sb": "start-storybook -p 6006",
-    "build:sb": "build-storybook"
+    "build:sb": "build-storybook",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
@@ -24,9 +25,12 @@
     "copy-to-clipboard": "^3.3.2",
     "dayjs": "^1.11.5",
     "gravatar": "^1.8.2",
+    "marked": "^4.2.5",
     "mui-markdown": "^0.5.5",
     "next": "12.3.0",
     "next-images": "^1.8.4",
+    "next-seo": "^5.15.0",
+    "next-sitemap": "^3.1.43",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-redux": "^8.0.4",
@@ -44,6 +48,7 @@
     "@storybook/react": "^6.5.12",
     "@storybook/testing-library": "^0.0.13",
     "@types/gravatar": "^1.8.3",
+    "@types/marked": "^4.0.8",
     "@types/node": "18.7.18",
     "@types/react": "18.0.20",
     "@types/react-dom": "18.0.6",

@@ -136,6 +136,12 @@ export interface BlogPostDetailEntity extends BlogPostEntity {
   isPrivate: boolean;
 }
 
+export interface BlogPostRssEntity
+  extends Pick<
+    BlogPostDetailEntity,
+    'id' | 'content' | 'createdAt' | 'title'
+  > {}
+
 export type BlogPostDetailNearPost = Omit<
   BlogPostEntity,
   'preview' | 'readTime'

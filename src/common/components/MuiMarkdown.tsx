@@ -13,7 +13,22 @@ const ContentStyled = styled.div`
 
   img {
     width: 100%;
+    max-width: 500px;
     object-fit: contain;
+  }
+
+  pre {
+    font-family: inherit;
+    margin: 0;
+  }
+
+  code {
+    font-family: inherit;
+    font-size: 0.9rem;
+    letter-spacing: -0em;
+    padding: 0.4rem !important;
+    font-weight: bold;
+    border: 1px solid #dbdbdb;
   }
 `;
 
@@ -88,6 +103,9 @@ export const MuiMarkdown = ({ children }: MuiMarkdownProps) => {
           slugify: (str) => str,
           overrides: MuiMarkdownOverrides(theme),
         }}
+        inlineCodeBgColor="rgb(248, 248, 242)"
+        inlineCodeColor="red"
+        codeBlockTheme={Markdown.codeBlockThemes.oceanicNext}
       >
         {children}
       </Markdown.default>
