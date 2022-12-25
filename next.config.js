@@ -13,11 +13,26 @@ const nextConfig = {
       'images.unsplash.com',
     ],
   },
+
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/blog',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = withImages({
   ...nextConfig,
   webpack(config) {
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+    };
+
     return config;
   },
 });

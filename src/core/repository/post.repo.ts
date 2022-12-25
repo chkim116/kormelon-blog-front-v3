@@ -11,6 +11,7 @@ import {
   BlogPostSearchByTagParams,
   TagMetaEntity,
   BlogPrivatePostEntity,
+  BlogPostRssEntity,
 } from '@core/entities';
 import { apiClient } from '@core/network';
 import { tokenProvider } from '@core/tokenProvider';
@@ -53,6 +54,13 @@ export const postRepository = {
     return apiClient.get<Response<BlogPrivatePostEntity[], PagingMeta>>(
       '/private',
     );
+  },
+
+  /**
+   * RSS 피드 조회
+   */
+  fetchPostRss() {
+    return apiClient.get<Response<BlogPostRssEntity[]>>('/post/rss');
   },
 
   /**

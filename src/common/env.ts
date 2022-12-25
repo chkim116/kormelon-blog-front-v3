@@ -17,4 +17,11 @@ export const env = {
    * SSR 체크
    */
   isSSR: typeof window === 'undefined',
+  /**
+   * api url
+   */
+  apiUrl:
+    process.env.NODE_ENV === 'production'
+      ? 'https://api.kormelon.com/api'
+      : 'http://localhost:4000/api',
 };

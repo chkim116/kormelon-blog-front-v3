@@ -12,6 +12,7 @@ import '@shared/styles/global.css';
 import { Layout } from '@shared/containers/Layout';
 import store from '@common/store';
 import { createEmotionCache } from '@shared/createEmotionCache';
+import { DefaultHead } from '@common/head';
 
 dayjs.extend(localizedFormat);
 
@@ -36,6 +37,7 @@ export default function MyApp({
 }: AppPropsWithLayout) {
   return (
     <CacheProvider value={emotionCache}>
+      <DefaultHead />
       <Provider store={store}>
         <Layout>
           <Component {...pageProps} />

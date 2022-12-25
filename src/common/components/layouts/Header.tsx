@@ -53,10 +53,6 @@ const NAV_ITEM_LIST = [
     label: 'Resume',
     href: '/resume',
   },
-  {
-    label: 'About',
-    href: '/about',
-  },
 ];
 
 interface HeaderProps {
@@ -142,17 +138,16 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
               },
             }}
           >
-            {/* TODO: 로고 교체 */}
             <Typography variant="h5" noWrap component="div" flex={1}>
               <NextLink href="/" passHref>
                 <Link underline="none" color="text.primary" fontWeight="bold">
-                  K-DEV
+                  Kormelon
                 </Link>
               </NextLink>
             </Typography>
 
             <Box
-              flex={2}
+              flex={1}
               display={{
                 xs: 'none',
                 md: 'flex',
@@ -179,7 +174,12 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
               ))}
             </Box>
 
-            <Box display="flex" justifyContent="flex-end" flex={1}>
+            <Box
+              display="flex"
+              justifyContent="flex-end"
+              flex={1}
+              flexGrow={{ xs: 2, sm: 1 }}
+            >
               <Box>
                 <IconButton
                   onClick={onThemeChange}
@@ -193,7 +193,15 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                   {themeMode ? <DarkMode /> : <LightMode />}
                 </IconButton>
                 <NextLink href={'/tags'} passHref>
-                  <IconButton LinkComponent="a">
+                  <IconButton
+                    LinkComponent="a"
+                    sx={{
+                      display: {
+                        xs: 'none',
+                        sm: 'inline-flex',
+                      },
+                    }}
+                  >
                     <LocalOffer />
                   </IconButton>
                 </NextLink>
@@ -500,7 +508,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                   <Logout />
                 </IconButton>
               ) : (
-                <NextLink href={'/login'} passHref>
+                <NextLink href={'/auth'} passHref>
                   <IconButton color="inherit">
                     <Login />
                   </IconButton>
