@@ -9,6 +9,7 @@ import {
 import { ThemeProvider } from '@emotion/react';
 import styled from '@emotion/styled';
 import { CssBaseline } from '@mui/material';
+import { useRouter } from 'next/router';
 import { STORAGE_THEME_KEY } from '@common/constants';
 import { useAppDispatch, useAppSelector } from '@common/store';
 import { tokenProvider } from '@core/tokenProvider';
@@ -18,6 +19,7 @@ import {
   effNotificationLoad,
   selNotifications,
 } from '@shared/stores/notification';
+import { googleTagService } from '@shared/services';
 import { feedbackService } from '../../common/components/Feedback';
 import { Footer } from '../../common/components/layouts/Footer';
 import { Header } from '../../common/components/layouts/Header';
@@ -42,6 +44,8 @@ export const Layout = ({ children }: LayoutProps) => {
   const isLogged = useAppSelector(selIsLogged);
   const notifications = useAppSelector(selNotifications);
 
+  const router = useRouter();
+
   const refHeader = useRef<HeaderHandle>(null);
   const refCurrentScrollY = useRef<number>(0);
 
@@ -64,16 +68,6 @@ export const Layout = ({ children }: LayoutProps) => {
     });
   };
 
-  useEffect(() => {
-    const theme = tokenProvider().get(STORAGE_THEME_KEY);
-    setThemeMode(theme === 'light');
-  }, []);
-
-  useEffect(() => {
-    dispatch(authSlice.actions.initialize());
-    dispatch(effNotificationLoad());
-  }, [dispatch]);
-
   const handleScroll = useCallback(() => {
     if (50 > window.scrollY) {
       return refHeader.current?.open();
@@ -95,6 +89,35 @@ export const Layout = ({ children }: LayoutProps) => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [handleScroll]);
+
+  useEffect(() => {
+    const theme = tokenProvider().get(STORAGE_THEME_KEY);
+    setThemeMode(theme === 'light');
+  }, []);
+
+  useEffect(() => {
+    dispatch(authSlice.actions.initialize());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isLogged) {
+      dispatch(effNotificationLoad());
+    }
+  }, [dispatch, isLogged]);
+
+  useEffect(() => {
+    const gtagRouteChange = (url: string) => {
+      googleTagService.pageView(url);
+    };
+
+    router.events.on('routeChangeComplete', (url) => {
+      gtagRouteChange(url);
+    });
+
+    return () => {
+      router.events.off('routeChangeComplete', gtagRouteChange);
+    };
+  }, [router.events]);
 
   return (
     <ThemeProvider theme={theme}>
