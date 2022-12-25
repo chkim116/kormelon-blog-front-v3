@@ -105,7 +105,7 @@
   - ETC - CircleCI, AWS(S3/Cloudfront/Lambda/EB)
 - 수행 업무 :
   - 캔버스 제작 에디터
-    - 이미지 크롭(crop), 리솔루션(resolution), 배경색상 변경 기능
+    - 이미지 크롭(crop), 리솔루션(resolution), 배경 색상 변경 기능
     - 크롭 방식 이외, 큰 이미지를 원하는 크기로 잘게 쪼갤 수 있는 기능 지원
   - 사내 어드민
     - 캔버스 제작 에디터에서 주문된 주문 목록 조회 기능
@@ -134,4 +134,6 @@
 
 - <a href="https://github.com/chkim116/kadvice" target="_blank">Github</a>
 - 한국어로 된 명언 리스트
-- 명언을 페이지에 넣고 싶은데, 영어로 된 영어가 마음에 들지 않아 직접 제작함.
+- 명언을 페이지에 넣고 싶은데, 영어로 된 명언들이 마음에 들지 않아 직접 제작함.
+
+_last updated 22.12.21_

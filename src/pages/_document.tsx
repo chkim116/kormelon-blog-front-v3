@@ -2,15 +2,12 @@ import { Children } from 'react';
 import createEmotionServer from '@emotion/server/create-instance';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import { createEmotionCache } from '@shared/createEmotionCache';
-import { DefaultHead } from '@common/head';
 
 export default class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head>
-          <DefaultHead />
-        </Head>
+        <Head />
         <body>
           <Main />
           <div id="feedback" />

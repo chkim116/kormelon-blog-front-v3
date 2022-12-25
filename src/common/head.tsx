@@ -165,9 +165,10 @@ export function PageSeo({
   url = 'https://www.kormelon.com',
   image = 'https://images.unsplash.com/photo-1616812757130-aca5451b0243?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
 }: SeoProps) {
+  const DEFAULT_TITLE = 'Kormelon Dev blog | ';
   return (
     <NextSeo
-      title={title}
+      title={DEFAULT_TITLE + title}
       description={desc}
       canonical={url}
       openGraph={{

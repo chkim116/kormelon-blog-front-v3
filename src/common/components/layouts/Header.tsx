@@ -53,10 +53,6 @@ const NAV_ITEM_LIST = [
     label: 'Resume',
     href: '/resume',
   },
-  {
-    label: 'About',
-    href: '/about',
-  },
 ];
 
 interface HeaderProps {
@@ -142,11 +138,10 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
               },
             }}
           >
-            {/* TODO: 로고 교체 */}
             <Typography variant="h5" noWrap component="div" flex={1}>
               <NextLink href="/" passHref>
                 <Link underline="none" color="text.primary" fontWeight="bold">
-                  K-DEV
+                  Kormelon
                 </Link>
               </NextLink>
             </Typography>
@@ -513,7 +508,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                   <Logout />
                 </IconButton>
               ) : (
-                <NextLink href={'/login'} passHref>
+                <NextLink href={'/auth'} passHref>
                   <IconButton color="inherit">
                     <Login />
                   </IconButton>
