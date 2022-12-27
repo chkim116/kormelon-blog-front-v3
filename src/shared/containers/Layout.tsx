@@ -20,6 +20,7 @@ import {
   selNotifications,
 } from '@shared/stores/notification';
 import { googleTagService } from '@shared/services';
+import { effViewLoad, selViewValue } from '@shared/stores/view';
 import { feedbackService } from '../../common/components/Feedback';
 import { Footer } from '../../common/components/layouts/Footer';
 import { Header } from '../../common/components/layouts/Header';
@@ -43,6 +44,7 @@ export const Layout = ({ children }: LayoutProps) => {
   const user = useAppSelector(selUserData);
   const isLogged = useAppSelector(selIsLogged);
   const notifications = useAppSelector(selNotifications);
+  const view = useAppSelector(selViewValue);
 
   const router = useRouter();
 
@@ -119,6 +121,10 @@ export const Layout = ({ children }: LayoutProps) => {
     };
   }, [router.events]);
 
+  useEffect(() => {
+    dispatch(effViewLoad());
+  }, [dispatch]);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -134,7 +140,7 @@ export const Layout = ({ children }: LayoutProps) => {
           onThemeChange={handleThemeChange}
         />
         <Main>{children}</Main>
-        <Footer />
+        <Footer {...view} />
       </Wrap>
     </ThemeProvider>
   );

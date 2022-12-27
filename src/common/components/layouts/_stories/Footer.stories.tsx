@@ -13,7 +13,18 @@ export default {
   argTypes,
 } as ComponentMeta<typeof Footer>;
 
-const Template: ComponentStory<typeof Footer> = (_) => <Footer />;
+const Template: ComponentStory<typeof Footer> = ({ ...props }) => (
+  <Footer {...props} />
+);
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  today: Number(0).toLocaleString(),
+  total: Number(0).toLocaleString(),
+};
+
+export const View = Template.bind({});
+View.args = {
+  today: Number(100).toLocaleString(),
+  total: Number(1000).toLocaleString(),
+};

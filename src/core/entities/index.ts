@@ -5,3 +5,4 @@ export * from './notification.entity';
 export * from './post.entity';
 export * from './tag.entity';
 export * from './comment.entity';
+export * from './view.entity';
