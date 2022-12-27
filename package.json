@@ -4,14 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "cross-env NODE_ENV=production next build",
     "start": "next start",
+    "deploy": "serverless",
     "lint": "next lint",
     "cy": "cypress open",
     "cy:run": "cypress run",
     "sb": "start-storybook -p 6006",
     "build:sb": "build-storybook",
-    "postbuild": "next-sitemap"
+    "postbuild": "cross-env NODE_ENV=production next-sitemap"
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
@@ -54,6 +55,7 @@
     "@types/react-dom": "18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.37.0",
     "babel-loader": "^8.2.5",
+    "cross-env": "^7.0.3",
     "cypress": "^10.8.0",
     "eslint": "8.23.1",
     "eslint-config-next": "12.3.0",
