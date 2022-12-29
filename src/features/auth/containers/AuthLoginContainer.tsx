@@ -36,7 +36,7 @@ export const AuthLoginContainer = () => {
 
     dispatch(effAuthLogin(form))
       .unwrap()
-      .then(() => router.push('/'))
+      .then(() => router.push('/blog'))
       .catch((err) => {
         feedbackService('error', err.message);
       });

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { env } from '@common/env';
 import { Dialog } from '@common/components';
 
-function usePreventPageLeave(path = '/') {
+function usePreventPageLeave(path = '/blog') {
   const { push, asPath, beforePopState } = useRouter();
 
   const [isOpen, setIsOpen] = useState(false);

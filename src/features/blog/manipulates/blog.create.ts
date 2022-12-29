@@ -31,7 +31,10 @@ export function createBlogPostDetailModel(): BlogPostDetailModel {
   };
 }
 
-export function createContentAnchorPositionMap(anchors: BlogPostAnchorModel[]) {
+export function createContentAnchorPositionMap(
+  anchors: BlogPostAnchorModel[],
+  farAwayHeight = 0,
+) {
   if (env.isSSR || !anchors.length) {
     return;
   }
@@ -42,7 +45,7 @@ export function createContentAnchorPositionMap(anchors: BlogPostAnchorModel[]) {
     const anchorDom = document.getElementById(anchor.id);
 
     if (anchorDom) {
-      anchorPositionMap[anchor.id] = anchorDom.offsetTop - 200;
+      anchorPositionMap[anchor.id] = farAwayHeight + anchorDom.offsetTop - 200;
     }
   }
 

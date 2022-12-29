@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Box } from '@mui/material';
 import copy from 'copy-to-clipboard';
 import { feedbackService } from '@common/components/Feedback';
@@ -50,15 +50,19 @@ export const BlogPostDetailContainer = ({
   const router = useQueryPush();
 
   const refContentBoundary = useRef<HTMLDivElement>(null);
-  const [anchors, setAnchors] = useState<BlogPostAnchorModel[]>([]);
-  const anchorPosition = createContentAnchorPositionMap(anchors);
-
   const tick = useRef<NodeJS.Timer | null>(null);
+
+  const [anchors, setAnchors] = useState<BlogPostAnchorModel[]>([]);
+  const [farAwayHeight, setFarAwayHeight] = useState(0);
+
+  const anchorPosition = useMemo(
+    () => createContentAnchorPositionMap(anchors, farAwayHeight),
+    [anchors, farAwayHeight],
+  );
+
   const [activeAnchorId, setActiveAnchorId] = useState('');
   const [isMove, setIsMove] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
-
-  const [farAwayHeight, setFarAwayHeight] = useState(0);
 
   const getFarAwayHeight = useCallback((element: HTMLElement) => {
     if (!element?.offsetHeight) {
@@ -177,15 +181,19 @@ export const BlogPostDetailContainer = ({
         <PostThumbnail src={thumbnail} alt={`${title} thumbnail`} />
       </Box>
 
-      <Box maxWidth="md" m="0 auto" ref={refContentBoundary}>
+      <Box
+        position="relative"
+        maxWidth="md"
+        m="0 auto"
+        ref={refContentBoundary}
+      >
         <PostContent content={content} />
-
         <Box
           position="absolute"
-          top={`${farAwayHeight}px`}
-          right="1%"
-          width="204px"
-          height={`calc(100% - ${farAwayHeight}px)`}
+          top={0}
+          right="-230px"
+          width="200px"
+          height="100%"
         >
           <PostFloating
             activeAnchorId={activeAnchorId}

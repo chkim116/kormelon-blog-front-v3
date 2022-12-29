@@ -139,7 +139,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
             }}
           >
             <Typography variant="h5" noWrap component="div" flex={1}>
-              <NextLink href="/" passHref>
+              <NextLink href="/blog" passHref>
                 <Link underline="none" color="text.primary" fontWeight="bold">
                   Kormelon
                 </Link>
