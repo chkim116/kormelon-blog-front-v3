@@ -112,7 +112,8 @@ export const PostWriteContent = forwardRef<
           id="content"
           onChange={handleChange}
           multiline
-          minRows={50}
+          maxRows={30}
+          minRows={30}
           aria-label="post content"
           placeholder="게시글을 작성하세요."
           sx={{

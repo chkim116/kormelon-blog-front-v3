@@ -27,7 +27,7 @@ export const SearchListContainer = ({ tagValue }: SearchListContainerProps) => {
         <strong>{tagValue}</strong>
         태그 검색: 총 {total}개의 게시글
       </Typography>
-      <SearchList posts={posts} loading={loading} />;
+      <SearchList posts={posts} loading={loading} />
     </Container>
   );
 };

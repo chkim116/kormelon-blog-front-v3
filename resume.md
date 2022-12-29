@@ -1,9 +1,13 @@
 # RESUME
 
+독학으로 프로그래밍을 단련한 비전공자
+
 - 김창회 (1996.01.23)
 - Email : <a href="mailto:cskim132@gmail.com">cskim132@gmail.com</a>
 - Github : <a href='https://github.com/chkim116' target="_blank">https://github.com/chkim116</a>
 - Blog: https://kormelon.com
+
+<br />
 
 ---
 
@@ -120,7 +124,7 @@
 - 사용 기술 :
   - FE - Next, Redux, Mui
   - BE - Express.js, MySQL, Typeorm
-  - ETC - Github Action, AWS
+  - ETC - CircleCI, AWS
 - 수행 업무 :
   - 프로그래밍 시작부터 꾸준히 개선 작업 중
   - 개인 블로그로 사용 중이며 개발 아티클 외 서적 리뷰 진행
