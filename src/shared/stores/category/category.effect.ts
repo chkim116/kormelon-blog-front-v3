@@ -8,19 +8,35 @@ import {
   SubCategoryUpdateParams,
 } from '@core/entities';
 import { repo } from '@core/repo';
+import { RootState } from '@common/store';
+import { drfCategories } from './category.selector';
 
-export const effCategoriesLoad = createAsyncThunk<CategoryEntity[], void>(
-  'categoriesLoad',
-  async (_, { rejectWithValue }) => {
-    try {
-      const {
-        data: { payload },
-      } = await repo.category.fetchCategories();
+export const effCategoriesLoad = createAsyncThunk<
+  CategoryEntity[],
+  void,
+  { state: RootState }
+>('categoriesLoad', async (_, { getState }) => {
+  const categories = drfCategories(getState());
 
-      return payload;
-    } catch (err) {
-      return rejectWithValue(err);
-    }
+  if (categories.length) {
+    return categories;
+  }
+
+  const {
+    data: { payload },
+  } = await repo.category.fetchCategories();
+
+  return payload;
+});
+
+export const effCategoriesRefresh = createAsyncThunk<CategoryEntity[], void>(
+  'categoriesRefresh',
+  async (_) => {
+    const {
+      data: { payload },
+    } = await repo.category.fetchCategories();
+
+    return payload;
   },
 );
 
@@ -44,7 +60,7 @@ export const effCategoriesCreate = createAsyncThunk<void, CategoryCreateParams>(
   async (params, { rejectWithValue, dispatch }) => {
     try {
       await repo.category.createCategory(params);
-      await dispatch(effCategoriesLoad());
+      await dispatch(effCategoriesRefresh());
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -57,7 +73,7 @@ export const effSubCategoriesCreate = createAsyncThunk<
 >('subCategoryCreate', async (params, { rejectWithValue, dispatch }) => {
   try {
     await repo.category.createSubCategory(params);
-    await dispatch(effCategoriesLoad());
+    await dispatch(effCategoriesRefresh());
   } catch (err) {
     return rejectWithValue(err);
   }
@@ -68,7 +84,7 @@ export const effCategoriesUpdate = createAsyncThunk<void, CategoryUpdateParams>(
   async (params, { rejectWithValue, dispatch }) => {
     try {
       await repo.category.updateCategory(params);
-      await dispatch(effCategoriesLoad());
+      await dispatch(effCategoriesRefresh());
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -81,7 +97,7 @@ export const effSubCategoriesUpdate = createAsyncThunk<
 >('subCategoriesUpdate', async (params, { rejectWithValue, dispatch }) => {
   try {
     await repo.category.updateSubCategory(params);
-    await dispatch(effCategoriesLoad());
+    await dispatch(effCategoriesRefresh());
   } catch (err) {
     return rejectWithValue(err);
   }
@@ -92,7 +108,7 @@ export const effCategoriesDelete = createAsyncThunk<void, number>(
   async (id, { rejectWithValue, dispatch }) => {
     try {
       await repo.category.deleteCategory(id);
-      await dispatch(effCategoriesLoad());
+      await dispatch(effCategoriesRefresh());
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -104,7 +120,7 @@ export const effSubCategoriesDelete = createAsyncThunk<void, number>(
   async (id, { rejectWithValue, dispatch }) => {
     try {
       await repo.category.deleteSubCategory(id);
-      await dispatch(effCategoriesLoad());
+      await dispatch(effCategoriesRefresh());
     } catch (err) {
       return rejectWithValue(err);
     }
