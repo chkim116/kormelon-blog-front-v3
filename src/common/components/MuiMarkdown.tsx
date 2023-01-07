@@ -15,6 +15,8 @@ const ContentStyled = styled.div`
     width: 100%;
     max-width: 500px;
     object-fit: contain;
+    display: flex;
+    margin: 0 auto;
   }
 
   pre {
