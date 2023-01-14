@@ -36,7 +36,7 @@ Cypress.Commands.add('auth', () => {
 Cypress.Commands.add('ignoreNotifications', () => {
   cy.intercept('GET', SERVER_URL + '/notification', {
     statusCode: 200,
-    payload: [],
+    body: { payload: [] },
   });
 });
 
