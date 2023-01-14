@@ -26,7 +26,7 @@ export const BlogPostDetailPage = ({
   return (
     <BlogPostDetailCommentParamsCtxProvider value={queries}>
       <PageSeo
-        url={`https://www.kormelon.com/blog/post/${post.id}`}
+        url={`https://www.kormelon.com/blog/${post.id}`}
         image={post.thumbnail}
         desc={post.preview}
         title={post.title}
