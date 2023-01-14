@@ -12,7 +12,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: posts.map((post) => ({ params: { id: String(post.id) } })),
-    fallback: true,
+    fallback: 'blocking',
   };
 };
 
@@ -31,6 +31,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
         prev,
       },
     },
-    revalidate: 864_000,
+    revalidate: 10,
   };
 };
