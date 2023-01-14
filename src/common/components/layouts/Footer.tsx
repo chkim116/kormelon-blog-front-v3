@@ -1,4 +1,5 @@
-import { GitHub, RssFeed } from '@mui/icons-material';
+import GitHub from '@mui/icons-material/GitHub';
+import RssFeed from '@mui/icons-material/RssFeed';
 import { Box, IconButton, Typography } from '@mui/material';
 import { ViewModel } from '@shared/models';
 

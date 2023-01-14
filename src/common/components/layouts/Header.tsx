@@ -7,19 +7,17 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import {
-  CloseOutlined,
-  DarkMode,
-  Edit,
-  LightMode,
-  LocalOffer,
-  Login,
-  Logout,
-  Notifications,
-  RssFeed,
-  Security,
-  Settings,
-} from '@mui/icons-material';
+import CloseOutlined from '@mui/icons-material/CloseOutlined';
+import DarkMode from '@mui/icons-material/DarkMode';
+import Edit from '@mui/icons-material/Edit';
+import LightMode from '@mui/icons-material/LightMode';
+import LocalOffer from '@mui/icons-material/LocalOffer';
+import Login from '@mui/icons-material/Login';
+import Logout from '@mui/icons-material/Logout';
+import Notifications from '@mui/icons-material/Notifications';
+import RssFeed from '@mui/icons-material/RssFeed';
+import Security from '@mui/icons-material/Security';
+import Settings from '@mui/icons-material/Settings';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
