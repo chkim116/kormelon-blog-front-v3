@@ -1,10 +1,11 @@
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
+import fs from 'fs';
 import { marked } from 'marked';
 import { env } from '@common/env';
-import { repo } from '@core/repo';
 import { BlogPostRssEntity } from '@core/entities';
+import { repo } from '@core/repo';
 
-const URL = env.apiUrl;
+const URL = env.isProduction ? 'https://kormelon.com' : 'http://localhost:3000';
 const TITLE = 'Kormelon Dev Blog';
 const SITE_DESCRIPTION = 'The most recent home feed on Kormelon Blog';
 
@@ -41,7 +42,7 @@ const postRssXml = (posts: BlogPostRssEntity[]) => {
   };
 };
 
-const getRssXml = (posts: BlogPostRssEntity[]) => {
+const createRss = (posts: BlogPostRssEntity[]) => {
   const { rssItemsXml, latestPostDate } = postRssXml(posts);
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -58,27 +59,26 @@ const getRssXml = (posts: BlogPostRssEntity[]) => {
   </rss>`;
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const res = ctx.res;
-
-  if (!res) {
-    return {
-      props: {},
-    };
-  }
-
+const generateRss = async () => {
   const {
     data: { payload: posts },
   } = await repo.post.fetchPostRss();
 
-  res.setHeader('Content-Type', 'text/xml');
-  res.write(getRssXml(posts));
-  res.end();
+  const rssFeed = createRss(posts);
+
+  fs.writeFileSync('./public/rss.xml', rssFeed);
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  await generateRss();
 
   return {
     props: {},
+    revalidate: 10,
   };
 };
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default () => null;
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+export default function Rss() {
+  return <></>;
+}
