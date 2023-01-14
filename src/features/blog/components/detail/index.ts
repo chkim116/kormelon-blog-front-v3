@@ -2,7 +2,6 @@ export * from './BlogPostNear';
 export * from './PostContent';
 export * from './PostContentFooter';
 export * from './PostDetailHeader';
-export * from './PostDetailSkeleton';
 export * from './PostFloating';
 export * from './PostNearCard';
 export * from './PostThumbnail';
