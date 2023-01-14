@@ -46,7 +46,7 @@ describe('auth flow', () => {
     cy.login(loginParams.email, loginParams.password);
 
     cy.wait('@loginUser').then(() => {
-      expect(cy.location('href').should('contain', '/'));
+      expect(cy.location('href').should('contain', 'blog'));
     });
   });
 

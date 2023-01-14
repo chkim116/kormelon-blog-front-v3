@@ -8,7 +8,18 @@ describe('blog CRUD flow', () => {
     cy.fixture('blog/createParams.json').then(
       (params) => (createParams = params),
     );
-
+    cy.intercept('GET', SERVER_URL + '/category', {
+      statusCode: 200,
+      body: {
+        payload: [
+          {
+            id: 1,
+            value: '카테고리',
+            subCategories: [{ id: 1, value: '하위', categoryId: 1 }],
+          },
+        ],
+      },
+    });
     cy.auth();
     cy.visit('/');
   });
@@ -25,15 +36,6 @@ describe('blog CRUD flow', () => {
   it('blog write', () => {
     cy.intercept('GET', SERVER_URL + '/post', { statusCode: 200 });
     cy.intercept('POST', SERVER_URL + '/post', { statusCode: 201 });
-    cy.intercept('GET', SERVER_URL + '/category', {
-      payload: [
-        {
-          id: 1,
-          value: '카테고리',
-          subCategories: [{ id: 1, value: '하위', categoryId: 1 }],
-        },
-      ],
-    });
 
     cy.get('button[type="submit"]')
       .click()
