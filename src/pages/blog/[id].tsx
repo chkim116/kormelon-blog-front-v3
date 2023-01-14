@@ -31,5 +31,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
         prev,
       },
     },
+    revalidate: 864_000,
   };
 };
