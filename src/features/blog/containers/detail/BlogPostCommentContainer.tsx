@@ -36,7 +36,7 @@ export const BlogPostCommentContainer = () => {
   useEffect(handleCommentLoad, [handleCommentLoad]);
 
   return (
-    <Box maxWidth="md" m="0 auto" pt={4} pb={24} px={4} ref={refCommentElement}>
+    <Box maxWidth="md" m="0 auto" pb={24} pt={2} px={2} ref={refCommentElement}>
       <BlogPostCommentCreatorContainer postId={postId} />
 
       {postComments.map(

@@ -21,6 +21,7 @@ import { BlogPostCategoryModel } from '@features/blog/models/blog.model';
 
 interface PostDetailHeaderProps {
   tags: BlogPostTagEntity[];
+  isAuthor: boolean;
   id: number;
   preview: string;
   title: string;
@@ -38,6 +39,7 @@ export const PostDetailHeader = ({
   tags,
   title,
   user,
+  isAuthor,
   readTime,
   category,
   onDelete,
@@ -47,18 +49,20 @@ export const PostDetailHeader = ({
   };
 
   return (
-    <Box maxWidth="lg" m="0 auto" pt={16} pb={8} px={{ xs: 1, md: 0 }}>
-      <Box display="flex" justifyContent="flex-end">
-        <IconButton>
-          <NextLink href={`/blog/write?edit=${id}`}>
-            <Edit />
-          </NextLink>
-        </IconButton>
+    <Box maxWidth="lg" m="0 auto" pt={4} pb={8} px={{ xs: 1, md: 0 }}>
+      {isAuthor ? (
+        <Box display="flex" justifyContent="flex-end">
+          <IconButton>
+            <NextLink href={`/blog/write?edit=${id}`}>
+              <Edit />
+            </NextLink>
+          </IconButton>
 
-        <IconButton onClick={handleDelete}>
-          <Delete />
-        </IconButton>
-      </Box>
+          <IconButton onClick={handleDelete}>
+            <Delete />
+          </IconButton>
+        </Box>
+      ) : null}
 
       <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
         <NextLink

@@ -15,7 +15,7 @@ export const BlogPostHero = () => (
       justifyContent: 'center',
     }}
   >
-    <Box maxWidth="xl">
+    <Box maxWidth="lg">
       <Box>
         <Typography
           variant="button"

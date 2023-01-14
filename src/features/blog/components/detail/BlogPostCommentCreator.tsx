@@ -46,8 +46,13 @@ export const BlogPostCommentCreator = ({
               />
             )}
 
-            <Button type="submit" variant="contained" onClick={handleSubmit}>
-              댓글 작성
+            <Button
+              sx={{ width: '100%', maxWidth: '50px' }}
+              type="submit"
+              variant="contained"
+              onClick={handleSubmit}
+            >
+              작성
             </Button>
           </Box>
         </Box>

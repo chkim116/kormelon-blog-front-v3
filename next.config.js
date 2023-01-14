@@ -21,6 +21,16 @@ const nextConfig = {
         destination: '/blog',
         permanent: true,
       },
+      {
+        source: '/rss',
+        destination: '/rss.xml',
+        permanent: true,
+      },
+      {
+        permanent: true,
+        source: '/server-sitemap-index',
+        destination: '/server-sitemap-index.xml',
+      },
     ];
   },
 };

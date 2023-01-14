@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { feedbackService } from '@common/components/Feedback';
 import { useAppDispatch, useAppSelector } from '@common/store';
 import { BlogPostCreateParams, TagEntity } from '@core/entities';
-import { effCategoriesLoad, selCategories } from '@shared/stores/category';
+import { effCategoriesLoad } from '@shared/stores/category';
 import { useQueryParser } from '@shared/hooks';
 import { createBlogPostCreateParams } from '@features/blog/manipulates/blog.create';
 import {
@@ -15,7 +15,10 @@ import {
   effBlogPrivatePostDetailLoad,
   selBlogPostDetail,
 } from '@features/blog/stores';
-import { refineBlogWriteParams } from '@features/blog/manipulates';
+import {
+  refineBlogWriteParams,
+  toBlogPostCreateParams,
+} from '@features/blog/manipulates';
 import { PostConfirm } from '../../components/write';
 import { BlogPostContentWriteContainer } from './BlogPostContentWriteContainer';
 import { BlogPostMetaWriteContainer } from './BlogPostMetaWriteContainer';
@@ -26,7 +29,6 @@ export const BlogPostWriteContainer = () => {
   const { editId, isPrivateMode } = useQueryParser(refineBlogWriteParams);
 
   const dispatch = useAppDispatch();
-  const categories = useAppSelector(selCategories);
   const postDetail = useAppSelector(selBlogPostDetail);
 
   const isEditMode = useMemo(() => !!editId, [editId]);
@@ -88,10 +90,8 @@ export const BlogPostWriteContainer = () => {
   };
 
   useEffect(() => {
-    if (!categories.length) {
-      dispatch(effCategoriesLoad());
-    }
-  }, [categories.length, dispatch]);
+    dispatch(effCategoriesLoad());
+  }, [dispatch]);
 
   useEffect(() => {
     if (isEditMode) {
@@ -101,33 +101,10 @@ export const BlogPostWriteContainer = () => {
 
       dispatch(effect)
         .unwrap()
-        .then(
-          ({
-            post: {
-              category,
-              content,
-              isPrivate,
-              preview,
-              thumbnail,
-              tags,
-              title,
-            },
-          }) => {
-            setForm((prev) => ({
-              ...prev,
-              categoryId: category.id,
-              subCategoryId: category.subCategoryId,
-              tags: tags.map((tag) => tag.id),
-              content: content,
-              isPrivate: isPrivate,
-              preview: preview,
-              thumbnail: thumbnail,
-              title: title,
-            }));
-
-            setSelectedTags(tags);
-          },
-        );
+        .then(({ post }) => {
+          setForm((prev) => toBlogPostCreateParams({ ...prev, ...post }));
+          setSelectedTags(post.tags);
+        });
     }
   }, [dispatch, editId, isEditMode, isPrivateMode]);
 

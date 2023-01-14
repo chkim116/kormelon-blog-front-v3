@@ -8,7 +8,7 @@ export function getMuiTheme(mode: boolean) {
       },
       typography: {
         body1: {
-          fontSize: '1.2rem',
+          fontSize: '1.125rem',
         },
         fontFamily: [
           'Pretendard',

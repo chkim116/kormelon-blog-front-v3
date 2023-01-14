@@ -20,7 +20,7 @@ export const BlogPostCommentAnonymousField = ({
     <Box display="flex" gap={1} mr={2}>
       <Box>
         <TextField
-          sx={{ width: '150px' }}
+          sx={{ maxWidth: '150px', width: '100%' }}
           size="small"
           type="text"
           name="username"
@@ -33,7 +33,7 @@ export const BlogPostCommentAnonymousField = ({
       </Box>
       <Box>
         <TextField
-          sx={{ width: '150px' }}
+          sx={{ maxWidth: '150px', width: '100%' }}
           size="small"
           type="password"
           placeholder="비밀번호"

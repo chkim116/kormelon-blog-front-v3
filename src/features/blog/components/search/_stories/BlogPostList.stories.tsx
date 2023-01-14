@@ -1,22 +1,14 @@
 import { ComponentProps } from 'react';
 import { ComponentStory, ComponentMeta, ArgTypes } from '@storybook/react';
-import { BlogPostCardListByCategory } from '../BlogPostCardListByCategory';
+import { BlogPostModel } from '@features/blog/models';
+import { BlogPostList } from '../BlogPostList';
 
 type MyArgTypes = Partial<
-  Record<
-    keyof ComponentProps<typeof BlogPostCardListByCategory>,
-    ArgTypes[string]
-  >
+  Record<keyof ComponentProps<typeof BlogPostList>, ArgTypes[string]>
 >;
 const argTypes: MyArgTypes = {};
 
-export default {
-  title: 'blog/search/BlogPostCardListByCategory',
-  component: BlogPostCardListByCategory,
-  argTypes,
-} as ComponentMeta<typeof BlogPostCardListByCategory>;
-
-const POST = {
+const POST: BlogPostModel = {
   id: 1,
   thumbnail:
     'https://assets-kormelon-v2.s3.ap-northeast-2.amazonaws.com/winter2.jpg',
@@ -26,25 +18,28 @@ const POST = {
   readTime: '5 minute read',
 };
 
-const Template: ComponentStory<typeof BlogPostCardListByCategory> = ({
-  ...props
-}) => <BlogPostCardListByCategory {...props} />;
+export default {
+  title: 'blog/search/BlogPostList',
+  component: BlogPostList,
+  argTypes,
+} as ComponentMeta<typeof BlogPostList>;
+
+const Template: ComponentStory<typeof BlogPostList> = ({ ...props }) => (
+  <BlogPostList {...props} />
+);
 
 export const Default = Template.bind({});
 Default.args = {
-  openId: 1,
-  subCategories: [
-    {
-      id: 1,
-      value: 'Javascript',
-      categoryId: 1,
-    },
-  ],
-  posts: [
-    { ...POST },
+  firstPost: POST,
+  restPost: [],
+};
+
+export const Rest = Template.bind({});
+Rest.args = {
+  ...Default.args,
+  restPost: [
     { ...POST, id: 2 },
     { ...POST, id: 3 },
-    { ...POST, id: 4 },
   ],
 };
 

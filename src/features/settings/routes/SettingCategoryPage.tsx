@@ -40,7 +40,7 @@ export const SettingCategoryPage = () => {
   }
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="lg">
       <SettingCategoryCreatorContainer isLoading={createLoading} />
 
       {isLoading ? (

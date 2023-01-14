@@ -49,10 +49,11 @@ const NAV_ITEM_LIST = [
     label: 'Blog',
     href: '/blog',
   },
-  {
-    label: 'Resume',
-    href: '/resume',
-  },
+  // TODO
+  // {
+  //   label: 'Resume',
+  //   href: '/resume',
+  // },
 ];
 
 interface HeaderProps {
@@ -130,7 +131,11 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
               backgroundColor: 'background.paper',
               display: 'flex',
               justifyContent: 'space-between',
-              maxWidth: 'xl',
+              gap: {
+                sm: 0,
+                md: 12,
+              },
+              maxWidth: 'lg',
               width: '100%',
               m: '0 auto',
               px: {
@@ -138,7 +143,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
               },
             }}
           >
-            <Typography variant="h5" noWrap component="div" flex={1}>
+            <Typography variant="h5" noWrap component="div">
               <NextLink href="/blog" passHref>
                 <Link underline="none" color="text.primary" fontWeight="bold">
                   Kormelon
@@ -153,7 +158,7 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                 md: 'flex',
               }}
               alignItems="center"
-              justifyContent="center"
+              justifyContent="flex-start"
               gap="2em"
             >
               {NAV_ITEM_LIST.map((item) => (
@@ -177,8 +182,8 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
             <Box
               display="flex"
               justifyContent="flex-end"
-              flex={1}
-              flexGrow={{ xs: 2, sm: 1 }}
+              flex="1 0"
+              flexGrow={{ sm: 1 }}
             >
               <Box>
                 <IconButton
@@ -223,14 +228,17 @@ export const Header = forwardRef<HeaderHandle, HeaderProps>(
                   aria-controls={isUserMenuOpen ? 'account-menu' : undefined}
                   aria-expanded={isUserMenuOpen ? 'true' : undefined}
                   size="large"
+                  sx={{
+                    px: '2px',
+                    mr: '8px',
+                  }}
                   aria-label="account for current user"
-                  sx={{ mr: '8px' }}
                 >
                   <Avatar
                     data-cy="user-menu-button"
                     sx={{
-                      width: 32,
-                      height: 32,
+                      width: 28,
+                      height: 28,
                     }}
                     src={user.profileImage}
                   >
