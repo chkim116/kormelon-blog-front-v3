@@ -46,7 +46,7 @@ export const PostFloating = ({
       }}
     >
       {anchors.map(({ id, value }) => (
-        <ListItem key={id} sx={{ p: 0, py: '4px' }}>
+        <ListItem key={id} sx={{ p: 0, display: 'flex', alignItems: 'center' }}>
           <ListItemText>
             <Typography
               component="a"

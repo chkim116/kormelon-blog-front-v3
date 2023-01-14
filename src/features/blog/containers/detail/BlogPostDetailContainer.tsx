@@ -193,6 +193,12 @@ export const BlogPostDetailContainer = ({
       >
         <PostContent content={content} />
         <Box
+          sx={{
+            display: 'none',
+            ['@media (min-width: 1400px)']: {
+              display: 'flex',
+            },
+          }}
           position="absolute"
           top={0}
           right="-230px"

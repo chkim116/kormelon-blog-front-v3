@@ -1,6 +1,10 @@
 import { AnyAction, createSlice } from '@reduxjs/toolkit';
 import { CategoryEntity, SubCategoryEntity } from '@core/entities';
-import { effCategoriesLoad, effSubCategoriesLoad } from './category.effect';
+import {
+  effCategoriesLoad,
+  effCategoriesRefresh,
+  effSubCategoriesLoad,
+} from './category.effect';
 
 interface CategorySliceState {
   loading: boolean;
@@ -25,6 +29,11 @@ export const categorySlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder.addCase(effCategoriesLoad.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.categories = payload;
+    });
+
+    builder.addCase(effCategoriesRefresh.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.categories = payload;
     });
