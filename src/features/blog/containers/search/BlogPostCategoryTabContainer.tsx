@@ -6,7 +6,7 @@ import { useAppSelector } from '@common/store';
 import { CategoryEntity, SubCategoryEntity } from '@core/entities';
 import { useQueryPush } from '@shared/hooks/useQueryPush';
 import { selCategories } from '@shared/stores/category';
-import { BlogPostCardListByCategory } from '@features/blog/components/search/BlogPostCardListByCategory';
+import { BlogPostSubCategoryTabContainer } from '@features/blog/containers/search/BlogPostSubCategoryTabContainer';
 import {
   selBlogPostLoading,
   selBlogPosts,
@@ -14,11 +14,13 @@ import {
 } from '@features/blog/stores';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface BlogPostListContainerProps {}
+interface BlogPostCategoryTabContainerProps {}
 
 export type SubCategoryModel = Omit<SubCategoryEntity, 'posts'>;
 
-export const BlogPostListContainer = (_: BlogPostListContainerProps) => {
+export const BlogPostCategoryTabContainer = (
+  _: BlogPostCategoryTabContainerProps,
+) => {
   const posts = useAppSelector(selBlogPosts);
   const loadedCategories = useAppSelector(selCategories);
   const loading = useAppSelector(selBlogPostLoading);
@@ -101,7 +103,7 @@ export const BlogPostListContainer = (_: BlogPostListContainerProps) => {
           ))}
         </TabList>
 
-        <Box mt={4}>
+        <Box mt={4} minHeight="80vh">
           {categories.map((category) => (
             <TabPanel
               value={category.id.toString()}
@@ -110,7 +112,7 @@ export const BlogPostListContainer = (_: BlogPostListContainerProps) => {
                 p: 0,
               }}
             >
-              <BlogPostCardListByCategory
+              <BlogPostSubCategoryTabContainer
                 loading={loading}
                 page={page}
                 openId={subCategoryId}

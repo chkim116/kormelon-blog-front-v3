@@ -5,7 +5,7 @@ import { useAppDispatch } from '@common/store';
 import { useQueryParser } from '@shared/hooks/useQueryParser';
 import { effCategoriesLoad } from '@shared/stores/category';
 import {
-  BlogPostListContainer,
+  BlogPostCategoryTabContainer,
   BlogPostHeroContainer,
   BlogPostPaginationContainer,
 } from '../containers/search';
@@ -33,7 +33,7 @@ export const BlogPostListPage = (_: BlogPostListPageProps) => {
       <BlogPostHeroContainer />
 
       <Container maxWidth="lg">
-        <BlogPostListContainer />
+        <BlogPostCategoryTabContainer />
         <BlogPostPaginationContainer />
       </Container>
     </Box>
