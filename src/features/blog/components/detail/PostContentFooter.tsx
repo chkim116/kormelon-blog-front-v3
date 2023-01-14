@@ -36,7 +36,14 @@ export const PostContentFooter = ({
         </Typography>
       </Box>
 
-      <Box display={{ lg: 'none' }}>
+      <Box
+        sx={{
+          display: 'none',
+          ['@media (max-width: 1400px)']: {
+            display: 'flex',
+          },
+        }}
+      >
         <PostUtils isLiked={isLiked} onLike={onLike} onShare={onShare} />
       </Box>
     </Stack>

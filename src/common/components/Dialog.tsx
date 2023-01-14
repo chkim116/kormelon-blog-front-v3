@@ -44,7 +44,7 @@ export const Dialog = ({
       onClose={handleClose}
       aria-describedby="alert-dialog-description"
     >
-      <DialogContent sx={{ minWidth: '300px' }}>
+      <DialogContent>
         <DialogContentText id="alert-dialog-description">
           {text}
         </DialogContentText>

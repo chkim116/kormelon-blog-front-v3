@@ -6,9 +6,16 @@ import * as Markdown from 'mui-markdown';
 const ContentStyled = styled.div`
   & p {
     margin: 0;
-    line-height: 2rem;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    line-height: 1.7777778;
+    margin-bottom: 1.1em;
+    margin-top: 1.1em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0.83em 0 0.6em 0;
   }
 
   img {

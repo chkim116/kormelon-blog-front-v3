@@ -14,16 +14,18 @@ export const Footer = ({ today, total }: FooterProps) => (
     }}
   >
     <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: '2em',
-        p: '2em',
-        maxWidth: 'xl',
-        width: '100%',
-        m: '0 auto',
+      display="flex"
+      flexDirection={{
+        xs: 'column',
+        md: 'row',
       }}
+      alignItems="center"
+      justifyContent="space-between"
+      gap="2em"
+      p="2em"
+      maxWidth="lg"
+      width="100%"
+      m="0 auto"
     >
       <Box display="flex" gap={2} alignItems="center">
         <Typography variant="body2">today: {today}</Typography>
@@ -33,10 +35,14 @@ export const Footer = ({ today, total }: FooterProps) => (
         <Box>&copy; 2022 kormelon</Box>
 
         <Box>
-          <IconButton>
+          <IconButton
+            LinkComponent="a"
+            target="_blank"
+            href="https://github.com/chkim116/kormelon-blog-front-v3"
+          >
             <GitHub />
           </IconButton>
-          <IconButton>
+          <IconButton LinkComponent="a" href="/rss" target="_blank">
             <RssFeed />
           </IconButton>
         </Box>
