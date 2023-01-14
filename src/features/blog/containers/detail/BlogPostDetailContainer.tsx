@@ -3,10 +3,11 @@ import { Box } from '@mui/material';
 import copy from 'copy-to-clipboard';
 import { feedbackService } from '@common/components/Feedback';
 import { STORAGE_LIKE_KEY } from '@common/constants';
-import { useAppDispatch } from '@common/store';
+import { useAppDispatch, useAppSelector } from '@common/store';
 import { tokenProvider } from '@core/tokenProvider';
 import { useQueryPush } from '@shared/hooks';
 import { intersectionObserver } from '@shared/utils';
+import { selUserData } from '@shared/stores/auth';
 import {
   PostContent,
   PostContentFooter,
@@ -48,6 +49,8 @@ export const BlogPostDetailContainer = ({
   } = post;
   const dispatch = useAppDispatch();
   const router = useQueryPush();
+
+  const { id: userId } = useAppSelector(selUserData);
 
   const refContentBoundary = useRef<HTMLDivElement>(null);
   const tick = useRef<NodeJS.Timer | null>(null);
@@ -173,6 +176,7 @@ export const BlogPostDetailContainer = ({
           title={title}
           createdAt={createdAt}
           user={user}
+          isAuthor={user.id === userId}
           readTime={readTime}
           category={category}
           onDelete={handleDelete}
