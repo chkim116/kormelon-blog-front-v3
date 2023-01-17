@@ -21,10 +21,9 @@ import {
 } from '@shared/stores/notification';
 import { googleTagService } from '@shared/services';
 import { effViewLoad, selViewValue } from '@shared/stores/view';
+import { env } from '@common/env';
+import { Footer, Header, Main } from '@common/components/layouts';
 import { feedbackService } from '../../common/components/Feedback';
-import { Footer } from '../../common/components/layouts/Footer';
-import { Header } from '../../common/components/layouts/Header';
-import { Main } from '../../common/components/layouts/Main';
 
 const Wrap = styled.div`
   margin-top: 64px;
@@ -85,6 +84,10 @@ export const Layout = ({ children }: LayoutProps) => {
   }, []);
 
   useEffect(() => {
+    if (!env.isSSR) {
+      return;
+    }
+
     window.addEventListener('scroll', handleScroll);
 
     return () => {
