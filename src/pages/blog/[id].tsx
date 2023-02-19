@@ -1,9 +1,45 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
+import dynamic from 'next/dynamic';
 import { repo } from '@core/repo';
-import { BlogPostDetailPage } from '@features/blog/routes/BlogPostDetailPage';
+import { BlogPostDetailResultEntityPayload } from '@core/entities';
+import { PageSeo } from '@common/head';
 import { toBlogPostDetailModel } from '@features/blog/manipulates';
 
-export default BlogPostDetailPage;
+const BlogPostDetailPage = dynamic(
+  () =>
+    import('@features/blog/routes/BlogPostDetailPage').then(
+      ({ BlogPostDetailPage }) => BlogPostDetailPage,
+    ),
+  {
+    ssr: false,
+  },
+);
+
+export default function Page({
+  post,
+  next,
+  prev,
+}: BlogPostDetailResultEntityPayload) {
+  const props = {
+    post: toBlogPostDetailModel(post),
+    postNear: {
+      next,
+      prev,
+    },
+  };
+
+  return (
+    <>
+      <PageSeo
+        url={`https://www.kormelon.com/blog/${post.id}`}
+        image={post.thumbnail}
+        desc={post.preview}
+        title={post.title}
+      />
+      <BlogPostDetailPage {...props} />
+    </>
+  );
+}
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const {
@@ -25,12 +61,10 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   return {
     props: {
-      post: toBlogPostDetailModel(post),
-      postNear: {
-        next,
-        prev,
-      },
+      post,
+      next,
+      prev,
     },
-    revalidate: 10,
+    revalidate: 60,
   };
 };
