@@ -15,7 +15,7 @@ export const generateServerSitemap = async () => {
   } = await repo.post.fetchPostRss();
 
   const fields: ISitemapField[] = posts.map((post: BlogPostRssEntity) => ({
-    loc: `${URL}/blog/${post.id}/${post.title}`,
+    loc: `${URL}/blog/${post.id}`,
     lastmod: new Date().toISOString(),
     changefreq: 'weekly',
     priority: 0.7,
