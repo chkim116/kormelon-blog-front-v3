@@ -1,7 +1,7 @@
 import { DefaultSeo, NextSeo } from 'next-seo';
 import { GA_TRACKING_ID } from '@shared/services';
 
-const favicon = () => (
+export const favicon = () => (
   <>
     <link
       rel="apple-touch-icon"
@@ -146,9 +146,8 @@ export const DefaultHead = () => (
         cardType: 'summary_large_image',
       }}
     />
-    {favicon()}
-    {googleTag()}
     {googleAds()}
+    {googleTag()}
   </>
 );
 

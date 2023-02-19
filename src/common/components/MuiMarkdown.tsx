@@ -11,7 +11,10 @@ const ContentStyled = styled.div`
     margin-top: 1.1em;
   }
 
-  h1,
+  h1 {
+    margin: 2em 0 0.6em 0;
+  }
+
   h2,
   h3,
   h4 {
@@ -34,9 +37,8 @@ const ContentStyled = styled.div`
   code {
     font-family: inherit;
     font-size: 0.9rem;
-    letter-spacing: -0em;
-    padding: 0.4rem !important;
-    font-weight: bold;
+    padding: 0.2rem !important;
+    margin: 0 !important;
     border: 1px solid #dbdbdb;
   }
 `;
@@ -76,8 +78,9 @@ const MuiMarkdownOverrides = (theme: Theme) => ({
         component="blockquote"
         variant="outlined"
         sx={{
-          m: 0,
-          p: '0.8em',
+          my: '0.4em',
+          mx: 0,
+          p: '0 0.8em',
           border: 0,
           borderRadius: 0,
           backgroundColor: 'background.paper',

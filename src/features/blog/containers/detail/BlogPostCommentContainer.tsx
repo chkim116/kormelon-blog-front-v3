@@ -36,45 +36,61 @@ export const BlogPostCommentContainer = () => {
   useEffect(handleCommentLoad, [handleCommentLoad]);
 
   return (
-    <Box maxWidth="md" m="0 auto" pb={24} pt={2} px={2} ref={refCommentElement}>
-      <BlogPostCommentCreatorContainer postId={postId} />
+    <>
+      <Divider
+        sx={{
+          maxWidth: 'md',
+          mx: 'auto',
+          my: 8,
+        }}
+      />
+      <Box
+        maxWidth="md"
+        m="0 auto"
+        pb={24}
+        pt={2}
+        px={2}
+        ref={refCommentElement}
+      >
+        <BlogPostCommentCreatorContainer postId={postId} />
 
-      {postComments.map(
-        ({
-          commentReplies,
-          createdAt,
-          id,
-          isAnonymous,
-          userId,
-          username,
-          value,
-          userProfile,
-          deletedAt,
-        }) => (
-          <>
-            <BlogPostCommentBodyContainer
-              key={id}
-              postId={postId}
-              userProfile={userProfile}
-              commentId={id}
-              commentReplies={commentReplies}
-              createdAt={createdAt}
-              deletedAt={deletedAt}
-              isAnonymous={isAnonymous}
-              commentValue={value}
-              username={username}
-              commentAuthorId={userId}
-            />
-            <BlogPostCommentReplyContainer
-              postId={postId}
-              userId={userId}
-              commentId={id}
-              replies={commentReplies}
-            />
-            <Divider sx={{ pb: 2, mb: 2 }} />
-          </>
-        ),
-      )}
-    </Box>
+        {postComments.map(
+          ({
+            commentReplies,
+            createdAt,
+            id,
+            isAnonymous,
+            userId,
+            username,
+            value,
+            userProfile,
+            deletedAt,
+          }) => (
+            <>
+              <BlogPostCommentBodyContainer
+                key={id}
+                postId={postId}
+                userProfile={userProfile}
+                commentId={id}
+                commentReplies={commentReplies}
+                createdAt={createdAt}
+                deletedAt={deletedAt}
+                isAnonymous={isAnonymous}
+                commentValue={value}
+                username={username}
+                commentAuthorId={userId}
+              />
+              <BlogPostCommentReplyContainer
+                postId={postId}
+                userId={userId}
+                commentId={id}
+                replies={commentReplies}
+              />
+              <Divider sx={{ pb: 2, mb: 2 }} />
+            </>
+          ),
+        )}
+      </Box>
+    </>
   );
 };
