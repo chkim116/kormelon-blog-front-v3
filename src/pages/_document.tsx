@@ -2,13 +2,17 @@ import { Children } from 'react';
 import createEmotionServer from '@emotion/server/create-instance';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import { createEmotionCache } from '@shared/createEmotionCache';
-import { favicon } from '@common/head';
+import { favicon, googleAds, googleTag } from '@common/head';
 
 export default class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head>{favicon()}</Head>
+        <Head>
+          {favicon()}
+          {googleAds()}
+          {googleTag()}
+        </Head>
         <body>
           <Main />
           <div id="feedback" />

@@ -82,7 +82,7 @@ export const favicon = () => (
   </>
 );
 
-const googleAds = () => (
+export const googleAds = () => (
   <script
     async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3241811705564924"
@@ -90,7 +90,7 @@ const googleAds = () => (
   />
 );
 
-const googleTag = () => (
+export const googleTag = () => (
   <>
     <meta
       name="google-site-verification"
@@ -146,8 +146,6 @@ export const DefaultHead = () => (
         cardType: 'summary_large_image',
       }}
     />
-    {googleAds()}
-    {googleTag()}
   </>
 );
 
