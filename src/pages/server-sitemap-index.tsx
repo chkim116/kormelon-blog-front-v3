@@ -1,6 +1,5 @@
-import { GetStaticProps } from 'next';
-import fs from 'fs';
-import { ISitemapField, SitemapBuilder } from 'next-sitemap';
+import { GetServerSideProps } from 'next';
+import { ISitemapField, getServerSideSitemap } from 'next-sitemap';
 import { BlogPostRssEntity } from '@core/entities';
 import { repo } from '@core/repo';
 
@@ -21,18 +20,13 @@ export const generateServerSitemap = async () => {
     priority: 0.7,
   }));
 
-  const serverSitemap = new SitemapBuilder().buildSitemapXml(fields);
-
-  fs.writeFileSync('./public/server-sitemap-index.xml', serverSitemap);
+  return fields;
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  await generateServerSitemap();
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const siteMap = await generateServerSitemap();
 
-  return {
-    props: {},
-    revalidate: 60,
-  };
+  return getServerSideSitemap(ctx, siteMap);
 };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
