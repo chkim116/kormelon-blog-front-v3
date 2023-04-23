@@ -33,6 +33,11 @@ export const BlogPostTagSearchContainer = ({
     useState<TagEntity[]>(outSelectedTags);
 
   const debounced = useDebouncedCallback(async (text: string) => {
+    if (!text) {
+      setSearchedTags([]);
+      return;
+    }
+
     const payload = await dispatch(effTagSearchLoad(text)).unwrap();
 
     const searchTags = payload.filter(
