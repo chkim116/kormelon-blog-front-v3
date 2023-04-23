@@ -1,5 +1,4 @@
-import { GetStaticProps } from 'next';
-import fs from 'fs';
+import { GetServerSideProps } from 'next';
 import { marked } from 'marked';
 import { env } from '@common/env';
 import { BlogPostRssEntity } from '@core/entities';
@@ -64,17 +63,18 @@ const generateRss = async () => {
     data: { payload: posts },
   } = await repo.post.fetchPostRss();
 
-  const rssFeed = createRss(posts);
-
-  fs.writeFileSync('./public/rss.xml', rssFeed);
+  return createRss(posts);
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  await generateRss();
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+  const rss = await generateRss();
+
+  res.setHeader('Content-Type', 'text/xml');
+  res.write(rss);
+  res.end();
 
   return {
     props: {},
-    revalidate: 60,
   };
 };
 
