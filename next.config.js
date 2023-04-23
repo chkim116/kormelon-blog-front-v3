@@ -21,28 +21,10 @@ const nextConfig = {
         destination: '/blog',
         permanent: true,
       },
-      {
-        source: '/rss',
-        destination: '/rss.xml',
-        permanent: true,
-      },
-      {
-        permanent: true,
-        source: '/server-sitemap-index',
-        destination: '/server-sitemap-index.xml',
-      },
     ];
   },
 };
 
 module.exports = withImages({
   ...nextConfig,
-  webpack(config) {
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      fs: false,
-    };
-
-    return config;
-  },
 });
