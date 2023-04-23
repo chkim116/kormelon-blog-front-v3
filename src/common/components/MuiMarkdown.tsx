@@ -93,6 +93,7 @@ const MuiMarkdownOverrides = (theme: Theme) => ({
           },
           '& p': {
             p: 0,
+            m: 0,
           },
         }}
       >
