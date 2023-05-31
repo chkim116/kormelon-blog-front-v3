@@ -47,11 +47,10 @@ const NAV_ITEM_LIST = [
     label: 'Blog',
     href: '/blog',
   },
-  // TODO
-  // {
-  //   label: 'Resume',
-  //   href: '/resume',
-  // },
+  {
+    label: 'Resume',
+    href: '/resume',
+  },
 ];
 
 interface HeaderProps {
