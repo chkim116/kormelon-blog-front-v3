@@ -47,8 +47,8 @@
 - 수행 업무 :
   - 이커머스 웹
     - 구 이커머스 웹 리뉴얼 작업 진행
-      - 홈탭, 카테고리탭, 세일탭, 로그인&회원가입, 상품 검색, 내정보(주문 내역) 담당 작업
-    - 디자인 시스템 구축 리드 <a href="https://www.kormelon.com/blog/39" target="_blank">(관련글)</a>
+      - 홈탭, 카테고리탭, 세일탭, 로그인&회원가입, 상품 검색, 내정보(주문 내역), 코디 상세 페이지 작업
+    - 디자인 시스템 구축 리드
   - 사내 어드민
     - MD, 운영팀 요구에 따른 기능 추가 전담 진행
     - 사내 아키텍처에 맞춘 리팩터링 작업
@@ -62,6 +62,8 @@
     - Webpack → Vite 마이그레이션 작업
     - <a href="https://github.com/chkim116/react-new-template" target="_blank">아키텍처 템플릿 제작 및 문서화</a>
     - <a href="https://github.com/thesoncriel/jordy" target="_blank">사내 공용 라이브러리</a> 컨트리뷰트
+- 관련글 :
+  - <a href="https://www.kormelon.com/blog/39" target="_blank">웹 디자인 시스템 구축기</a>
 
 ### 꿈많은 청년들
 
@@ -118,7 +120,7 @@
   - <a href="https://early-front-fork.vercel.app/tool" target="_blank">홈페이지(임시)</a>
   - <a href="https://github.com/chkim116/early-front-fork" target="_blank">Source Code</a>
 - 관련글 :
-  - <a href="https://www.kormelon.com/blog/30" target="_blank">사업을 하며 깨달은 3가지</a>
+  - <a href="https://www.kormelon.com/blog/30" target="_blank">사업을 하며 깨달은 4가지</a>
 
 ### 블로그
 
@@ -131,15 +133,16 @@
   - ETC - CircleCI, AWS
 - 수행 업무 :
   - 프로그래밍 시작부터 꾸준한 개선 작업 중
-  - 개인 블로그로 사용 중이며 개발 아티클 외 서적 리뷰 진행
+  - 아티클 외 서적 리뷰 진행
 - 링크 :
   - <a href="https://www.kormelon.com" target="_blank">홈페이지</a>
   - <a href="https://github.com/chkim116/kormelon-blog-front-v3" target="_blank">FE Source</a>
   - <a href="https://github.com/chkim116/kormelon-blog-back-v3" target="_blank">BE Source</a>
 - 관련글 :
-  - <a href="https://www.kormelon.com/blog/9" target="_blank">블로그 회고록</a>
+  - <a href="https://www.kormelon.com/blog/9" target="_blank">블로그 회고록 Part1</a>
+  - <a href="https://www.kormelon.com/blog/40" target="_blank">블로그 회고록 Part2</a>
 
-## 오픈 소스
+# 오픈 소스
 
 ### Kadvice
 
@@ -147,4 +150,4 @@
 - 한국어로 된 명언 리스트
 - 명언을 페이지에 넣고 싶은데, 영어로 된 명언들이 마음에 들지 않아 직접 제작함.
 
-_last updated 23.05.31_
+_last updated 23.06.17_
