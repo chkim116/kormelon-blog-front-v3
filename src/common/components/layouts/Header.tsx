@@ -49,7 +49,7 @@ const NAV_ITEM_LIST = [
   },
   {
     label: 'Resume',
-    href: '/resume',
+    href: 'https://kimchanghoe.notion.site/kimchanghoe/3cd2b466abf34924a81f1a77f20f060f',
   },
 ];
 
