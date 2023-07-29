@@ -31,5 +31,5 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export default function Sitemap() {
-  return null;
+  return <></>;
 }
