@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
 import { ISitemapField, getServerSideSitemap } from 'next-sitemap';
-import { BlogPostRssEntity } from '@core/entities';
-import { repo } from '@core/repo';
+import { repo } from '@server/repo';
+import { BlogPostRssEntity } from '@server/entities';
 
 const URL =
   process.env.NODE_ENV === 'production'

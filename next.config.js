@@ -14,15 +14,9 @@ const nextConfig = {
       'images.unsplash.com',
     ],
   },
-
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/blog',
-        permanent: true,
-      },
-    ];
+  experimental: {
+    optimizePackageImports: ['@mui/icons-material'],
+    serverActions: true,
   },
 };
 
