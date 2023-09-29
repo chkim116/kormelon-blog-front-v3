@@ -1,8 +1,8 @@
 import { GetServerSideProps } from 'next';
 import { marked } from 'marked';
-import { env } from '@common/env';
-import { BlogPostRssEntity } from '@core/entities';
-import { repo } from '@core/repo';
+import { repo } from '@server/repo';
+import { BlogPostRssEntity } from '@server/entities';
+import { env } from '@core/env';
 
 const URL = env.isProduction ? 'https://kormelon.com' : 'http://localhost:3000';
 const TITLE = 'Kormelon Dev Blog';

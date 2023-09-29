@@ -1,7 +1,5 @@
 /// <reference types="cypress" />
-import { tokenProvider } from '../../src/core/tokenProvider';
 import { SERVER_URL } from './constants';
-import user from '../fixtures/auth/user.json';
 
 Cypress.Commands.add('dataCy', (value) => cy.get(`[data-cy=${value}]`));
 
@@ -28,11 +26,6 @@ Cypress.Commands.add(
   },
 );
 
-Cypress.Commands.add('auth', () => {
-  tokenProvider().set('kormelon_user', user);
-  tokenProvider().set('kormelon_token', 'token');
-});
-
 Cypress.Commands.add('ignoreNotifications', () => {
   cy.intercept('GET', SERVER_URL + '/notification', {
     statusCode: 200,
@@ -40,13 +33,11 @@ Cypress.Commands.add('ignoreNotifications', () => {
   });
 });
 
-Cypress.Commands.add('feedback', (value?: string) => {
+Cypress.Commands.add('toast', (value?: string) => {
   if (value) {
-    cy.dataCy('feedback').should('contain', value);
+    cy.get('#toast').should('contain', value);
     return;
   }
 
-  cy.dataCy('feedback').should('exist');
+  cy.get('#toast').should('exist');
 });
-
-export {};
