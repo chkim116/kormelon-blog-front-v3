@@ -13,6 +13,10 @@ export function BlogCommonPagination({
   page,
   onChange,
 }: BlogCommonPaginationProps) {
+  if (0 >= total) {
+    return;
+  }
+
   return (
     <div className="py-12 pb-20 flex justify-center">
       <Pagination

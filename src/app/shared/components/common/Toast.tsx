@@ -2,7 +2,7 @@
 import { forwardRef, useImperativeHandle } from 'react';
 import { createPortal } from 'react-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import { getPortal } from '@shared/utils';
+import { getPortal } from 'src/app/shared/utils/getPortal';
 import 'react-toastify/dist/ReactToastify.css';
 
 export type ToastStatusType = 'error' | 'warning' | 'info' | 'success';
@@ -23,7 +23,7 @@ export const Toast = forwardRef<ToastHandle, ToastProps>((_, ref) => {
       open(status: ToastStatusType, message: string) {
         toast[status](message, {
           position: 'top-center',
-          toastId: 'feedback',
+          toastId: 'feedback_' + Date.now(),
           autoClose: 2000,
         });
       },

@@ -24,16 +24,7 @@ export const Default: StoryObj<StoryProps> = {
   render: Template,
 
   args: {
-    length: 3,
-  },
-};
-
-export const CustomTitle: StoryObj<StoryProps> = {
-  render: Template,
-
-  args: {
-    ...Default.args,
-    title: 'custom title',
+    length: 6,
   },
 };
 

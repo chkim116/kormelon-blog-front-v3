@@ -1,14 +1,19 @@
 'use client';
+
 import {
   ChangeEventHandler,
   MouseEventHandler,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import { Input } from '@nextui-org/react';
-import { CategoryUpdateParams } from '@server/entities';
+import { CategoryUpdateUiParams } from '@domain/category/category.uiState';
 import { SettingsCategoryExtraAction } from './SettingsCategoryExtraAction';
-import { SettingsCategorySubCategoryCreator } from './SettingsCategorySubCategoryCreator';
+import {
+  SettingsCategorySubCategoryCreator,
+  SettingsCategorySubCategoryCreatorHandle,
+} from './SettingsCategorySubCategoryCreator';
 
 export interface SettingsSubCategoryCreateArgs {
   id: number;
@@ -20,7 +25,7 @@ interface SettingsCategoryCategoryItemProps {
   value: string;
   onSubCreateClick: (args: SettingsSubCategoryCreateArgs) => void;
   onCategoryDeleteClick: (id: number) => void;
-  onCategoryUpdateClick: (params: CategoryUpdateParams) => void;
+  onCategoryUpdateClick: (params: CategoryUpdateUiParams) => void;
 }
 
 export const SettingsCategoryCategoryItem = ({
@@ -32,7 +37,9 @@ export const SettingsCategoryCategoryItem = ({
 }: SettingsCategoryCategoryItemProps) => {
   const [editValue, setEditValue] = useState(value);
   const [isEditable, setIsEditable] = useState(false);
-  const [isCreatorOpen, setIsCreatorOpen] = useState(false);
+
+  const refSubCreatorModal =
+    useRef<SettingsCategorySubCategoryCreatorHandle | null>(null);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setEditValue(e.target.value);
@@ -52,11 +59,9 @@ export const SettingsCategoryCategoryItem = ({
   };
 
   const handleOpenSubCreatorClick = () => {
-    setIsCreatorOpen((prev) => !prev);
-  };
-
-  const handleSubCreateClick = (value: string) => {
-    onSubCreateClick({ id, value });
+    refSubCreatorModal.current?.open().then((value) => {
+      onSubCreateClick({ id, value });
+    });
   };
 
   const handleFocusedClick: MouseEventHandler<HTMLInputElement> = (e) => {
@@ -96,11 +101,7 @@ export const SettingsCategoryCategoryItem = ({
         </>
       )}
 
-      <SettingsCategorySubCategoryCreator
-        isOpen={isCreatorOpen}
-        onOk={handleSubCreateClick}
-        onClose={handleOpenSubCreatorClick}
-      />
+      <SettingsCategorySubCategoryCreator ref={refSubCreatorModal} />
     </div>
   );
 };

@@ -1,45 +1,82 @@
-import React, { ChangeEventHandler, useState } from 'react';
-import { Input } from '@nextui-org/react';
-import { Dialog } from '@shared/components/common';
+'use client';
 
-interface SettingsCategorySubCategoryCreatorProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onOk: (value: string) => void;
+import {
+  ChangeEventHandler,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
+import { Input } from '@nextui-org/react';
+import {
+  Dialog,
+  DialogOkCallback,
+} from 'src/app/shared/components/common/Dialog';
+import { PromiseResolver } from 'src/app/shared/uiStates/sharedCommon.uiState';
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface SettingsCategorySubCategoryCreatorProps {}
+
+export interface SettingsCategorySubCategoryCreatorHandle {
+  open(): Promise<string>;
 }
 
-export const SettingsCategorySubCategoryCreator = ({
-  isOpen,
-  onClose,
-  onOk,
-}: SettingsCategorySubCategoryCreatorProps) => {
+export const SettingsCategorySubCategoryCreator = forwardRef<
+  SettingsCategorySubCategoryCreatorHandle,
+  SettingsCategorySubCategoryCreatorProps
+>((_, ref) => {
+  const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const refResolver = useRef<PromiseResolver<string> | null>(null);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setValue(e.target.value);
   };
 
-  const handleOk = () => {
+  const resetValue = () => {
+    setOpen(false);
+    setValue('');
+    setErrorMessage('');
+  };
+
+  const handleOk = (close: DialogOkCallback) => {
     if (!value) {
       setErrorMessage('값을 입력해 주세요.');
       return;
     }
 
-    onOk(value);
-    setValue('');
-    setErrorMessage('');
+    refResolver.current?.resolve(value);
+    resetValue();
+    close();
   };
 
   const handleClose = () => {
-    onClose();
-    setValue('');
-    setErrorMessage('');
+    refResolver.current?.reject();
+    resetValue();
   };
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      open() {
+        setOpen(true);
+
+        return new Promise((resolve, reject) => {
+          refResolver.current = {
+            resolve,
+            reject,
+          };
+        });
+      },
+    }),
+    [],
+  );
 
   return (
     <Dialog
-      open={isOpen}
+      open={open}
       onClose={handleClose}
       onOk={handleOk}
       className="pt-3"
@@ -56,10 +93,14 @@ export const SettingsCategorySubCategoryCreator = ({
         type="text"
         color={errorMessage ? 'danger' : 'default'}
         fullWidth
+        value={value}
         variant="underlined"
         onChange={handleChange}
         errorMessage={errorMessage}
       />
     </Dialog>
   );
-};
+});
+
+SettingsCategorySubCategoryCreator.displayName =
+  'SettingsCategorySubCategoryCreator';

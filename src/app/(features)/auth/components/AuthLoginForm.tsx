@@ -1,15 +1,16 @@
-import { ChangeEventHandler, FormEventHandler, useState } from 'react';
-import { Card, Input, Button, Spacer } from '@nextui-org/react';
-import { AuthLoginParamsModel } from '@domain/uiStates';
-import { createAuthLoginParamsModel } from '@domain/manipulates';
+'use client';
+import { ChangeEventHandler, ReactNode, useState } from 'react';
+import { Card, Input, Spacer } from '@nextui-org/react';
+import { createAuthLoginUiParams } from '@domain/auth/auth.create';
+import { AuthLoginUiParams } from '@domain/auth/auth.uiState';
 
 interface AuthLoginFormProps {
-  isLoading: boolean;
-  onSubmit: (params: AuthLoginParamsModel) => void;
+  onSubmit: (params: AuthLoginUiParams) => void;
+  children: ReactNode;
 }
 
-export const AuthLoginForm = ({ isLoading, onSubmit }: AuthLoginFormProps) => {
-  const [form, setForm] = useState(createAuthLoginParamsModel());
+export const AuthLoginForm = ({ children, onSubmit }: AuthLoginFormProps) => {
+  const [form, setForm] = useState(createAuthLoginUiParams());
   const [errorFieldNames, setErrorFieldNames] = useState<string[]>([]);
   const isErrorField = (name: string) => errorFieldNames.includes(name);
 
@@ -22,9 +23,7 @@ export const AuthLoginForm = ({ isLoading, onSubmit }: AuthLoginFormProps) => {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
     setErrorFieldNames([]);
 
     let isErr = false;
@@ -47,7 +46,7 @@ export const AuthLoginForm = ({ isLoading, onSubmit }: AuthLoginFormProps) => {
     <Card className="w-full p-5">
       <h1 className="text-2xl bold text-center mb-5">Login</h1>
 
-      <form onChange={handleChange} onSubmit={handleSubmit}>
+      <form action={handleSubmit} onChange={handleChange}>
         <Input
           variant="underlined"
           isClearable
@@ -73,15 +72,7 @@ export const AuthLoginForm = ({ isLoading, onSubmit }: AuthLoginFormProps) => {
         />
 
         <Spacer y={4} />
-        <Button
-          className="w-full"
-          type="submit"
-          color="primary"
-          data-cy="signInButton"
-          isLoading={isLoading}
-        >
-          Sign in
-        </Button>
+        {children}
       </form>
     </Card>
   );

@@ -10,6 +10,8 @@ import {
   ModalHeader,
 } from '@nextui-org/react';
 
+export type DialogOkCallback = () => void;
+
 interface DialogProps {
   open?: boolean;
   text?: string;
@@ -18,7 +20,7 @@ interface DialogProps {
   hideOk?: boolean;
   okText?: string;
   closeText?: string;
-  onOk?: (close: () => void) => void;
+  onOk?: (close: DialogOkCallback) => void | Promise<void>;
   onClose?: () => void;
   children?: ReactNode;
 }
@@ -44,7 +46,7 @@ export const Dialog = ({
     onClose?.();
   };
 
-  const handleOk = () => {
+  const handleOk = async () => {
     onOk?.(onOpenChange);
   };
 

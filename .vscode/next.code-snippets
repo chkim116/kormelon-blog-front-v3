@@ -1,0 +1,195 @@
+{
+  // Place your kormelon-blog-front-v3 작업 영역 snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
+  // description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+  // is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
+  // used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+  // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
+  // Placeholders with the same ids are connected.
+  // Example:
+  // "Print to console": {
+  // 	"scope": "javascript,typescript",
+  // 	"prefix": "log",
+  // 	"body": [
+  // 		"console.log('$1');",
+  // 		"$2"
+  // 	],
+  // 	"description": "Log output to console"
+  // }
+  "nextjs page 컴포넌트 파일 생성": {
+    "prefix": "!npc",
+    "body": [
+      "interface ${1:${TM_FILENAME_BASE}}PageProps {",
+      "  params: Record<string, string>;",
+      "  searchParams: Record<string, string>;",
+      "}",
+      "",
+      "export const dynamic = 'force-dynamic'",
+      "",
+      "export default async function ${1:${TM_FILENAME_BASE}}Page({",
+      "  params,",
+      "  searchParams,",
+      "}: ${1:${TM_FILENAME_BASE}}PageProps) {",
+      "  ${2:fetch};",
+      "",
+      "  return ${3:page};",
+      "}",
+      ""
+    ],
+    "description": "nextjs page 컴포넌트 파일 생성"
+  },
+
+  "nextjs layout 컴포넌트 파일 생성": {
+    "prefix": "!nlp",
+    "body": [
+      "import { ReactNode } from 'react';",
+      "",
+      "interface ${1:${TM_FILENAME_BASE}}LayoutProps {",
+      "  children: ReactNode;",
+      "}",
+      "",
+      "export default function ${1:${TM_FILENAME_BASE}}Layout({ children }: ${1:${TM_FILENAME_BASE}}LayoutProps) {",
+      "  return (",
+      "    <>",
+      "    {children}",
+      "    </>",
+      "  );",
+      "}",
+      ""
+    ],
+    "description": "nextjs layout 컴포넌트 파일 생성"
+  },
+
+  "nextjs error page 컴포넌트 파일 생성": {
+    "prefix": "!nepc",
+    "body": [
+      "'use client'",
+      "",
+      "import { ComponentProps } from 'react';",
+      "import { ErrorComponent } from 'next/dist/client/components/error-boundary';",
+      "",
+      "export default function ${1:${TM_FILENAME_BASE}}ErrorPage (_: ComponentProps<ErrorComponent>) {",
+      "  return (",
+      "  // ${2:${TM_FILENAME_BASE}}",
+      "  )",
+      "}"
+    ],
+    "description": "nextjs error page 컴포넌트 파일 생성"
+  },
+
+  "nextjs loading 컴포넌트 파일 생성": {
+    "prefix": "!nlc",
+    "body": [
+      "'use client'",
+      "",
+      "export default function ${1:${TM_FILENAME_BASE}}LoadingPage () {",
+      "",
+      "  return (",
+      "    ${2:<></>}",
+      "  )",
+      "}"
+    ],
+    "description": "nextjs loading 컴포넌트 파일 생성"
+  },
+
+  "nextjs container client component 파일 생성": {
+    "prefix": "!nccc",
+    "body": [
+      "'use client'",
+      "",
+      "// eslint-disable-next-line @typescript-eslint/no-empty-interface",
+      "interface ${1:${TM_FILENAME_BASE}}ClientProps {}",
+      "",
+      "export function ${1:${TM_FILENAME_BASE}} (_ : ${1:${TM_FILENAME_BASE}}ClientProps) {",
+      "",
+      "  return (",
+      "    ${2:<></>}",
+      "  )",
+      "}"
+    ],
+    "description": "nextjs container client 파일 생성"
+  },
+
+  "nextjs container server component 파일 생성": {
+    "prefix": "!ncsc",
+    "body": [
+      "// eslint-disable-next-line @typescript-eslint/no-empty-interface",
+      "interface ${1:${TM_FILENAME_BASE}}Props {}",
+      "",
+      "export function ${1:${TM_FILENAME_BASE}} (_ : ${1:${TM_FILENAME_BASE}}Props) {",
+      "",
+      "  return (",
+      "    ${2:<></>}",
+      "  )",
+      "}"
+    ],
+    "description": "nextjs container client 파일 생성"
+  },
+
+  "nextjs component 파일 생성": {
+    "prefix": "!nc",
+    "body": [
+      "'use client'",
+      "",
+      "// eslint-disable-next-line @typescript-eslint/no-empty-interface",
+      "interface ${1:${TM_FILENAME_BASE}}Props {}",
+      "",
+      "export function ${1:${TM_FILENAME_BASE}} (_ : ${1:${TM_FILENAME_BASE}}Props) {",
+      "",
+      "  return (",
+      "    ${2:<></>}",
+      "  )",
+      "}"
+    ],
+    "description": "nextjs component 파일 생성"
+  },
+
+  "nextjs action 함수 생성": {
+    "prefix": "!na",
+    "body": [
+      "export const act${1:${TM_FILENAME_BASE}} : ActionFnType = async () => {",
+      "  try {",
+      "    //",
+      "    return createActionResolveWithData();",
+      "  } catch (err) {",
+      "    return createActionRejectedWithError(err);",
+      "  }",
+      "}"
+    ],
+    "description": "nextjs action 함수 생성"
+  },
+
+  "React Storybook Visual Test ": {
+    "prefix": "!rcs",
+    "scope": "typescript,typescriptreact",
+    "description": "스토리북을 통한 리액트 비주얼 테스트 코드를 만든다.",
+    "body": [
+      "import { ComponentProps } from 'react';",
+      "import { ArgTypes, Meta, StoryFn, StoryObj } from '@storybook/react';",
+      "import { ${1:${TM_FILENAME_BASE/\\.stories//gi}} } from '${2:..}/${1}';",
+      "",
+      "",
+      "interface StoryProps extends ComponentProps<typeof ${1}> {}",
+      "",
+      "type MyArgTypes = Partial<Record<keyof StoryProps, ArgTypes[string]>>;",
+      "const argTypes: MyArgTypes = {}",
+      "",
+      "export default {",
+      "  title: '${3:ChangePlease}/${1}',",
+      "  component: ${1},",
+      "  argTypes,",
+      "} as Meta;",
+      "",
+      "const Template: StoryFn<StoryProps> = ({ ...props }) => {",
+      "  return (",
+      "    <${1} {...props}></${1}>",
+      "  );",
+      "};",
+      "",
+      "export const Default: StoryObj<StoryProps> = {",
+      "  render: Template,",
+      "",
+      "  args: {}",
+      "};"
+    ]
+  }
+}

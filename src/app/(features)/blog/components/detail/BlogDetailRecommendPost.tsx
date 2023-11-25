@@ -1,8 +1,8 @@
-import { BlogPostModel } from '@domain/uiStates';
-import { BlogCommonCardGrid } from '../common';
+import { BlogSearchUiState } from '@domain/blog/search/blogSearch.uiState';
+import { BlogCommonCardGrid } from '../common/BlogCommonCardGrid';
 
 interface BlogDetailRecommendPostProps {
-  posts: BlogPostModel[];
+  posts: BlogSearchUiState[];
 }
 
 export const BlogDetailRecommendPost = ({
@@ -10,7 +10,7 @@ export const BlogDetailRecommendPost = ({
 }: BlogDetailRecommendPostProps) =>
   posts.length > 0 ? (
     <div className="py-12 sm:py-16 lg:py-20">
-      <BlogCommonCardGrid posts={posts} loading={false} title="More" />
+      <BlogCommonCardGrid blogs={posts} title="More" />
     </div>
   ) : (
     <></>

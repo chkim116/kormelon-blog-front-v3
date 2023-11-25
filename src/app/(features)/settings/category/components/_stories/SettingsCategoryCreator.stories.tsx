@@ -1,5 +1,6 @@
 import { ComponentProps } from 'react';
 import { ArgTypes, Meta, StoryFn, StoryObj } from '@storybook/react';
+import { Button } from '@nextui-org/react';
 import { SettingsCategoryCreator } from '../SettingsCategoryCreator';
 
 interface StoryProps extends ComponentProps<typeof SettingsCategoryCreator> {}
@@ -14,21 +15,15 @@ export default {
 } as Meta;
 
 const Template: StoryFn<StoryProps> = ({ ...props }) => (
-  <SettingsCategoryCreator {...props} />
+  <SettingsCategoryCreator {...props}>
+    <Button type="submit" color="primary">
+      생성
+    </Button>
+  </SettingsCategoryCreator>
 );
 
 export const Default: StoryObj<StoryProps> = {
   render: Template,
 
-  args: {
-    loading: false,
-  },
-};
-
-export const Loading: StoryObj<StoryProps> = {
-  render: Template,
-
-  args: {
-    loading: true,
-  },
+  args: {},
 };

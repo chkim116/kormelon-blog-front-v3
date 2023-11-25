@@ -4,7 +4,7 @@ import {
   STORAGE_THEME_KEY,
   STORAGE_TOKEN_KEY,
   STORAGE_USER_KEY,
-} from '.';
+} from './token.const';
 
 type TokenType =
   | typeof STORAGE_TOKEN_KEY

@@ -1,13 +1,15 @@
+'use client';
+
 import { ChangeEventHandler, useEffect, useState } from 'react';
 import { Input } from '@nextui-org/react';
-import SubdirectoryArrowRightRoundedIcon from '@mui/icons-material/SubdirectoryArrowRightRounded';
-import { SubCategoryUpdateParams } from '@server/entities';
+import { LucideIcon } from '@shared/components/common/Icon';
+import { SubCategoryUpdateUiParams } from '@domain/category/category.uiState';
 import { SettingsCategoryExtraAction } from './SettingsCategoryExtraAction';
 
 interface SettingsCategorySubCategoryItemProps {
   id: number;
   value: string;
-  onSubUpdateClick: (params: SubCategoryUpdateParams) => void;
+  onSubUpdateClick: (params: SubCategoryUpdateUiParams) => void;
   onSubDeleteClick: (id: number) => void;
 }
 
@@ -43,7 +45,7 @@ export const SettingsCategorySubCategoryItem = ({
 
   return (
     <div className="pl-4 flex list-style-none gap-2 items-center justify-between">
-      <SubdirectoryArrowRightRoundedIcon fontSize="small" className="mb-0.5" />
+      <LucideIcon name="minus" fontSize="small" className="mb-0.5" />
       {isEditable ? (
         <>
           <Input

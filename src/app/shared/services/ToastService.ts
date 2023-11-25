@@ -1,8 +1,12 @@
 'use client';
 import { createElement } from 'react';
 import { Root, createRoot } from 'react-dom/client';
-import { Toast, ToastStatusType, ToastHandle } from '@shared/components/common';
-import { getPortal } from '@shared/utils';
+import {
+  Toast,
+  ToastStatusType,
+  ToastHandle,
+} from 'src/app/shared/components/common/Toast';
+import { getPortal } from 'src/app/shared/utils/getPortal';
 
 function ToastService() {
   const portal = getPortal();

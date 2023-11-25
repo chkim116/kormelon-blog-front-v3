@@ -1,10 +1,11 @@
+'use client';
 import NextLink from 'next/link';
-import { LocalOfferOutlined } from '@mui/icons-material';
 import { Chip } from '@nextui-org/react';
-import { TagWithPostModel } from '@domain/uiStates';
+import { LucideIcon} from '@shared/components/common/Icon';
+import { TagSearchWithPostCountUiState } from '@domain/tag/tag.uiState';
 
 interface TagSearchListProps {
-  tags: TagWithPostModel[];
+  tags: TagSearchWithPostCountUiState[];
 }
 
 export const TagSearchList = ({ tags }: TagSearchListProps) => (
@@ -16,12 +17,12 @@ export const TagSearchList = ({ tags }: TagSearchListProps) => (
           className="mx-1 p-2"
           as={NextLink}
           key={tag.id}
-          href={`/search?tagId=${tag.id}&tagValue=${tag.value}`}
-          startContent={<LocalOfferOutlined fontSize="small" />}
+          href={`/search/tags?tagId=${tag.id}&tagValue=${tag.value}`}
+          startContent={<LucideIcon name='tag' size={16} />}
           variant="bordered"
         >
           {tag.value}
-          {tag.posts.length > 0 && ` (${tag.posts.length})`}
+          {` (${tag.posts.length})`}
         </Chip>
       ))}
     </div>

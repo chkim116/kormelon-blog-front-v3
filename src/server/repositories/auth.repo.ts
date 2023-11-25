@@ -3,15 +3,21 @@ import {
   AuthEntity,
   AuthRegisterParams,
   Response,
+  AuthUserEntity,
 } from '@server/entities';
-import { apiClient } from '@core/network';
+import { authApiServer, baseApiServer } from '@core/network/apiServer';
 import {
-  STORAGE_TOKEN_KEY,
-  STORAGE_USER_KEY,
-  tokenProvider,
-} from '@core/storage';
+  getCookies,
+  removeCookies,
+  setCookies,
+} from '@server/cookies/serverCookieProvider';
+import {
+  COOKIE_TOKEN_KEY,
+  COOKIE_USER_KEY,
+} from '@server/constants/cookie.const';
+import { AuthRepository } from './types';
 
-export const authRepository = {
+export class AuthRepositoryImpl implements AuthRepository {
   /**
    * 유저가 로그인한다.
    *
@@ -19,8 +25,11 @@ export const authRepository = {
    * @returns
    */
   login(params: AuthLoginParams) {
-    return apiClient.post<Response<AuthEntity>>('/auth/signin', params);
-  },
+    return baseApiServer<Response<AuthEntity>>('/auth/signin', {
+      body: params,
+      method: 'POST',
+    });
+  }
 
   /**
    * 유저가 회원가입한다.
@@ -29,28 +38,53 @@ export const authRepository = {
    * @returns
    */
   register(params: AuthRegisterParams) {
-    return apiClient.post<Response>('/auth/signup', params);
-  },
+    return baseApiServer<Response>('/auth/signup', {
+      body: params,
+      method: 'POST',
+    });
+  }
 
   /**
    * 유저의 프로필 이미지를 업로드한다.
    *
-   * @param file
+   * @param fd FormData
    * @returns
    */
-  uploadProfileImage(file: File) {
-    const formData = new FormData();
-
-    formData.append('image', file);
-
-    return apiClient.post<Response<string>>('/auth/image', formData);
-  },
+  uploadProfileImage(fd: FormData) {
+    return authApiServer<Response<string>>('/auth/image', {
+      method: 'POST',
+      body: fd,
+    });
+  }
 
   /**
    * 유저 로그아웃
    */
   logout() {
-    tokenProvider.remove(STORAGE_TOKEN_KEY);
-    tokenProvider.remove(STORAGE_USER_KEY);
-  },
-};
+    removeCookies(COOKIE_TOKEN_KEY);
+    removeCookies(COOKIE_USER_KEY);
+  }
+
+  /**
+   * 유저 쿠키에 저장
+   */
+  setToken(user: AuthUserEntity, token: string) {
+    setCookies(COOKIE_TOKEN_KEY, token, {
+      httpOnly: true,
+      path: '/',
+    });
+    setCookies(COOKIE_USER_KEY, user, {
+      httpOnly: true,
+      path: '/',
+    });
+  }
+
+  /**
+   * 쿠키에 저장된 유저 정보를 확인하고 리턴
+   */
+  check() {
+    return getCookies<AuthUserEntity>(COOKIE_USER_KEY);
+  }
+}
+
+export const authRepository = new AuthRepositoryImpl();

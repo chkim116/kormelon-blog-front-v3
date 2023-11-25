@@ -1,25 +1,14 @@
-import {
-  ChangeEventHandler,
-  Key,
-  KeyboardEventHandler,
-  useRef,
-  useState,
-} from 'react';
-import {
-  SearchRounded,
-  AddCircleRounded,
-  CheckRounded,
-} from '@mui/icons-material';
-import { Chip, Input, Listbox, ListboxItem } from '@nextui-org/react';
-import { TagEntity } from '@server/entities';
-import { useClickAway } from '@shared/hooks';
+import { Key, useState } from 'react';
+import { Autocomplete, AutocompleteItem, Chip } from '@nextui-org/react';
+import { LucideIcon } from '@shared/components/common/Icon';
+import { TagSearchUiState } from '@domain/tag/tag.uiState';
 
 interface BlogTagSearchProps {
-  searchedTags: TagEntity[];
-  selectedTags: TagEntity[];
+  searchedTags: TagSearchUiState[];
+  selectedTags: TagSearchUiState[];
   onSearch: (text: string) => void;
   onDelete: (id: number) => void;
-  onSelect: (tag: TagEntity) => void;
+  onSelect: (tag: TagSearchUiState) => void;
 }
 
 const NO_SEARCHED_TAG_ID = -1;
@@ -44,99 +33,65 @@ export const BlogWriteTagSearch = ({
   onDelete,
   onSelect,
 }: BlogTagSearchProps) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState('');
   const selectedSets = new Set(selectedTags.map(({ value }) => value));
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setIsOpen(true);
-    onSearch(e.target.value);
-    setValue(e.target.value);
-  };
-
-  const handleClick = () => {
-    setIsOpen(true);
+  const handleChange = (value: string) => {
+    setValue(value);
+    onSearch(value);
   };
 
   const handleSelect = (key: Key) => {
-    const [id, value] = fromPrimaryKey(key);
-
-    setIsOpen(false);
-    setValue('');
-    onSelect({ id, value });
-  };
-
-  // TODO: 키로 이동할 수 있도록
-  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
-    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-      if (e.key === 'ArrowDown') {
-        //
-      }
-
-      if (e.key === 'ArrowUp') {
-        //
-      }
+    if (!value) {
+      return;
     }
+
+    const [id, tagValue] = fromPrimaryKey(key);
+
+    setValue('');
+    onSelect({ id, value: tagValue });
   };
 
   const handleDeleteCurried = (id: number) => () => {
     onDelete(id);
   };
 
-  const ref = useRef<HTMLUListElement | null>(null);
-
-  useClickAway(ref, () => {
-    setIsOpen(false);
-  });
-
   return (
     <div className="max-w-4xl mx-auto">
       <div className="my-6 flex-col gap-1">
         <div className="relative top-0 left-0 max-w-[208px] w-full">
-          <Input
-            label="태그검색"
+          <Autocomplete
             size="sm"
+            items={searchedTags}
+            inputValue={value}
             variant="bordered"
-            className="w-full"
-            autoComplete="off"
-            value={value}
-            onClick={handleClick}
-            onKeyDown={handleKeyDown}
-            onChange={handleChange}
-            endContent={<SearchRounded />}
-          />
-
-          {isOpen && searchedTags.length > 0 && (
-            <Listbox
-              ref={ref}
-              className="absolute top-13 w-full border rounded-md bg-white z-50"
-              selectionMode="multiple"
-              aria-label="태그검색리스트"
-              tabIndex={0}
-              onAction={handleSelect}
-            >
-              {searchedTags.map(({ id, value }) => (
-                <ListboxItem
-                  key={toPrimaryKey(id, value)}
-                  className={selectedSets.has(value) ? 'bg-primary-100' : ''}
-                  color={selectedSets.has(value) ? 'primary' : 'default'}
-                  startContent={
-                    id === NO_SEARCHED_TAG_ID &&
-                    !selectedSets.has(value) && (
-                      <AddCircleRounded className="w-3 h-3" />
-                    )
-                  }
-                  endContent={
-                    selectedSets.has(value) && (
-                      <CheckRounded className="w-3 h-3" />
-                    )
-                  }
-                >
-                  {value}
-                </ListboxItem>
-              ))}
-            </Listbox>
-          )}
+            label="태그 검색"
+            labelPlacement="inside"
+            endContent={<LucideIcon name="search" />}
+            onSelectionChange={handleSelect}
+            onInputChange={handleChange}
+          >
+            {({ id, value }) => (
+              <AutocompleteItem
+                key={toPrimaryKey(id, value)}
+                className={selectedSets.has(value) ? 'bg-primary-100' : ''}
+                color={selectedSets.has(value) ? 'primary' : 'default'}
+                startContent={
+                  id === NO_SEARCHED_TAG_ID &&
+                  !selectedSets.has(value) && (
+                    <LucideIcon name="plus-circle" className="w-3 h-3" />
+                  )
+                }
+                endContent={
+                  selectedSets.has(value) && (
+                    <LucideIcon name="check" className="w-3 h-3" />
+                  )
+                }
+              >
+                {value}
+              </AutocompleteItem>
+            )}
+          </Autocomplete>
         </div>
       </div>
 

@@ -40,15 +40,6 @@ export const WithTags: StoryObj<StoryProps> = {
   },
 };
 
-export const Private: StoryObj<StoryProps> = {
-  render: Template,
-
-  args: {
-    ...blogFixtures.getBlogDetail(),
-    isPrivate: false,
-  },
-};
-
 export const Author: StoryObj<StoryProps> = {
   render: Template,
 

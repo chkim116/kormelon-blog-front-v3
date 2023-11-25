@@ -1,9 +1,11 @@
-import { Accordion, AccordionItem, CircularProgress } from '@nextui-org/react';
+'use client';
+
+import { Accordion, AccordionItem } from '@nextui-org/react';
 import {
-  CategoryEntity,
-  CategoryUpdateParams,
-  SubCategoryUpdateParams,
-} from '@server/entities';
+  CategorySearchUiState,
+  CategoryUpdateUiParams,
+  SubCategoryUpdateUiParams,
+} from '@domain/category/category.uiState';
 import {
   SettingsCategoryCategoryItem,
   SettingsSubCategoryCreateArgs,
@@ -11,59 +13,48 @@ import {
 import { SettingsCategorySubCategoryItem } from './SettingsCategorySubCategoryItem';
 
 interface SettingsCategoryCategoryListProps {
-  loading: boolean;
-  categories: CategoryEntity[];
-  onCategoryUpdateClick: (params: CategoryUpdateParams) => void;
+  categories: CategorySearchUiState[];
+  onCategoryUpdateClick: (params: CategoryUpdateUiParams) => void;
   onCategoryDeleteClick: (id: number) => void;
   onSubCreateClick: (args: SettingsSubCategoryCreateArgs) => void;
-  onSubUpdateClick: (params: SubCategoryUpdateParams) => void;
+  onSubUpdateClick: (params: SubCategoryUpdateUiParams) => void;
   onSubDeleteClick: (id: number) => void;
 }
 
 export const SettingsCategoryCategoryList = ({
-  loading,
   categories,
   onCategoryUpdateClick,
   onCategoryDeleteClick,
   onSubCreateClick,
   onSubUpdateClick,
   onSubDeleteClick,
-}: SettingsCategoryCategoryListProps) => {
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-[50vh]">
-        <CircularProgress />
-      </div>
-    );
-  }
-
-  return (
-    <Accordion variant="splitted" selectionMode="multiple">
-      {categories.map(({ subCategories, id, value }) => (
-        <AccordionItem
-          key={id}
-          aria-label={value}
-          title={
-            <SettingsCategoryCategoryItem
-              id={id}
-              value={value}
-              onSubCreateClick={onSubCreateClick}
-              onCategoryDeleteClick={onCategoryDeleteClick}
-              onCategoryUpdateClick={onCategoryUpdateClick}
-            />
-          }
-        >
-          {subCategories.map(({ id, value }) => (
-            <SettingsCategorySubCategoryItem
-              key={id}
-              id={id}
-              value={value}
-              onSubUpdateClick={onSubUpdateClick}
-              onSubDeleteClick={onSubDeleteClick}
-            />
-          ))}
-        </AccordionItem>
-      ))}
-    </Accordion>
-  );
-};
+}: SettingsCategoryCategoryListProps) => (
+  <Accordion variant="splitted" selectionMode="multiple">
+    {categories.map(({ subCategories, id, value }) => (
+      <AccordionItem
+        key={id}
+        aria-label={value}
+        isCompact
+        title={
+          <SettingsCategoryCategoryItem
+            id={id}
+            value={value}
+            onSubCreateClick={onSubCreateClick}
+            onCategoryDeleteClick={onCategoryDeleteClick}
+            onCategoryUpdateClick={onCategoryUpdateClick}
+          />
+        }
+      >
+        {subCategories.map(({ id, value }) => (
+          <SettingsCategorySubCategoryItem
+            key={id}
+            id={id}
+            value={value}
+            onSubUpdateClick={onSubUpdateClick}
+            onSubDeleteClick={onSubDeleteClick}
+          />
+        ))}
+      </AccordionItem>
+    ))}
+  </Accordion>
+);

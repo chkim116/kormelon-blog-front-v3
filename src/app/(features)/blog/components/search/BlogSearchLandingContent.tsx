@@ -1,6 +1,3 @@
-'use client';
-/* eslint-disable react/no-unescaped-entities */
-
 interface BlogSearchLandingContentProps {
   categoryName: string;
 }

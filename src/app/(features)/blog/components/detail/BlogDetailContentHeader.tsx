@@ -1,18 +1,22 @@
 'use client';
 import {
-  ArrowRight,
-  Delete,
-  Edit,
-  LocalOfferOutlined,
-} from '@mui/icons-material';
-import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
-import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
-import { Button, Chip, Link, User } from '@nextui-org/react';
+  BreadcrumbItem,
+  Breadcrumbs,
+  Button,
+  Chip,
+  User,
+} from '@nextui-org/react';
 import NextImage from 'next/image';
 import NextLink from 'next/link';
-import { BlogPostDetailModel } from '@domain/uiStates';
+import { numberFormat } from 'safers';
+import { LucideIcon } from '@shared/components/common/Icon';
+import { BlogDetailUiState } from '@domain/blog/detail/blogDetail.uiState';
+import {
+  IMAGE_DEFAULT_HEIGHT_SIZE,
+  IMAGE_DEFAULT_WIDTH_SIZE,
+} from 'src/app/shared/constants';
 
-interface BlogDetailContentHeaderProps extends BlogPostDetailModel {
+interface BlogDetailContentHeaderProps extends BlogDetailUiState {
   isAuthor: boolean;
   onDelete: (id: number) => void;
 }
@@ -42,12 +46,12 @@ export const BlogDetailContentHeader = ({
         <div className="flex justify-end gap-1">
           <div className="flex items-center gap-1 border-r-1 pr-2">
             <div className="flex items-center gap-1">
-              <PeopleRoundedIcon />
-              {view?.toLocaleString()}
+              <LucideIcon name="user-2" />
+              {numberFormat(view)}
             </div>
             <div className="flex items-center gap-1">
-              <FavoriteRoundedIcon />
-              {like?.toLocaleString()}
+              <LucideIcon name="thumbs-up" />
+              {numberFormat(like)}
             </div>
           </div>
 
@@ -55,10 +59,10 @@ export const BlogDetailContentHeader = ({
             isIconOnly
             size="sm"
             variant="light"
-            href={`/blog/write?edit=${id}`}
+            href={`/blog/write?editId=${id}`}
             as={NextLink}
           >
-            <Edit />
+            <LucideIcon name="pencil" />
           </Button>
 
           <Button
@@ -68,28 +72,27 @@ export const BlogDetailContentHeader = ({
             color="danger"
             onClick={handleDelete}
           >
-            <Delete />
+            <LucideIcon name="trash" />
           </Button>
         </div>
       )}
 
       {/* 카테고리 - 서브카테고리 */}
       <div className="max-w-2xl mx-auto text-center mb-3 flex items-center justify-center gap-1">
-        <Link
-          as={NextLink}
-          className="truncate font-medium text-current"
-          href={`/blog?categoryId=${category.id}&subCategoryId=${category.subCategoryId}`}
-        >
-          {category.value}
-        </Link>
-        <ArrowRight fontSize="small" />
-        <Link
-          as={NextLink}
-          className="truncate font-medium text-current"
-          href={`/blog?categoryId=${category.id}&subCategoryId=${category.subCategoryId}`}
-        >
-          {category.subCategoryValue}
-        </Link>
+        <Breadcrumbs>
+          <BreadcrumbItem href={`/blog?categoryId=${category.id}`}>
+            {category.value}
+          </BreadcrumbItem>
+          <BreadcrumbItem
+            href={`/blog?categoryId=${category.id}&subCategoryId=${category.subCategoryId}`}
+          >
+            <NextLink
+              href={`/blog?categoryId=${category.id}&subCategoryId=${category.subCategoryId}`}
+            >
+              {category.subCategoryValue}
+            </NextLink>
+          </BreadcrumbItem>
+        </Breadcrumbs>
       </div>
 
       {/* 타이틀 - 프리뷰 */}
@@ -110,8 +113,8 @@ export const BlogDetailContentHeader = ({
             className="mx-1 p-2"
             as={NextLink}
             key={tag.id}
-            href={`/search?tagId=${tag.id}&tagValue=${tag.value}`}
-            startContent={<LocalOfferOutlined fontSize="small" />}
+            href={`/search/tags?tagId=${tag.id}&tagValue=${tag.value}`}
+            startContent={<LucideIcon name="tag" size={16} />}
             variant="bordered"
           >
             {tag.value}
@@ -142,9 +145,14 @@ export const BlogDetailContentHeader = ({
         </div>
       </div>
 
-      <div className="shadow-xl rounded-lg aspect-[16/8] relative overflow-hidden mt-12 sm:mt-16 lg:mt-20 mx-4 sm:mx-6 lg:mx-8">
-        <NextImage priority src={thumbnail} alt={title} layout="fill" />
-      </div>
+      <NextImage
+        width={IMAGE_DEFAULT_WIDTH_SIZE}
+        height={IMAGE_DEFAULT_HEIGHT_SIZE}
+        className="object-cover shadow-xl rounded-lg aspect-[16/9] relative overflow-hidden mt-12 sm:mt-16 lg:mt-20 mx-auto"
+        priority
+        src={thumbnail}
+        alt={title}
+      />
     </section>
   );
 };

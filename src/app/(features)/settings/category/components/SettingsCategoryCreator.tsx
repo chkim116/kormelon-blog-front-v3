@@ -1,21 +1,22 @@
-import { ChangeEventHandler, FormEventHandler, useState } from 'react';
-import { Button, Input } from '@nextui-org/react';
+'use client';
+
+import { ChangeEventHandler, ReactNode, useState } from 'react';
+import { Input } from '@nextui-org/react';
+import { CategoryCreateUiParams } from '@domain/category/category.uiState';
 
 interface SettingsCategoryCreatorProps {
-  loading: boolean;
-  onSubmit: (value: string) => Promise<void>;
+  onSubmit: (params: CategoryCreateUiParams) => Promise<void>;
+  children: ReactNode;
 }
 
 export const SettingsCategoryCreator = ({
-  loading,
   onSubmit,
+  children,
 }: SettingsCategoryCreatorProps) => {
   const [value, setValue] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
     if (!value) {
       setErrorMessage('값을 입력해 주세요.');
       return;
@@ -24,7 +25,7 @@ export const SettingsCategoryCreator = ({
     setErrorMessage('');
     value.trim();
 
-    onSubmit(value).then(() => {
+    onSubmit({ value }).then(() => {
       setValue('');
     });
   };
@@ -37,10 +38,13 @@ export const SettingsCategoryCreator = ({
     <form
       className="flex items-start py-4 max-w-xl w-full mb-12"
       autoComplete="off"
-      onSubmit={handleSubmit}
+      action={handleSubmit}
     >
       <Input
-        data-cy="create-category-input"
+        size="sm"
+        classNames={{
+          inputWrapper: 'h-10',
+        }}
         id="category"
         name="category"
         placeholder="카테고리 입력"
@@ -49,15 +53,7 @@ export const SettingsCategoryCreator = ({
         errorMessage={errorMessage}
         onChange={handleChange}
       />
-      <Button
-        data-cy="create-category-submit"
-        isLoading={loading}
-        isDisabled={loading}
-        type="submit"
-        color="primary"
-      >
-        생성
-      </Button>
+      {children}
     </form>
   );
 };

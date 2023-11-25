@@ -17,14 +17,18 @@ export const useQueryPush = () => {
   }, [searchParams]);
 
   const navigate = useCallback(
-    (object: Record<string, string | number>, isScroll = true) => {
+    (
+      object: Record<string, string | number>,
+      basePath = pathname,
+      isScroll = true,
+    ) => {
       const queries = { ...query, ...object };
 
       for (const key in queries) {
         if (!queries[key]) delete queries[key];
       }
 
-      push(pathname + qs.stringify(queries, { addQueryPrefix: true }), {
+      push(basePath + qs.stringify(queries, { addQueryPrefix: true }), {
         scroll: isScroll,
       });
     },

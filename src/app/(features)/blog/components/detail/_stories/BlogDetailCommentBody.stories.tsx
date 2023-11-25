@@ -49,7 +49,7 @@ export const Deleted: StoryObj<StoryProps> = {
 
   args: {
     ...commentFixtures.getCommentList(1, false)[0],
-    deletedAt: '2023-09-26',
+    isDeleted: true,
   },
 };
 

@@ -1,6 +1,8 @@
+'use client';
+
 import { MouseEventHandler } from 'react';
-import { Add, Check, Close, Delete, Edit } from '@mui/icons-material';
 import { Button } from '@nextui-org/react';
+import { LucideIcon } from '@shared/components/common/Icon';
 
 interface SettingsCategoryExtraActionProps {
   isEditMode: boolean;
@@ -48,7 +50,7 @@ export const SettingsCategoryExtraAction = ({
         data-cy="edit-finish"
         onClick={handleUpdate}
       >
-        <Check />
+        <LucideIcon name="check" />
       </Button>
       <Button
         variant="light"
@@ -57,7 +59,7 @@ export const SettingsCategoryExtraAction = ({
         aria-label="수정 취소 버튼"
         onClick={handleEditMode}
       >
-        <Close />
+        <LucideIcon name="x" />
       </Button>
     </div>
   ) : (
@@ -71,7 +73,7 @@ export const SettingsCategoryExtraAction = ({
           onClick={handleCreate}
           data-cy="create-category-modal-open"
         >
-          <Add />
+          <LucideIcon name="plus" />
         </Button>
       )}
 
@@ -82,7 +84,7 @@ export const SettingsCategoryExtraAction = ({
         data-cy="edit-category"
         onClick={handleEditMode}
       >
-        <Edit />
+        <LucideIcon name="pencil" />
       </Button>
       <Button
         isIconOnly
@@ -92,7 +94,7 @@ export const SettingsCategoryExtraAction = ({
         aria-label="카테고리 삭제"
         data-cy="delete-category"
       >
-        <Delete />
+        <LucideIcon name="trash" />
       </Button>
     </div>
   );

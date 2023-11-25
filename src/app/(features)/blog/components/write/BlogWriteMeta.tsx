@@ -24,7 +24,8 @@ export const BlogWriteMeta = ({
       <div>
         <Input
           label="제목"
-          variant="underlined"
+          variant="bordered"
+          labelPlacement="inside"
           value={title}
           name="title"
           id="title"
@@ -35,7 +36,7 @@ export const BlogWriteMeta = ({
       <div className="mt-4">
         <Textarea
           variant="bordered"
-          labelPlacement="outside"
+          labelPlacement="inside"
           label="프리뷰"
           value={preview}
           name="preview"

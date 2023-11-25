@@ -1,19 +1,20 @@
 import {
-  useState,
   ChangeEventHandler,
+  DragEventHandler,
+  KeyboardEventHandler,
   forwardRef,
   useImperativeHandle,
   useRef,
-  DragEventHandler,
-  KeyboardEventHandler,
+  useState,
 } from 'react';
-import { Preview } from '@mui/icons-material';
 import { Button, Textarea } from '@nextui-org/react';
-import { Dialog, Markdown } from '@shared/components/common';
+import { LucideIcon } from '@shared/components/common/Icon';
+import { Dialog } from 'src/app/shared/components/common/Dialog';
+import { Markdown } from 'src/app/shared/components/common/Markdown';
 
 interface BlogWriteContentProps {
   content: string;
-  onDrop: (file: File) => void;
+  onDrop: (fd: FormData) => void;
   onChange: (name: string, value: string) => void;
 }
 
@@ -26,7 +27,7 @@ export const BlogWriteContent = forwardRef<
   BlogWriteContentHandle,
   BlogWriteContentProps
 >(({ content, onDrop, onChange }, ref) => {
-  const refEditor = useRef<HTMLInputElement | null>(null);
+  const refEditor = useRef<HTMLTextAreaElement | null>(null);
 
   const [isPreview, setIsPreview] = useState(false);
 
@@ -73,7 +74,10 @@ export const BlogWriteContent = forwardRef<
     e.preventDefault();
     const file = e.dataTransfer.files[0];
 
-    onDrop(file);
+    const fd = new FormData();
+    fd.append('image', file);
+
+    onDrop(fd);
   };
 
   useImperativeHandle(ref, () => {
@@ -89,6 +93,7 @@ export const BlogWriteContent = forwardRef<
           const end = editor.selectionEnd || 0;
 
           editor.setRangeText(`\n![alt](${image})`, start, end, 'end');
+          onChange('content', editor.value);
         }
       },
     };
@@ -100,7 +105,7 @@ export const BlogWriteContent = forwardRef<
         <Button
           variant="light"
           onClick={handlePreview}
-          startContent={<Preview />}
+          startContent={<LucideIcon name="scan-eye" />}
         >
           본문 확인
         </Button>
@@ -121,11 +126,13 @@ export const BlogWriteContent = forwardRef<
       </div>
 
       <Dialog
-        className="max-w-4xl w-full"
+        className="max-w-4xl w-full h-[90vh] overflow-y-auto"
         open={isPreview}
         onClose={handlePreview}
       >
-        <Markdown content={content} />
+        <div className="w-full mx-auto">
+          <Markdown content={content} />
+        </div>
       </Dialog>
     </div>
   );

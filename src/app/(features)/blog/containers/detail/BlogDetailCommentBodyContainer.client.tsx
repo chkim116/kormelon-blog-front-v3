@@ -1,33 +1,51 @@
 'use client';
 import { useState } from 'react';
+import { toast } from 'src/app/shared/services/ToastService';
+import { useQueryParser } from 'src/app/shared/hooks/useQueryParser';
+import { commentService } from '@domain/comment';
 import {
-  BaseCommentCreateParamsModel,
-  BlogPostCommentDeleteParamsModel,
-  BlogPostCommentUpdateParamsModel,
-} from '@domain/uiStates';
-import { toast } from '@shared/services';
-import { useAppDispatch, useAppSelector } from '@shared/stores';
-import { selUserData } from '@shared/stores/auth';
-import { BlogDetailCommentBody } from '@app/blog/components/detail';
-import { useBlogPostDetailCommentParamsCtx } from '@app/blog/contexts';
+  CommentSearchUiState,
+  CommentUpdateUiParams,
+  CommentDeleteUiParams,
+} from '@domain/comment/comment.uiState';
+import { useFormActionState } from 'src/app/shared/hooks/useFormActionState';
 import {
-  effBlogPostCommentDelete,
-  effBlogPostCommentUpdate,
-  selBlogPostComments,
-} from '@app/blog/stores';
+  actCommentDelete,
+  actCommentUpdate,
+} from '@app/blog/actions/comment.action';
+import { BlogDetailCommentBody } from '@app/blog/components/detail/BlogDetailCommentBody';
 import { BlogDetailCommentReplyContainerClient } from './BlogDetailCommentReplyContainer.client';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface BlogDetailCommentBodyContainerClientProps {}
+interface BlogDetailCommentBodyContainerClientProps {
+  comments: CommentSearchUiState[];
+  userId: string;
+}
 
-export const BlogDetailCommentBodyContainerClient = (
-  _: BlogDetailCommentBodyContainerClientProps,
-) => {
-  const postComments = useAppSelector(selBlogPostComments);
-  const { postId } = useBlogPostDetailCommentParamsCtx();
-  const { id: userId } = useAppSelector(selUserData);
+export const BlogDetailCommentBodyContainerClient = ({
+  comments,
+  userId,
+}: BlogDetailCommentBodyContainerClientProps) => {
+  const { postId } = useQueryParser(commentService.refineQueryParams);
 
-  const dispatch = useAppDispatch();
+  const { formAction: updateAction } = useFormActionState(actCommentUpdate, {
+    onSuccess() {
+      toast.open('success', '댓글이 수정되었습니다.');
+    },
+    onError({ message }) {
+      toast.open('error', message);
+    },
+  });
+
+  const { formAction: deleteAction } = useFormActionState(actCommentDelete, {
+    onSuccess() {
+      toast.open('success', '댓글이 삭제되었습니다.');
+    },
+    onError({ message }) {
+      toast.open('error', message);
+    },
+  });
+
   const [shownReplyId, setShownReplyId] = useState<string[]>([]);
 
   const getIsShownReply = (id: string) => {
@@ -48,41 +66,34 @@ export const BlogDetailCommentBodyContainerClient = (
     setShownReplyId([...shownReplyIdSet]);
   };
 
-  const handleEdit = async (editValue: BaseCommentCreateParamsModel) => {
-    const updateParams: BlogPostCommentUpdateParamsModel = {
+  const handleEdit = async (editValue: CommentUpdateUiParams) => {
+    const updateParams: CommentUpdateUiParams = {
       commentValue: editValue.commentValue,
       password: editValue.password,
-      commentId: editValue.id,
+      commentId: editValue.commentId,
       postId,
     };
 
-    await dispatch(effBlogPostCommentUpdate(updateParams))
-      .unwrap()
-      .then(() => {
-        toast.open('success', '댓글이 수정되었습니다.');
-      })
-      .catch((err) => toast.open('error', err.message));
+    await updateAction(updateParams);
   };
 
   const handleDelete = async (commentId: string, password: string) => {
-    const deleteParams: BlogPostCommentDeleteParamsModel = {
+    const deleteParams: CommentDeleteUiParams = {
       password,
       commentId,
       postId,
     };
 
-    await dispatch(effBlogPostCommentDelete(deleteParams))
-      .unwrap()
-      .then(() => toast.open('success', '댓글이 삭제되었습니다.'))
-      .catch((err) => toast.open('error', err.message));
+    await deleteAction(deleteParams);
   };
 
   return (
     <>
-      {postComments.map(({ commentReplies, ...props }) => (
+      {comments.map(({ commentReplies, ...props }) => (
         <div key={props.id}>
           <BlogDetailCommentBody
             {...props}
+            replyLength={commentReplies.length}
             isAuthor={userId === props.userId}
             onDelete={handleDelete}
             onEdit={handleEdit}
@@ -91,6 +102,7 @@ export const BlogDetailCommentBodyContainerClient = (
 
           {getIsShownReply(props.id) && (
             <BlogDetailCommentReplyContainerClient
+              userId={userId}
               comments={commentReplies}
               commentId={props.id}
             />

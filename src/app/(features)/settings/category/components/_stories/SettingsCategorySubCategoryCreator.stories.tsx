@@ -1,7 +1,11 @@
-import { ComponentProps, useState, useEffect } from 'react';
+import { ComponentProps, useRef } from 'react';
 import { ArgTypes, Meta, StoryFn, StoryObj } from '@storybook/react';
 import { Button } from '@nextui-org/react';
-import { SettingsCategorySubCategoryCreator } from '../SettingsCategorySubCategoryCreator';
+import { actions } from '@storybook/addon-actions';
+import {
+  SettingsCategorySubCategoryCreator,
+  SettingsCategorySubCategoryCreatorHandle,
+} from '../SettingsCategorySubCategoryCreator';
 
 interface StoryProps
   extends ComponentProps<typeof SettingsCategorySubCategoryCreator> {}
@@ -15,37 +19,24 @@ export default {
   argTypes,
 } as Meta;
 
+const handlers = actions('onTestOk', 'onTestCancel');
 const Template: StoryFn<StoryProps> = ({ ...props }) => {
-  const [open, setOpen] = useState(props.isOpen);
+  const refDialog = useRef<SettingsCategorySubCategoryCreatorHandle | null>(
+    null,
+  );
 
-  const handleToggle = () => {
-    setOpen((prev) => !prev);
+  const handleOpen = () => {
+    refDialog.current
+      ?.open()
+      .then(handlers.onTestOk)
+      .catch(handlers.onTestCancel);
   };
-
-  const handleOk = (value: string) => {
-    handleToggle();
-    props.onOk(value);
-  };
-
-  const handleClose = () => {
-    handleToggle();
-    props.onClose();
-  };
-
-  useEffect(() => {
-    setOpen(props.isOpen);
-  }, [props.isOpen]);
 
   return (
     <>
-      <Button onClick={handleToggle}>오픈</Button>
+      <Button onClick={handleOpen}>오픈</Button>
 
-      <SettingsCategorySubCategoryCreator
-        {...props}
-        isOpen={open}
-        onClose={handleClose}
-        onOk={handleOk}
-      />
+      <SettingsCategorySubCategoryCreator {...props} ref={refDialog} />
     </>
   );
 };
@@ -53,15 +44,5 @@ const Template: StoryFn<StoryProps> = ({ ...props }) => {
 export const Default: StoryObj<StoryProps> = {
   render: Template,
 
-  args: {
-    isOpen: false,
-  },
-};
-
-export const Open: StoryObj<StoryProps> = {
-  render: Template,
-
-  args: {
-    isOpen: true,
-  },
+  args: {},
 };

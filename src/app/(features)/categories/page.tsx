@@ -1,11 +1,14 @@
-import { CategoriesLandingContent } from './components';
-import { CategoriesClientContainer } from './containers';
+import { actCategoriesLoad } from '@app/settings/category/actions/category.action';
+import { CategoriesLandingContent } from './components/CategoriesLandingContent';
+import { Categories } from './components/Categories';
 
-export default function CategoriesPage() {
+export default async function CategoriesPage() {
+  const { data: categories } = await actCategoriesLoad();
+
   return (
     <>
       <CategoriesLandingContent />
-      <CategoriesClientContainer />
+      <Categories categories={categories} />
     </>
   );
 }

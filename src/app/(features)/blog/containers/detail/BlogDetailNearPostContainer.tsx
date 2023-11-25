@@ -1,9 +1,8 @@
-'use client';
-import { BlogPostNearEntity } from '@server/entities';
-import { BlogDetailNearPost } from '@app/blog/components/detail';
+import { BlogDetailNearDto } from '@domain/blog/detail/blogDetail.uiState';
+import { BlogDetailNearPost } from '@app/blog/components/detail/BlogDetailNearPost';
 
 interface BlogDetailNearPostContainerProps {
-  nearPost: BlogPostNearEntity;
+  nearPost: BlogDetailNearDto;
 }
 
 export const BlogDetailNearPostContainer = ({

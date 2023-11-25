@@ -1,6 +1,7 @@
 import { ComponentProps } from 'react';
 import { StoryFn, Meta, ArgTypes } from '@storybook/react';
 import { faker } from '@faker-js/faker';
+import { Button } from '@nextui-org/react';
 import { AuthRegisterForm } from '../AuthRegisterForm';
 
 type MyArgTypes = Partial<
@@ -16,7 +17,16 @@ export default {
 
 const Template: StoryFn<typeof AuthRegisterForm> = ({ ...props }) => (
   <div className="max-w-sm">
-    <AuthRegisterForm {...props} />
+    <AuthRegisterForm {...props}>
+      <Button
+        className="w-full"
+        type="submit"
+        color="primary"
+        data-cy="signInButton"
+      >
+        Sign In
+      </Button>
+    </AuthRegisterForm>
   </div>
 );
 
@@ -24,26 +34,15 @@ export const Default = {
   render: Template,
 
   args: {
-    errorFieldNames: [],
     isLoading: false,
+  },
+};
+
+export const ProfileImage = {
+  render: Template,
+
+  args: {
+    ...Default.args,
     profileImage: faker.image.avatar(),
-  },
-};
-
-export const Loading = {
-  render: Template,
-
-  args: {
-    ...Default.args,
-    isLoading: true,
-  },
-};
-
-export const Error = {
-  render: Template,
-
-  args: {
-    ...Default.args,
-    errorFieldNames: ['email', 'password', 'username'],
   },
 };

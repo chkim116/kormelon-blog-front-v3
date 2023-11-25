@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { toBlogPostCommentSearchModels } from '@domain/manipulates';
+import { CommentSearchUiState } from '@domain/comment/comment.uiState';
 import { CommentSearchEntity } from '@server/entities';
-import { BlogPostCommentSearchModel } from '@domain/uiStates';
+import { toCommentSearchUiStates } from '@domain/comment/comment.convert';
 
 function getCommentList(length = 6, isAnonymous = false) {
   const results: CommentSearchEntity[] = Array.from({ length }, () => {
@@ -24,11 +24,11 @@ function getCommentList(length = 6, isAnonymous = false) {
     return result;
   });
 
-  return toBlogPostCommentSearchModels(results);
+  return toCommentSearchUiStates(results);
 }
 
 function getCommentListWithReplies(length = 6, replyLength = 3) {
-  const results: BlogPostCommentSearchModel[] = getCommentList(length).map(
+  const results: CommentSearchUiState[] = getCommentList(length).map(
     (item) => ({
       ...item,
       commentReplies: getCommentList(replyLength),

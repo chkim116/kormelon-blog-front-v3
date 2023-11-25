@@ -24,4 +24,11 @@ export const env = {
     process.env.NODE_ENV === 'production'
       ? 'https://api.kormelon.com/api'
       : 'http://localhost:4000/api',
+  /**
+   * FE 도메인
+   */
+  domain:
+    process.env.NODE_ENV === 'production'
+      ? 'https://kormelon.com'
+      : 'http://localhost:3000',
 };

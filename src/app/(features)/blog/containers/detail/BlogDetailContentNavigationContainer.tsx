@@ -1,9 +1,13 @@
 'use client';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { useDebounce } from 'use-debounce';
-import { extractHeadingText } from '@domain/manipulates';
-import { BlogPostAnchorModel } from '@domain/uiStates';
-import { BlogDetailContentNavigation } from '@app/blog/components/detail';
+import { toString } from 'safers';
+import { toBlogDetailAnchorUiStates } from '@domain/blog/detail/blogDetail.convert';
+import {
+  BlogDetailAnchorUiState,
+  BlogDetailAnchorUiDto,
+} from '@domain/blog/detail/blogDetail.uiState';
+import { BlogDetailContentNavigation } from '@app/blog/components/detail/BlogDetailContentNavigation';
 
 const DEFAULT_OFFSET_TOP = 100;
 
@@ -14,8 +18,15 @@ interface BlogDetailContentNavigationClientContainerProps {
 export const BlogDetailContentNavigationClientContainer = ({
   actionContents,
 }: BlogDetailContentNavigationClientContainerProps) => {
-  const [anchors, setAnchors] = useState<BlogPostAnchorModel[]>([]);
+  const [anchors, setAnchors] = useState<BlogDetailAnchorUiState[]>([]);
   const [activeId, setActiveId] = useState('');
+
+  const selectHeadElements = () => {
+    const elements =
+      document?.getElementById('blogContent')?.querySelectorAll('h2') || [];
+
+    return elements as NodeListOf<HTMLHeadingElement>;
+  };
 
   const handleClickAnchor = (id: string) => {
     const target = anchors.find(({ id: anchorId }) => anchorId === id);
@@ -42,8 +53,21 @@ export const BlogDetailContentNavigationClientContainer = ({
     setActiveId(currentId);
   }, 200);
 
+  const calcAnchors = useCallback(() => {
+    const elements = selectHeadElements();
+
+    if (elements.length) {
+      const heads: BlogDetailAnchorUiDto[] = [];
+      elements.forEach(({ textContent, offsetTop }) => {
+        heads.push({ textContent: toString(textContent), offsetTop });
+      });
+
+      setAnchors(toBlogDetailAnchorUiStates(heads));
+    }
+  }, []);
+
   const [handleResize] = useDebounce(() => {
-    setAnchors(extractHeadingText());
+    calcAnchors();
   }, 100);
 
   useEffect(() => {
@@ -56,8 +80,8 @@ export const BlogDetailContentNavigationClientContainer = ({
   }, [handleResize, handleScroll]);
 
   useEffect(() => {
-    setAnchors(extractHeadingText());
-  }, []);
+    calcAnchors();
+  }, [calcAnchors]);
 
   return (
     <BlogDetailContentNavigation

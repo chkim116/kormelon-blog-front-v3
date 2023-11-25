@@ -1,21 +1,22 @@
 'use client';
 import { useState } from 'react';
-import { Button, Input, Textarea } from '@nextui-org/react';
-import { BaseCommentCreateParamsModel } from '@domain/uiStates';
-import { createBlogPostCommentCreateParamsModel } from '@domain/manipulates';
+import { Input, Textarea } from '@nextui-org/react';
+import { CommentCreateUiParams } from '@domain/comment/comment.uiState';
+import { createCommentCreateUiParams } from '@domain/comment/comment.create';
+import { SubmitButton } from 'src/app/shared/components/common/SubmitButton';
 
 interface BlogDetailCommentTextareaProps {
   isAnonymous: boolean;
-  onSubmit: (createParams: BaseCommentCreateParamsModel) => Promise<void>;
+  onSubmit: (createParams: CommentCreateUiParams) => Promise<void>;
 }
 
 export const BlogDetailCommentTextarea = ({
   isAnonymous,
   onSubmit,
 }: BlogDetailCommentTextareaProps) => {
-  const [value, setValue] = useState(createBlogPostCommentCreateParamsModel());
+  const [value, setValue] = useState(createCommentCreateUiParams());
 
-  const handleChange = (dto: Partial<BaseCommentCreateParamsModel>) => {
+  const handleChange = (dto: Partial<CommentCreateUiParams>) => {
     setValue((prev) => ({ ...prev, ...dto }));
   };
 
@@ -33,7 +34,7 @@ export const BlogDetailCommentTextarea = ({
 
   const handleSubmit = () => {
     onSubmit(value).then(() => {
-      setValue(createBlogPostCommentCreateParamsModel());
+      setValue(createCommentCreateUiParams());
     });
   };
 
@@ -43,39 +44,41 @@ export const BlogDetailCommentTextarea = ({
         variant="bordered"
         value={value.commentValue}
         required
-        placeholder="Comment"
+        placeholder="댓글을 작성하세요."
         onValueChange={handleChangeText}
       />
-      <div className="w-full flex gap-2 justify-end">
+      <form action={handleSubmit} className="w-full flex gap-2 justify-end">
         {isAnonymous && (
-          <>
+          <div className="flex items-center">
             <Input
               required
+              size="sm"
+              classNames={{
+                inputWrapper: 'w-40 h-10',
+              }}
               value={value.username}
               placeholder="익명"
               variant="bordered"
-              className="w-40"
               onValueChange={handleChangeUsername}
             />
             <Input
               type="password"
+              size="sm"
               value={value.password}
               placeholder="패스워드"
               variant="bordered"
-              className="w-40"
+              classNames={{
+                inputWrapper: 'w-40 h-10',
+              }}
               onValueChange={handleChangePassword}
             />
-          </>
+          </div>
         )}
-        <Button
-          className="ml-auto mt-1"
-          type="submit"
-          color="primary"
-          onClick={handleSubmit}
-        >
-          댓글등록
-        </Button>
-      </div>
+
+        <SubmitButton className="ml-auto mt-1" type="submit" color="primary">
+          댓글 작성
+        </SubmitButton>
+      </form>
     </div>
   );
 };

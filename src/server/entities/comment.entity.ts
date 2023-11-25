@@ -5,7 +5,7 @@ interface CommentUserEntity {
   profileImage: string;
 }
 
-export interface BaseCommentCreateParams {
+interface BaseCommentCreateParams {
   /**
    * 댓글 값
    */

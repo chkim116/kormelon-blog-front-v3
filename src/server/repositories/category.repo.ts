@@ -7,9 +7,12 @@ import {
   SubCategoryEntity,
   SubCategoryUpdateParams,
 } from '@server/entities';
-import { apiClient } from '@core/network';
+import { authApiServer, baseApiServer } from '@core/network/apiServer';
+import { CategoryRepository } from './types';
 
-export const categoryRepository = {
+export const FETCH_CATEGORIES_CACHE_TAG = 'fetchCategories';
+
+export class CategoryRepositoryImpl implements CategoryRepository {
   /**
    * 카테고리들을 조회한다.
    *
@@ -18,8 +21,13 @@ export const categoryRepository = {
    * @returns
    */
   fetchCategories() {
-    return apiClient.get<Response<CategoryEntity[]>>('/category');
-  },
+    return baseApiServer<Response<CategoryEntity[]>>('/category', {
+      method: 'GET',
+      next: {
+        tags: [FETCH_CATEGORIES_CACHE_TAG],
+      },
+    });
+  }
 
   /**
    * 해당 카테고리의 서브 카테고리를 조회한다.
@@ -27,10 +35,11 @@ export const categoryRepository = {
    * @returns
    */
   fetchSubCategories(categoryId: number) {
-    return apiClient.get<Response<SubCategoryEntity[]>>('/subCategory', {
-      params: { categoryId },
+    return baseApiServer<Response<SubCategoryEntity[]>>('/subCategory', {
+      method: 'GET',
+      query: { categoryId },
     });
-  },
+  }
 
   /**
    * 카테고리를 생성한다.
@@ -39,8 +48,11 @@ export const categoryRepository = {
    * @returns
    */
   createCategory(params: CategoryCreateParams) {
-    return apiClient.post<Response>('/category', params);
-  },
+    return authApiServer<Response>('/category', {
+      method: 'POST',
+      body: params,
+    });
+  }
 
   /**
    * 서브 카테고리를 생성한다.
@@ -49,8 +61,11 @@ export const categoryRepository = {
    * @returns
    */
   createSubCategory(params: SubCategoryCreateParams) {
-    return apiClient.post<Response>('/subCategory', params);
-  },
+    return authApiServer<Response>('/subCategory', {
+      method: 'POST',
+      body: params,
+    });
+  }
 
   /**
    * 카테고리를 업데이트한다.
@@ -59,8 +74,11 @@ export const categoryRepository = {
    * @returns
    */
   updateCategory(params: CategoryUpdateParams) {
-    return apiClient.put<Response>('/category', params);
-  },
+    return authApiServer<Response>('/category', {
+      method: 'PUT',
+      body: params,
+    });
+  }
 
   /**
    * 서브 카테고리를 업데이트한다.
@@ -69,8 +87,11 @@ export const categoryRepository = {
    * @returns
    */
   updateSubCategory(params: SubCategoryUpdateParams) {
-    return apiClient.put<Response>('/subCategory', params);
-  },
+    return authApiServer<Response>('/subCategory', {
+      method: 'PUT',
+      body: params,
+    });
+  }
 
   /**
    * 카테고리를 삭제한다.
@@ -79,8 +100,8 @@ export const categoryRepository = {
    * @returns
    */
   deleteCategory(id: number) {
-    return apiClient.delete(`/category?id=${id}`);
-  },
+    return authApiServer(`/category?id=${id}`, { method: 'DELETE' });
+  }
 
   /**
    * 서브 카테고리를 삭제한다.
@@ -89,6 +110,8 @@ export const categoryRepository = {
    * @returns
    */
   deleteSubCategory(id: number) {
-    return apiClient.delete(`/subCategory?id=${id}`);
-  },
-};
+    return authApiServer(`/subCategory?id=${id}`, { method: 'DELETE' });
+  }
+}
+
+export const categoryRepository = new CategoryRepositoryImpl();

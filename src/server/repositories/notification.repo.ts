@@ -1,14 +1,18 @@
 import { NotificationSearchEntity, Response } from '@server/entities';
-import { apiClient } from '@core/network';
+import { authApiServer } from '@core/network/apiServer';
+import { NotificationRepository } from './types';
 
-export const notificationRepository = {
+class NotificationRepositoryImpl implements NotificationRepository {
   /**
    * 알림을 가져온다.
    * @returns
    */
   fetchList() {
-    return apiClient.get<Response<NotificationSearchEntity[]>>('/notification');
-  },
+    return authApiServer<Response<NotificationSearchEntity[]>>(
+      '/notification',
+      { method: 'GET' },
+    );
+  }
 
   /**
    * 알림을 읽는다.
@@ -16,6 +20,11 @@ export const notificationRepository = {
    * @returns
    */
   readNoti(id: number) {
-    return apiClient.post<void>('/notification', { id });
-  },
-};
+    return authApiServer<void>('/notification', {
+      body: { id },
+      method: 'POST',
+    });
+  }
+}
+
+export const notificationRepository = new NotificationRepositoryImpl();

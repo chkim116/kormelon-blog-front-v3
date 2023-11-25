@@ -1,6 +1,6 @@
 'use client';
-import { SettingsCategoryError } from './components/SettingsCategoryError';
+import { NotAuthError } from '@shared/components/error/NotAuthError';
 
-const SettingsCategoryErrorPage = () => <SettingsCategoryError />;
-
-export default SettingsCategoryErrorPage;
+export default function SettingsCategoryErrorPage() {
+  return <NotAuthError />;
+}

@@ -1,91 +1,92 @@
 'use client';
-/* eslint-disable indent */
-import { useCallback, useEffect } from 'react';
+
+import { toast } from 'src/app/shared/services/ToastService';
 import {
-  CategoryUpdateParams,
-  SubCategoryUpdateParams,
-} from '@server/entities';
-import { toast } from '@shared/services';
-import { useAppDispatch, useAppSelector } from '@shared/stores';
-import {
-  effCategoriesDelete,
-  effCategoriesLoad,
-  effCategoriesUpdate,
-  effSubCategoriesCreate,
-  effSubCategoriesDelete,
-  effSubCategoriesUpdate,
-  selCategories,
-  selCategoryLoading,
-} from '@shared/stores/category';
-import { SettingsCategoryCategoryList } from '../components';
+  CategorySearchUiState,
+  CategoryUpdateUiParams,
+  SubCategoryUpdateUiParams,
+} from '@domain/category/category.uiState';
+import { SettingsCategoryCategoryList } from '../components/SettingsCategoryCategoryList';
 import { SettingsSubCategoryCreateArgs } from '../components/SettingsCategoryCategoryItem';
+import {
+  actCategoryDelete,
+  actCategorySubCreate,
+  actCategorySubDelete,
+  actCategorySubUpdate,
+  actCategoryUpdate,
+} from '../actions/category.action';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface SettingsCategoryListContainerProps {}
+interface SettingsCategoryListContainerProps {
+  categories: CategorySearchUiState[];
+}
 
-export const SettingsCategoryListContainer = (
-  _: SettingsCategoryListContainerProps,
-) => {
-  const dispatch = useAppDispatch();
-
-  const isLoading = useAppSelector(selCategoryLoading);
-  const categories = useAppSelector(selCategories);
-
-  const handleCategoryDeleteClick = (id: number) => {
+export const SettingsCategoryListContainer = ({
+  categories,
+}: SettingsCategoryListContainerProps) => {
+  const handleCategoryDeleteClick = async (id: number) => {
     if (window.confirm('해당 카테고리를 삭제합니까?')) {
-      dispatch(effCategoriesDelete(id))
-        .unwrap()
-        .then(() => toast.open('success', '삭제 완료'))
-        .catch((err) => toast.open('error', err.message));
+      const { isError, message } = await actCategoryDelete(id);
+
+      if (isError) {
+        return toast.open('error', message);
+      }
+
+      toast.open('success', '삭제 완료');
     }
   };
 
-  const handleSubDeleteClick = (id: number) => {
+  const handleSubDeleteClick = async (id: number) => {
     if (window.confirm('해당 카테고리를 삭제합니까?')) {
-      dispatch(effSubCategoriesDelete(id))
-        .unwrap()
-        .then(() => toast.open('success', '삭제 완료'))
-        .catch((err) => toast.open('error', err.message));
+      const { isError, message } = await actCategorySubDelete(id);
+
+      if (isError) {
+        return toast.open('error', message);
+      }
+      toast.open('success', '삭제 완료');
     }
   };
 
-  const handleCategoryUpdateClick = (params: CategoryUpdateParams) => {
+  const handleCategoryUpdateClick = async (params: CategoryUpdateUiParams) => {
     if (window.confirm('해당 카테고리를 수정합니까?')) {
-      dispatch(effCategoriesUpdate(params))
-        .unwrap()
-        .then(() => toast.open('success', '수정 완료'))
-        .catch((err) => toast.open('error', err.message));
+      const { isError, message } = await actCategoryUpdate(params);
+
+      if (isError) {
+        return toast.open('error', message);
+      }
+      toast.open('success', '수정 완료');
     }
   };
 
-  const handleSubUpdateClick = (params: SubCategoryUpdateParams) => {
+  const handleSubUpdateClick = async (params: SubCategoryUpdateUiParams) => {
     if (window.confirm('해당 카테고리를 수정합니까?')) {
-      dispatch(effSubCategoriesUpdate(params))
-        .unwrap()
-        .then(() => toast.open('success', '수정 완료'))
-        .catch((err) => toast.open('error', err.message));
+      const { isError, message } = await actCategorySubUpdate(params);
+
+      if (isError) {
+        return toast.open('error', message);
+      }
+
+      toast.open('success', '수정 완료');
     }
   };
 
-  const handleSubCreateClick = ({
+  const handleSubCreateClick = async ({
     id,
     value,
   }: SettingsSubCategoryCreateArgs) => {
-    dispatch(effSubCategoriesCreate({ categoryId: id, value }))
-      .unwrap()
-      .then(() => toast.open('success', `서브 카테고리 ${value} 생성 완료`))
-      .catch((err) => toast.open('error', err.message));
+    const { isError, message } = await actCategorySubCreate({
+      categoryId: id,
+      value,
+    });
+
+    if (isError) {
+      return toast.open('error', message);
+    }
+
+    toast.open('success', `서브 카테고리 ${value} 생성 완료`);
   };
-
-  const loadCategories = useCallback(() => {
-    dispatch(effCategoriesLoad());
-  }, [dispatch]);
-
-  useEffect(loadCategories, [loadCategories]);
 
   return (
     <SettingsCategoryCategoryList
-      loading={isLoading}
       categories={categories}
       onCategoryDeleteClick={handleCategoryDeleteClick}
       onCategoryUpdateClick={handleCategoryUpdateClick}

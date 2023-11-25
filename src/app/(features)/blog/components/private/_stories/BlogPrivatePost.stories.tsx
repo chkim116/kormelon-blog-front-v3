@@ -27,7 +27,6 @@ export const Default: StoryObj<StoryProps> = {
   render: Template,
 
   args: {
-    loading: false,
     privateTotal: 3,
     privatePosts: getPrivatePosts(3),
   },
@@ -40,14 +39,5 @@ export const ManyPosts = {
     ...Default.args,
     privateTotal: 30,
     privatePosts: getPrivatePosts(30),
-  },
-};
-
-export const Loading = {
-  render: Template,
-
-  args: {
-    ...Default.args,
-    loading: true,
   },
 };
