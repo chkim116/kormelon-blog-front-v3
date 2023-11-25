@@ -26,12 +26,3 @@ export const Default: StoryObj<StoryProps> = {
     categories: categoryFixtures.getCategories(),
   },
 };
-
-export const Loading: StoryObj<StoryProps> = {
-  render: Template,
-
-  args: {
-    ...Default.args,
-    loading: true,
-  },
-};

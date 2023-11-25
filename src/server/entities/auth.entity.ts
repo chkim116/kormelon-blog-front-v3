@@ -1,4 +1,4 @@
-export enum UserRoleEnum {
+export enum AuthRoleEnum {
   /**
    * 일반 가입자
    */
@@ -9,7 +9,7 @@ export enum UserRoleEnum {
   ADMIN = 'admin',
 }
 
-export interface UserEntity {
+export interface AuthUserEntity {
   /**
    * 유저 식별자
    */
@@ -27,7 +27,7 @@ export interface UserEntity {
    *
    * 멤버 or 관리자
    */
-  role: UserRoleEnum;
+  role: AuthRoleEnum;
 }
 
 export interface AuthEntity {
@@ -38,7 +38,7 @@ export interface AuthEntity {
   /**
    * 유저 정보
    */
-  user: UserEntity;
+  user: AuthUserEntity;
 }
 
 export interface AuthLoginParams {
@@ -52,6 +52,13 @@ export interface AuthLoginParams {
   password: string;
 }
 
-export interface AuthRegisterParams
-  extends AuthLoginParams,
-    Pick<UserEntity, 'profileImage' | 'username'> {}
+export interface AuthRegisterParams extends AuthLoginParams {
+  /**
+   * 유저 프로필
+   */
+  profileImage: string;
+  /**
+   * 유저 닉네임
+   */
+  username: string;
+}

@@ -1,22 +1,18 @@
 import { faker } from '@faker-js/faker';
-import { CategoryModel } from '@domain/uiStates';
+import { CategorySearchUiState } from '@domain/category/category.uiState';
 
 function getCategories(length = 3) {
   return Array.from({ length }, () => {
     const categoryId = faker.number.int();
     const categoryValue = faker.lorem.word();
 
-    const result: CategoryModel = {
+    const result: CategorySearchUiState = {
       id: categoryId,
       value: categoryValue,
       posts: faker.number.int(30),
       subCategories: [
         {
           id: faker.number.int(),
-          category: {
-            id: categoryId,
-            value: categoryValue,
-          },
           value: faker.lorem.word(),
         },
       ],

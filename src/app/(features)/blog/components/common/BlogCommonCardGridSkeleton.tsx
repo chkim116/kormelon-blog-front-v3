@@ -1,14 +1,14 @@
 'use client';
+
 import { useMemo } from 'react';
+import { Skeleton } from '@nextui-org/react';
 import { BlogCommonCardSkeleton } from './BlogCommonCardSkeleton';
 
 interface BlogCommonCardGridSkeletonProps {
-  title: string;
   length: number;
 }
 
 export function BlogCommonCardGridSkeleton({
-  title,
   length,
 }: BlogCommonCardGridSkeletonProps) {
   const renderSkeletons = useMemo(
@@ -18,12 +18,10 @@ export function BlogCommonCardGridSkeleton({
 
   return (
     <section className="w-full mx-auto px-2">
-      <h2 className="text-xl font-bold text-secondary-900 sm:text-2xl mb-8">
-        {title}
-      </h2>
+      <Skeleton className="w-2/12 h-8 rounded-lg mb-8" />
       <div className="lg:col-span-12 mx-auto">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:gap-y-12 xl:grid-cols-3">
-          {renderSkeletons};
+          {renderSkeletons}
         </div>
       </div>
     </section>

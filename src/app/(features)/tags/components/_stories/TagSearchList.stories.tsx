@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react';
 import { StoryFn, Meta, ArgTypes } from '@storybook/react';
-import { TagWithPostModel } from '@domain/uiStates';
+import { TagSearchWithPostCountUiState } from '@domain/tag/tag.uiState';
 import { TagSearchList } from '../TagSearchList';
 
 type MyArgTypes = Partial<
@@ -18,7 +18,7 @@ const Template: StoryFn<typeof TagSearchList> = ({ ...props }) => (
   <TagSearchList {...props} />
 );
 
-function createTags(length: number): TagWithPostModel[] {
+function createTags(length: number): TagSearchWithPostCountUiState[] {
   return Array.from({ length }, (_, i) => ({
     id: i,
     value: `tag-${i}`,

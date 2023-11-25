@@ -1,9 +1,4 @@
-import {
-  ChangeEventHandler,
-  FormEventHandler,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEventHandler, ReactNode, useEffect, useState } from 'react';
 import {
   Avatar,
   Button,
@@ -12,24 +7,24 @@ import {
   Input,
   Spacer,
 } from '@nextui-org/react';
-import { createAuthRegisterParamsModel } from '@domain/manipulates';
-import { AuthRegisterParamsModel } from '@domain/uiStates';
-import { toast } from '@shared/services';
+import { toast } from 'src/app/shared/services/ToastService';
+import { createAuthRegisterUiParams } from '@domain/auth/auth.create';
+import { AuthRegisterUiParams } from '@domain/auth/auth.uiState';
 
 interface AuthRegisterFormProps {
   profileImage: string;
-  isLoading: boolean;
-  onSubmit: (params: AuthRegisterParamsModel) => void;
-  onUpload: (file: File) => void;
+  onSubmit: (params: AuthRegisterUiParams) => void;
+  onUpload: (fd: FormData) => void;
+  children: ReactNode;
 }
 
 export const AuthRegisterForm = ({
-  isLoading,
   profileImage,
   onSubmit,
   onUpload,
+  children,
 }: AuthRegisterFormProps) => {
-  const [form, setForm] = useState(createAuthRegisterParamsModel());
+  const [form, setForm] = useState(createAuthRegisterUiParams());
   const [errorFieldNames, setErrorFieldNames] = useState<string[]>([]);
   const isErrorField = (name: string) => errorFieldNames.includes(name);
 
@@ -37,8 +32,7 @@ export const AuthRegisterForm = ({
   const hasPasswordError = isErrorField('password');
   const hasUserError = isErrorField('username');
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     setErrorFieldNames([]);
 
     let isErr = false;
@@ -50,8 +44,6 @@ export const AuthRegisterForm = ({
         setErrorFieldNames((prev) => [...prev, key]);
       }
     });
-
-    console.log(isErr, errorFieldNames);
 
     if (isErr) {
       return;
@@ -76,7 +68,12 @@ export const AuthRegisterForm = ({
       return;
     }
 
-    onUpload(e.target.files[0]);
+    const file = e.target.files[0];
+
+    const fd = new FormData();
+    fd.append('image', file);
+
+    onUpload(fd);
   };
 
   useEffect(() => {
@@ -87,7 +84,7 @@ export const AuthRegisterForm = ({
     <Card className="w-full p-5">
       <h1 className="text-2xl bold text-center mb-5">Register</h1>
 
-      <form onChange={handleChange} onSubmit={handleSubmit}>
+      <form onChange={handleChange} action={handleSubmit}>
         <Input
           variant="underlined"
           isClearable
@@ -143,15 +140,8 @@ export const AuthRegisterForm = ({
         <Divider />
 
         <Spacer y={4} />
-        <Button
-          className="w-full"
-          data-cy="registerButton"
-          type="submit"
-          color="primary"
-          isLoading={isLoading}
-        >
-          Sign Up
-        </Button>
+
+        {children}
       </form>
     </Card>
   );

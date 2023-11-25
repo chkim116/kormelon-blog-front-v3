@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react';
 import { StoryFn, Meta, ArgTypes } from '@storybook/react';
-import { SAMPLE_IMAGE } from '@shared/constants';
+import { faker } from '@faker-js/faker';
 import { BlogWriteContent } from '../BlogWriteContent';
 
 type MyArgTypes = Partial<
@@ -22,6 +22,6 @@ export const Default = {
   render: Template,
 
   args: {
-    content: `# hello\n![image](${SAMPLE_IMAGE})\n\n> hi`,
+    content: `# hello\n![image](${faker.image.dataUri()})\n\n> hi`,
   },
 };

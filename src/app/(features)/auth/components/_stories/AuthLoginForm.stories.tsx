@@ -1,5 +1,6 @@
 import { ComponentProps } from 'react';
 import { StoryFn, Meta, ArgTypes } from '@storybook/react';
+import { Button } from '@nextui-org/react';
 import { AuthLoginForm } from '../AuthLoginForm';
 
 type MyArgTypes = Partial<
@@ -15,33 +16,21 @@ export default {
 
 const Template: StoryFn<typeof AuthLoginForm> = ({ ...props }) => (
   <div className="max-w-sm">
-    <AuthLoginForm {...props} />
+    <AuthLoginForm {...props}>
+      <Button
+        className="w-full"
+        type="submit"
+        color="primary"
+        data-cy="signInButton"
+      >
+        Sign In
+      </Button>
+    </AuthLoginForm>
   </div>
 );
 
 export const Default = {
   render: Template,
 
-  args: {
-    errorFieldNames: [],
-    isLoading: false,
-  },
-};
-
-export const Loading = {
-  render: Template,
-
-  args: {
-    ...Default.args,
-    isLoading: true,
-  },
-};
-
-export const Error = {
-  render: Template,
-
-  args: {
-    ...Default.args,
-    errorFieldNames: ['email', 'password'],
-  },
+  args: {},
 };

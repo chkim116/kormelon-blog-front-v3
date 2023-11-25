@@ -17,6 +17,7 @@
     "incremental": true,
     "typeRoots": ["node_modules/@types"],
     "downlevelIteration": true,
+    "types": ["jest", "node"],
     "paths": {
       "@core/*": ["src/core/*"],
       "@domain/*": ["src/domain/*"],
@@ -31,6 +32,12 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "jest.config.mjs"
+  ],
+  "exclude": ["node_modules", "cypress", "cypress.config.ts"]
 }

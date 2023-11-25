@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Button, Input } from '@nextui-org/react';
-import { Dialog } from '@shared/components/common';
+import { Dialog } from 'src/app/shared/components/common/Dialog';
 
 interface BlogDetailCommentEditConfirmModalProps {
   isAnonymous: boolean;

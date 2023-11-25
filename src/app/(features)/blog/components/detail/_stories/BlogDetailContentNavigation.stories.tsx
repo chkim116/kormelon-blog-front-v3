@@ -42,7 +42,7 @@ export const Active: StoryObj<StoryProps> = {
   },
 };
 
-export const ActionContents: StoryObj<StoryProps> = {
+export const WithActionContents: StoryObj<StoryProps> = {
   render: Template,
 
   args: {

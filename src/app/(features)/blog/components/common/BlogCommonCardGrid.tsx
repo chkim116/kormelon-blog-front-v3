@@ -1,21 +1,17 @@
-'use client';
-import { BlogPostModel } from '@domain/uiStates';
+import { BlogSearchUiState } from '@domain/blog/search/blogSearch.uiState';
 import { BlogCommonCard } from './BlogCommonCard';
-import { BlogCommonCardSkeleton } from './BlogCommonCardSkeleton';
 import { BlogCommonPostEmpty } from './BlogCommonPostEmpty';
 
 interface BlogCommonCardGridProps {
-  loading: boolean;
   title: string;
-  posts: BlogPostModel[];
+  blogs: BlogSearchUiState[];
 }
 
 export function BlogCommonCardGrid({
-  posts,
+  blogs,
   title = 'All Post',
-  loading,
 }: BlogCommonCardGridProps) {
-  const shouldPostCardRender = posts.length > 0;
+  const shouldPostCardRender = blogs.length > 0;
 
   return (
     <section className="w-full mx-auto px-2">
@@ -25,13 +21,9 @@ export function BlogCommonCardGrid({
       {shouldPostCardRender ? (
         <div className="lg:col-span-12 mx-auto">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:gap-y-12 xl:grid-cols-3">
-            {posts.map((post) =>
-              loading ? (
-                <BlogCommonCardSkeleton key={post.id} />
-              ) : (
-                <BlogCommonCard key={post.id} {...post} />
-              ),
-            )}
+            {blogs.map((post) => (
+              <BlogCommonCard key={post.id} {...post} />
+            ))}
           </div>
         </div>
       ) : (

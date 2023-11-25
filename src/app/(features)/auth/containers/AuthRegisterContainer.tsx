@@ -1,16 +1,12 @@
 'use client';
-import React, { useState } from 'react';
 import { Button } from '@nextui-org/react';
 import gravatar from 'gravatar';
-import { AuthRegisterParamsModel } from '@domain/uiStates';
-import { toast } from '@shared/services';
-import {
-  effAuthProfileUpload,
-  effAuthRegister,
-  selAuthLoading,
-} from '@shared/stores/auth';
-import { useAppDispatch, useAppSelector } from '@shared/stores';
+import { toast } from 'src/app/shared/services/ToastService';
+import { useFormActionState } from 'src/app/shared/hooks/useFormActionState';
+import { useActionState } from 'src/app/shared/hooks/useActionState';
+import { SubmitButton } from 'src/app/shared/components/common/SubmitButton';
 import { AuthRegisterForm } from '../components/AuthRegisterForm';
+import { actAuthProfileUpload, actAuthRegister } from '../actions/auth.action';
 
 interface AuthRegisterContainerProps {
   onChangeClick: () => void;
@@ -26,33 +22,40 @@ const defaultProfileImage = gravatar.url('default', {
 export const AuthRegisterContainer = ({
   onChangeClick,
 }: AuthRegisterContainerProps) => {
-  const dispatch = useAppDispatch();
+  const { formAction: handleSubmit } = useFormActionState(actAuthRegister, {
+    onError({ message }) {
+      toast.open('error', message);
+    },
+    onSuccess() {
+      onChangeClick();
+    },
+  });
 
-  const isLoading = useAppSelector(selAuthLoading);
-
-  const [profileImage, setProfileImage] = useState(defaultProfileImage);
-
-  const handleSubmit = (params: AuthRegisterParamsModel) => {
-    dispatch(effAuthRegister(params))
-      .unwrap()
-      .then(onChangeClick)
-      .catch((err) => toast.open('error', err.message));
-  };
-
-  const handleUpload = async (file: File) => {
-    const profileImage = await dispatch(effAuthProfileUpload(file)).unwrap();
-
-    setProfileImage(profileImage);
-  };
+  const {
+    action: handleUpload,
+    state: { data: profileImage },
+  } = useActionState(defaultProfileImage, actAuthProfileUpload, {
+    onError(state) {
+      toast.open('error', state.message);
+    },
+  });
 
   return (
     <>
       <AuthRegisterForm
-        isLoading={isLoading}
         profileImage={profileImage}
         onSubmit={handleSubmit}
         onUpload={handleUpload}
-      />
+      >
+        <SubmitButton
+          className="w-full"
+          data-cy="registerButton"
+          type="submit"
+          color="primary"
+        >
+          Sign Up
+        </SubmitButton>
+      </AuthRegisterForm>
       <Button
         className="w-full mt-4"
         variant="light"

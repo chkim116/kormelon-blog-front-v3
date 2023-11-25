@@ -1,6 +1,4 @@
-import { UserEntity } from './auth.entity';
-
-export interface BlogPostCategoryEntity {
+export interface PostCategoryEntity {
   /**
    * 카테고리 식별자
    */
@@ -11,19 +9,25 @@ export interface BlogPostCategoryEntity {
   value: string;
 }
 
-export interface BlogPostTagEntity {
+export interface PostTagEntity {
+  /**
+   * 태그 식별자
+   */
   id: number;
+  /**
+   * 태그 값
+   */
   value: string;
 }
 
-export interface BlogPostCommentEntity {
+export interface PostCommentEntity {
   /**
    * 댓글 식별자
    */
   id: string;
 }
 
-export interface BlogPostEntity {
+export interface PostSearchEntity {
   /**
    * 게시글 식별자
    */
@@ -50,16 +54,16 @@ export interface BlogPostEntity {
   createdAt: string;
 }
 
-export interface BlogPrivatePostEntity extends BlogPostEntity {
+export interface PostPrivateSearchEntity extends PostSearchEntity {
   /**
    * 비밀 모드
    */
   isPrivate: boolean;
 }
 
-export interface BlogPostRecommendEntity extends BlogPostEntity {}
+export interface PostRecommendEntity extends PostSearchEntity {}
 
-export interface BlogPostCreateParams {
+export interface PostCreateParams {
   /**
    * 게시글의 미리보기 내용
    */
@@ -94,14 +98,29 @@ export interface BlogPostCreateParams {
   isPrivate: boolean;
 }
 
-export interface BlogPostUpdateParams extends BlogPostCreateParams {
+export interface PostUpdateParams extends PostCreateParams {
   /**
    * 게시글의 식별자
    */
   id: number;
 }
 
-export interface BlogPostDetailEntity extends BlogPostEntity {
+interface PostAuthEntity {
+  /**
+   * 유저 식별자
+   */
+  id: string;
+  /**
+   * 유저 프로필
+   */
+  profileImage: string;
+  /**
+   * 유저 닉네임
+   */
+  username: string;
+}
+
+export interface PostDetailEntity extends PostSearchEntity {
   /**
    * 게시글 조회수
    */
@@ -113,11 +132,11 @@ export interface BlogPostDetailEntity extends BlogPostEntity {
   /**
    * 게시글 카테고리
    */
-  category: BlogPostCategoryEntity;
+  category: PostCategoryEntity;
   /**
    * 게시글 서브 카테고리
    */
-  subCategory: BlogPostCategoryEntity;
+  subCategory: PostCategoryEntity;
   /**
    * 게시글의 컨텐츠
    */
@@ -125,53 +144,78 @@ export interface BlogPostDetailEntity extends BlogPostEntity {
   /**
    * 게시글 작성 유저
    */
-  user: Omit<UserEntity, 'role'>;
+  user: PostAuthEntity;
   /**
    * 게시글에 연결된 태그
    */
-  tags: BlogPostTagEntity[];
+  tags: PostTagEntity[];
   /**
    * 게시글의 비밀 여부
    */
   isPrivate: boolean;
 }
 
-export interface BlogPostRssEntity
-  extends Pick<
-    BlogPostDetailEntity,
-    'id' | 'content' | 'createdAt' | 'title'
-  > {}
-
-export type BlogPostDetailNearPost = Omit<
-  BlogPostEntity,
-  'preview' | 'readTime'
-> | null;
-
-export interface BlogPostNearEntity {
-  prev: BlogPostDetailNearPost;
-  next: BlogPostDetailNearPost;
+export interface PostRssEntity {
+  /**
+   * 게시글 식별자
+   */
+  id: number;
+  /**
+   * 게시글 제목
+   */
+  title: string;
+  /**
+   * 게시글 내용
+   */
+  content: string;
+  /**
+   * 게시글 생성 일자
+   */
+  createdAt: string;
 }
 
-export interface BlogPostDetailResultEntityPayload {
+export interface PostDetailNearPostEntity {
   /**
-   * 현재 게시글의 상세
+   * 게시글 식별자
    */
-  post: BlogPostDetailEntity;
+  id: number;
+  /**
+   * 게시글 제목
+   */
+  title: string;
+  /**
+   * 게시글 썸네일
+   */
+  thumbnail: string;
+  /**
+   * 게시글 생성 일자
+   */
+  createdAt: string;
+}
+
+export interface PostDetailNearEntity {
   /**
    * 이전 게시글
    *
    * 기준은 카테고리 기준 다음 글이다.
    */
-  prev: BlogPostDetailNearPost;
+  prev: PostDetailNearPostEntity | null;
   /**
    * 다음 게시글
    *
    * 기준은 카테고리 기준 다음 글이다.
    */
-  next: BlogPostDetailNearPost;
+  next: PostDetailNearPostEntity | null;
 }
 
-export interface BlogPostSearchParams {
+export interface PostDetailResultEntityPayload extends PostDetailNearEntity {
+  /**
+   * 현재 게시글의 상세
+   */
+  post: PostDetailEntity;
+}
+
+export interface PostSearchParams {
   /**
    * 페이지
    *
@@ -189,18 +233,16 @@ export interface BlogPostSearchParams {
    */
   keyword?: string;
   /**
-   * 카테고리 별로 불러올 수 있는 쿼리
-   */
-  subCategoryId?: number;
-  /**
-   * 상위 카테고리 쿼리
-   *
-   * 실제 서버 검색에는 사용하지 않는다.
+   * 상위 카테고리 식별자
    */
   categoryId?: number;
+  /**
+   * 서브 카테고리 식별자
+   */
+  subCategoryId?: number;
 }
 
-export interface BlogPostSearchByTagParams {
+export interface PostSearchByTagParams {
   /**
    * 태그의 아이디
    */

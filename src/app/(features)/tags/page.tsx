@@ -1,17 +1,13 @@
-'use client';
-import React, { useCallback, useEffect } from 'react';
-import { useAppDispatch } from '@shared/stores';
-import { effTagAllSearchLoad } from '@shared/stores/tag';
-import { TagSearchListContainer } from './containers';
+import { actTagsSearchAllLoad } from 'src/app/shared/actions/sharedTag.action';
+import { TagSearchList } from './components/TagSearchList';
 
-export default function TagPage() {
-  const dispatch = useAppDispatch();
+interface TagsPageProps {
+  params: Record<string, string>;
+  searchParams: Record<string, string>;
+}
 
-  const loadAllTags = useCallback(() => {
-    dispatch(effTagAllSearchLoad());
-  }, [dispatch]);
+export default async function TagsPage(_: TagsPageProps) {
+  const { data: tags } = await actTagsSearchAllLoad();
 
-  useEffect(loadAllTags, [loadAllTags]);
-
-  return <TagSearchListContainer />;
+  return <TagSearchList tags={tags} />;
 }

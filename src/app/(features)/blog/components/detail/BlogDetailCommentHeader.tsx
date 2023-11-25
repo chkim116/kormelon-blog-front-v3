@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
-import { Edit, Delete } from '@mui/icons-material';
 import { Button, Input, User } from '@nextui-org/react';
-import { Dialog } from '@shared/components/common';
+import { Dialog } from 'src/app/shared/components/common/Dialog';
+import { LucideIcon } from '@shared/components/common/Icon';
 
 interface BlogDetailCommentHeaderProps {
   userProfile: string;
@@ -81,7 +81,7 @@ export const BlogDetailCommentHeader = ({
       {isShowingEditButtons && (
         <div className="flex gap-1 p-3">
           <Button variant="light" isIconOnly size="sm" onClick={onEditStart}>
-            <Edit fontSize="small" />
+            <LucideIcon name="pencil" size={18} />
           </Button>
 
           <Button
@@ -90,7 +90,7 @@ export const BlogDetailCommentHeader = ({
             size="sm"
             onClick={handleDeleteDialogOpen}
           >
-            <Delete fontSize="small" />
+            <LucideIcon name="trash" size={18} />
           </Button>
         </div>
       )}

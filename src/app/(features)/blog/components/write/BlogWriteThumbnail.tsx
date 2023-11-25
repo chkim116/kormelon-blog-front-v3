@@ -1,10 +1,10 @@
 import { ChangeEventHandler } from 'react';
 import { Input } from '@nextui-org/react';
 import Image from 'next/image';
-import { toast } from '@shared/services';
+import { toast } from 'src/app/shared/services/ToastService';
 
 interface BlogWriteThumbnailProps {
-  onUploadImage: (file: File) => void;
+  onUploadImage: (fd: FormData) => Promise<string>;
   previewThumbnail: string;
 }
 
@@ -20,7 +20,10 @@ export const BlogWriteThumbnail = ({
       return;
     }
 
-    onUploadImage(file);
+    const fd = new FormData();
+    fd.append('image', file);
+
+    onUploadImage(fd);
   };
 
   return (
@@ -29,7 +32,7 @@ export const BlogWriteThumbnail = ({
         <div className="relative w-full max-h-[480px] pb-[56.25%]">
           <div className="absolute w-full h-full">
             <Image
-              className="w-full h-full"
+              className="w-full h-full object-cover"
               src={previewThumbnail}
               alt="미리보는 썸네일"
               layout="fill"

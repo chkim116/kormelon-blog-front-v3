@@ -1,11 +1,10 @@
 'use client';
-import { toast } from '@shared/services';
-import { useAppDispatch, useAppSelector } from '@shared/stores';
-import {
-  effCategoriesCreate,
-  selCategoryLoading,
-} from '@shared/stores/category';
-import { SettingsCategoryCreator } from '../components';
+
+import { toast } from 'src/app/shared/services/ToastService';
+import { useFormActionState } from 'src/app/shared/hooks/useFormActionState';
+import { SubmitButton } from 'src/app/shared/components/common/SubmitButton';
+import { SettingsCategoryCreator } from '../components/SettingsCategoryCreator';
+import { actCategoryCreate } from '../actions/category.action';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface SettingsCategoryCreatorContainerProps {}
@@ -13,19 +12,20 @@ interface SettingsCategoryCreatorContainerProps {}
 export const SettingsCategoryCreatorContainer = (
   _: SettingsCategoryCreatorContainerProps,
 ) => {
-  const dispatch = useAppDispatch();
-  const isLoading = useAppSelector(selCategoryLoading);
-
-  const handleSubmit = async (value: string) => {
-    try {
-      await dispatch(effCategoriesCreate({ value })).unwrap();
-      toast.open('success', `카테고리 ${value} 생성`);
-    } catch (err) {
-      toast.open('error', (err as Error).message);
-    }
-  };
+  const { formAction: handleSubmit } = useFormActionState(actCategoryCreate, {
+    onSuccess({ data }) {
+      toast.open('success', `카테고리 ${data} 생성`);
+    },
+    onError({ message }) {
+      toast.open('error', message);
+    },
+  });
 
   return (
-    <SettingsCategoryCreator loading={isLoading} onSubmit={handleSubmit} />
+    <SettingsCategoryCreator onSubmit={handleSubmit}>
+      <SubmitButton type="submit" color="primary">
+        생성
+      </SubmitButton>
+    </SettingsCategoryCreator>
   );
 };

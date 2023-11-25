@@ -1,14 +1,13 @@
 import { Metadata } from 'next';
-import { toBlogPostDetailModel, createMetaData } from '@domain/manipulates';
-import { repo } from '@server/repo';
-import {
-  BlogDetailCommentClientContainer,
-  BlogDetailContentClientContainer,
-  BlogDetailNearPostContainer,
-  BlogDetailRecommendPostContainer,
-} from '@app/blog/containers/detail';
-
-export const dynamicParams = true;
+import { notFound } from 'next/navigation';
+import { toNumber } from 'safers';
+import { createMetaData } from 'src/app/shared/manipulates/sharedMeta.create';
+import { blogSearchService } from '@domain/blog/search';
+import { createBlogSearchUiParams } from '@domain/blog/search/blogSearch.create';
+import { actSharedCheckUser } from '@shared/actions/sharedAuth.action';
+import { blogDetailService } from '@domain/blog/detail';
+import { actBlogDetailSearch } from '@app/blog/actions/blogDetail.action';
+import { BlogDetailContentContainerClient } from '@app/blog/containers/detail/BlogDetailContentContainer.client';
 
 interface BlogDetailParams {
   id: number;
@@ -19,48 +18,55 @@ export interface BlogDetailPageProps {
 }
 
 export async function generateStaticParams() {
-  const {
-    data: { payload: posts },
-  } = await repo.post.fetchPosts({ per: 1000 });
+  try {
+    const { blogs } = await blogSearchService.fetchBlogs({
+      ...createBlogSearchUiParams(),
+      per: 1000,
+    });
 
-  return posts.map((post) => post.id);
+    return blogs.map((blog) => blog.id);
+  } catch (err) {
+    return [];
+  }
 }
 
 export async function generateMetadata({
   params,
 }: BlogDetailPageProps): Promise<Metadata> {
-  const { post } = await repo.post
-    .fetchPostById(Number(params.id))
-    .then(({ data: { payload } }) => payload);
+  try {
+    const { blog } = await blogDetailService.fetchBlogDetail(
+      toNumber(params.id),
+    );
 
-  return createMetaData({
-    url: `https://www.kormelon.com/blog/${post.id}`,
-    image: post.thumbnail,
-    description: post.preview,
-    title: post.title,
-  });
+    return createMetaData({
+      url: `https://www.kormelon.com/blog/${blog.id}`,
+      image: blog.thumbnail,
+      description: blog.preview,
+      title: blog.title,
+    });
+  } catch (err) {
+    return createMetaData();
+  }
 }
 
-async function fetchBlogDetail(params: BlogDetailParams) {
-  const { post, next, prev } = await repo.post
-    .fetchPostById(Number(params.id))
-    .then(({ data: { payload } }) => payload);
-
-  return {
-    post: toBlogPostDetailModel(post),
-    nearPost: { next, prev },
-  };
-}
+export const dynamic = 'force-dynamic';
 
 export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
-  const props = await fetchBlogDetail(params);
+  const id = toNumber(params.id);
 
-  return (
-    <>
-      <BlogDetailContentClientContainer post={props.post} />
-      <BlogDetailCommentClientContainer />
-      <BlogDetailNearPostContainer nearPost={props.nearPost} />
-      <BlogDetailRecommendPostContainer />
-    </>
-  );
+  if (!id) {
+    notFound();
+  }
+
+  const { data: blogData, isError } = await actBlogDetailSearch(id);
+
+  if (isError) {
+    notFound();
+  }
+
+  const { blog } = blogData;
+  const { data: user } = await actSharedCheckUser();
+  const isAuthor = blog.user.id === user.id;
+
+  return <BlogDetailContentContainerClient blog={blog} isAuthor={isAuthor} />;
 }

@@ -1,7 +1,6 @@
 'use client';
-import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
-import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import { Button } from '@nextui-org/react';
+import { LucideIcon } from '@shared/components/common/Icon';
 
 interface BlogDetailContentActionProps {
   isLiked: boolean;
@@ -22,7 +21,7 @@ export const BlogDetailContentAction = ({
       variant="bordered"
       onClick={onShare}
     >
-      <ShareRoundedIcon />
+      <LucideIcon name="clipboard-copy" />
     </Button>
     <Button
       as="li"
@@ -32,7 +31,7 @@ export const BlogDetailContentAction = ({
       onClick={onLike}
       aria-label="좋아요 버튼"
     >
-      <FavoriteRoundedIcon />
+      <LucideIcon name="thumbs-up" />
     </Button>
   </ul>
 );

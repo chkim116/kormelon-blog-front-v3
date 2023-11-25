@@ -1,19 +1,23 @@
-'use client';
-import { UserRoleEnum } from '@server/entities';
-import { useAppSelector } from '@shared/stores';
-import { selUserData } from '@shared/stores/auth';
-import { SettingsCategoryContainerClient } from './containers';
-import { SettingsCategoryError } from './components';
+import { actSharedCheckAdmin } from 'src/app/shared/actions/sharedAuth.action';
+import { actCategoriesLoad } from './actions/category.action';
+import { SettingsCategoryCreatorContainer } from './containers/SettingsCategoryCreatorContainer';
+import { SettingsCategoryListContainer } from './containers/SettingsCategoryListContainer';
 
-export default function SettingCategoryPage() {
-  const user = useAppSelector(selUserData);
+export const dynamic = 'force-dynamic';
 
-  const isNotAdmin = !user.id || user.role === UserRoleEnum.MEMBER;
+export default async function SettingCategoryPage() {
+  const { isError } = await actSharedCheckAdmin();
 
-  if (isNotAdmin) {
-    return <SettingsCategoryError />;
-    // throw new Error('접근할 수 없습니다.');
+  if (isError) {
+    throw new Error();
   }
 
-  return <SettingsCategoryContainerClient />;
+  const { data: categories } = await actCategoriesLoad();
+
+  return (
+    <>
+      <SettingsCategoryCreatorContainer />
+      <SettingsCategoryListContainer categories={categories} />
+    </>
+  );
 }

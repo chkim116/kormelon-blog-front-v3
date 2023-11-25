@@ -1,7 +1,6 @@
 'use client';
-import { EmailRounded } from '@mui/icons-material';
-import GitHub from '@mui/icons-material/GitHub';
 import { Avatar, Button } from '@nextui-org/react';
+import { LucideIcon } from '@shared/components/common/Icon';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IndexUserMenuProps {}
@@ -16,13 +15,13 @@ const INDEX_USER_MENU_LIST = [
   {
     text: 'Github',
     href: 'https://github.com/chkim116',
-    icon: <GitHub className="text-3xl" />,
+    icon: <LucideIcon name="github" className="text-3xl" />,
     isExternal: true,
   },
   {
     text: 'Email',
     href: 'mailto:cskim132@gmail.com',
-    icon: <EmailRounded className="text-3xl" />,
+    icon: <LucideIcon name="at-sign" className="text-3xl" />,
     isExternal: false,
   },
 ];

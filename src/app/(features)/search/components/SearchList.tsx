@@ -1,12 +1,11 @@
-import { SearchPostModel } from '@domain/uiStates';
-import { BlogCommonCardGrid } from '@app/blog/components/common';
+import { BlogSearchUiState } from '@domain/blog/search/blogSearch.uiState';
+import { BlogCommonCardGrid } from '@app/blog/components/common/BlogCommonCardGrid';
 
 interface SearchListProps {
-  loading: boolean;
-  posts: SearchPostModel[];
+  posts: BlogSearchUiState[];
   title: string;
 }
 
-export const SearchList = ({ posts, loading, title }: SearchListProps) => (
-  <BlogCommonCardGrid loading={loading} posts={posts} title={title} />
+export const SearchList = ({ posts, title }: SearchListProps) => (
+  <BlogCommonCardGrid blogs={posts} title={title} />
 );

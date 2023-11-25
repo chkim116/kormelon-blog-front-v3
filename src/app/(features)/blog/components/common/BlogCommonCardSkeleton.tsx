@@ -12,10 +12,13 @@ interface BlogCommonCardSkeletonProps {}
 
 export function BlogCommonCardSkeleton(_: BlogCommonCardSkeletonProps) {
   return (
-    <Card className="lg:max-w-sm w-full" shadow="none">
+    <Card
+      className="mx-auto max-w-full xl:max-w-sm w-full bg-dark"
+      shadow="none"
+    >
       <CardHeader className="p-0">
         <Skeleton className="w-full h-full aspect-ratio--16x9 rounded-lg">
-          <div className="h-48 rounded-lg bg-default-300" />
+          <div className="h-48 rounded-lg" />
         </Skeleton>
       </CardHeader>
 

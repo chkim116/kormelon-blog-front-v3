@@ -1,4 +1,5 @@
-import { IndexUserImage, IndexUserMenu } from '../components';
+import { IndexUserImage } from '../components/IndexUserImage';
+import { IndexUserMenu } from '../components/IndexUserMenu';
 
 export const IndexBioContainer = () => (
   <div className="p-6 sm:p-12 md:p-20 gap-6 flex flex-col items-center text-center">

@@ -2,10 +2,10 @@
 import React, { MouseEventHandler, ReactNode } from 'react';
 import { Divider, Link } from '@nextui-org/react';
 import NextLink from 'next/link';
-import { BlogPostAnchorModel } from '@domain/uiStates';
+import { BlogDetailAnchorUiState } from '@domain/blog/detail/blogDetail.uiState';
 
 interface BlogDetailContentNavigationProps {
-  anchors: BlogPostAnchorModel[];
+  anchors: BlogDetailAnchorUiState[];
   activeId: string;
   actionContents: ReactNode;
   onClick: (id: string) => void;

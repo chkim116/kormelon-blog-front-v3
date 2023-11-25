@@ -1,9 +1,9 @@
 import { ChangeEventHandler } from 'react';
 import { Select, SelectItem } from '@nextui-org/react';
-import { CategoryEntity } from '@server/entities';
+import { CategorySearchUiState } from '@domain/category/category.uiState';
 
 interface BlogWriteCategoryProps {
-  categories: CategoryEntity[];
+  categories: CategorySearchUiState[];
   categoryId: number;
   subCategoryId: number;
   onChangeCategory: (name: string, id: number) => void;

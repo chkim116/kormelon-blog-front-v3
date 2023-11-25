@@ -20,6 +20,13 @@ export interface SubCategoryEntity extends BaseCategoryEntity {
   posts: number;
 }
 
+export interface CategorySubCategoryEntity extends BaseCategoryEntity {
+  /**
+   * 부모 카테고리 정보
+   */
+  category: BaseCategoryEntity;
+}
+
 export interface CategoryEntity extends BaseCategoryEntity {
   /**
    * 카테고리에 해당하는 게시글 개수
@@ -28,7 +35,7 @@ export interface CategoryEntity extends BaseCategoryEntity {
   /**
    * 해당 카테고리의 서브 카테고리
    */
-  subCategories: Omit<SubCategoryEntity, 'posts'>[];
+  subCategories: CategorySubCategoryEntity[];
 }
 
 export interface CategoryCreateParams {
@@ -52,8 +59,7 @@ export interface SubCategoryCreateParams extends CategoryCreateParams {
   categoryId: number;
 }
 
-export interface SubCategoryUpdateParams
-  extends Omit<CategoryUpdateParams, 'categoryId'> {
+export interface SubCategoryUpdateParams extends CategoryCreateParams {
   /**
    * 자신의 식별자
    */

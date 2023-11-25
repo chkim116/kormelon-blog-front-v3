@@ -8,9 +8,15 @@ import {
   CardFooter,
 } from '@nextui-org/react';
 import NextLink from 'next/link';
-import { BlogPostModel } from '@domain/uiStates';
+import NextImage from 'next/image';
+import { BlogSearchUiState } from '@domain/blog/search/blogSearch.uiState';
+import {
+  BLUR_IMAGE,
+  IMAGE_DEFAULT_HEIGHT_SIZE,
+  IMAGE_DEFAULT_WIDTH_SIZE,
+} from 'src/app/shared/constants';
 
-interface BlogCommonCardProps extends BlogPostModel {}
+interface BlogCommonCardProps extends BlogSearchUiState {}
 
 export function BlogCommonCard({
   createdAt,
@@ -29,11 +35,14 @@ export function BlogCommonCard({
       <CardHeader className="p-0">
         <Link as={NextLink} href={`/blog/${id}`}>
           <Image
+            as={NextImage}
             alt={title}
-            className="h-full w-full object-cover"
+            width={IMAGE_DEFAULT_WIDTH_SIZE}
+            height={IMAGE_DEFAULT_HEIGHT_SIZE}
+            className="aspect-[16/9] w-full h-full object-cover"
             src={thumbnail}
-            width="100%"
-            height="100%"
+            placeholder="blur"
+            blurDataURL={BLUR_IMAGE}
           />
         </Link>
       </CardHeader>

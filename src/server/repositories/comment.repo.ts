@@ -1,3 +1,4 @@
+import { authApiServer, baseApiServer } from '@core/network/apiServer';
 import {
   CommentCreateParams,
   CommentDeleteParams,
@@ -8,9 +9,11 @@ import {
   CommentUpdateParams,
   Response,
 } from '@server/entities';
-import { apiClient } from '@core/network';
+import { CommentRepository } from './types';
 
-export const commentRepository = {
+export const FETCH_COMMENTS_CACHE_TAG = 'fetchComments';
+
+class CommentRepositoryImpl implements CommentRepository {
   /**
    * 댓글을 가져온다
    *
@@ -18,10 +21,14 @@ export const commentRepository = {
    * @returns
    */
   fetchComments(postId: number) {
-    return apiClient.get<Response<CommentSearchEntity[]>>(
+    return baseApiServer<Response<CommentSearchEntity[]>>(
       `/comment?postId=${postId}`,
+      {
+        method: 'GET',
+        next: { revalidate: 60, tags: [FETCH_COMMENTS_CACHE_TAG] },
+      },
     );
-  },
+  }
 
   /**
    * 댓글을 생성한다.
@@ -30,8 +37,8 @@ export const commentRepository = {
    * @returns
    */
   createComment(params: CommentCreateParams) {
-    return apiClient.post('/comment', params);
-  },
+    return authApiServer('/comment', { method: 'POST', body: params });
+  }
 
   /**
    * 댓글을 수정한다.
@@ -40,8 +47,8 @@ export const commentRepository = {
    * @returns
    */
   updateComment(params: CommentUpdateParams) {
-    return apiClient.put('/comment', params);
-  },
+    return authApiServer('/comment', { method: 'PUT', body: params });
+  }
 
   /**
    * 댓글을 삭제한다.
@@ -50,10 +57,11 @@ export const commentRepository = {
    * @returns
    */
   deleteComment(params: CommentDeleteParams) {
-    return apiClient.delete(
+    return authApiServer(
       `/comment?id=${params.id}&password=${params.password}`,
+      { method: 'DELETE' },
     );
-  },
+  }
 
   /**
    * 하위 댓글을 가져온다.
@@ -62,8 +70,10 @@ export const commentRepository = {
    * @returns
    */
   fetchCommentReplies(commentId: string) {
-    return apiClient.get(`/comment/reply?commentId=${commentId}`);
-  },
+    return baseApiServer(`/comment/reply?commentId=${commentId}`, {
+      method: 'GET',
+    });
+  }
 
   /**
    * 하위 댓글을 생성한다.
@@ -71,8 +81,8 @@ export const commentRepository = {
    * @returns
    */
   createCommentReply(params: CommentReplyCreateParams) {
-    return apiClient.post('/comment/reply', params);
-  },
+    return authApiServer('/comment/reply', { method: 'POST', body: params });
+  }
 
   /**
    * 하위 댓글을 수정한다.
@@ -80,8 +90,8 @@ export const commentRepository = {
    * @returns
    */
   updateCommentReply(params: CommentReplyUpdateParams) {
-    return apiClient.put('/comment/reply', params);
-  },
+    return authApiServer('/comment/reply', { method: 'PUT', body: params });
+  }
 
   /**
    * 하위 댓글을 삭제한다.
@@ -89,8 +99,13 @@ export const commentRepository = {
    * @returns
    */
   deleteCommentReply(params: CommentReplyDeleteParams) {
-    return apiClient.delete(
+    return authApiServer(
       `/comment/reply?id=${params.id}&password=${params.password}`,
+      {
+        method: 'DELETE',
+      },
     );
-  },
-};
+  }
+}
+
+export const commentRepository = new CommentRepositoryImpl();

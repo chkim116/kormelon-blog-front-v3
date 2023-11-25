@@ -1,26 +1,26 @@
 'use client';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Button } from '@nextui-org/react';
-import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 import {
-  BaseCommentCreateParamsModel,
-  BlogPostCommentSearchModel,
-} from '@domain/uiStates';
-import { createBlogPostCommentCreateParamsModel } from '@domain/manipulates';
-import {
-  BlogDetailCommentBodyText,
-  BlogDetailCommentEditConfirmModal,
-  BlogDetailCommentHeader,
-} from '.';
+  CommentSearchUiState,
+  CommentUpdateUiParams,
+} from '@domain/comment/comment.uiState';
+import { createCommentUpdateUiParams } from '@domain/comment/comment.create';
+import { LucideIcon } from '@shared/components/common/Icon';
+import { BlogDetailCommentBodyText } from './BlogDetailCommentBodyText';
+import { BlogDetailCommentEditConfirmModal } from './BlogDetailCommentEditConfirmModal';
+import { BlogDetailCommentHeader } from './BlogDetailCommentHeader';
 
-interface OmitBlogPostCommentSearchModel
-  extends Omit<BlogPostCommentSearchModel, 'commentReplies' | 'userId'> {}
+interface OmitCommentSearchUiState
+  extends Omit<CommentSearchUiState, 'commentReplies' | 'userId'> {}
 
-interface BlogDetailCommentBodyProps extends OmitBlogPostCommentSearchModel {
+interface BlogDetailCommentBodyProps extends OmitCommentSearchUiState {
   isAuthor: boolean;
   shownReply?: boolean;
+  replyLength?: number;
   onShowReply?: (id: string, shown: boolean) => void;
-  onEdit: (updateParams: BaseCommentCreateParamsModel) => Promise<void>;
+  onEdit: (updateParams: CommentUpdateUiParams) => Promise<void>;
   onDelete: (id: string, password: string) => Promise<void>;
 }
 
@@ -28,12 +28,13 @@ export const BlogDetailCommentBody = ({
   isAuthor,
   shownReply = true,
   createdAt,
-  deletedAt,
+  isDeleted,
   id,
   isAnonymous,
   userProfile,
   username,
   value,
+  replyLength,
   onDelete,
   onEdit,
   onShowReply,
@@ -41,13 +42,11 @@ export const BlogDetailCommentBody = ({
   const [editable, setEditable] = useState(false);
   const [shouldShowReply, setShouldShowReply] = useState(false);
   const [updateParams, setUpdateParams] = useState(
-    createBlogPostCommentCreateParamsModel,
+    createCommentUpdateUiParams(),
   );
 
-  const isDeleted = Boolean(deletedAt);
-
   const mutateUpdateParams = useCallback(
-    (args: Partial<BaseCommentCreateParamsModel>) => {
+    (args: Partial<CommentUpdateUiParams>) => {
       setUpdateParams((prev) => ({ ...prev, ...args }));
     },
     [],
@@ -59,12 +58,12 @@ export const BlogDetailCommentBody = ({
 
   const handleEditCancel = () => {
     setEditable(false);
-    mutateUpdateParams(createBlogPostCommentCreateParamsModel());
+    mutateUpdateParams(createCommentUpdateUiParams());
   };
 
   const handleEditStart = () => {
     setEditable(true);
-    mutateUpdateParams({ id, password: '', commentValue: value });
+    mutateUpdateParams({ commentId: id, password: '', commentValue: value });
   };
 
   const handleChangePassword = (password: string) => {
@@ -84,12 +83,12 @@ export const BlogDetailCommentBody = ({
     onShowReply?.(id, !shouldShowReply);
   };
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     mutateUpdateParams({ commentValue: value });
   }, [mutateUpdateParams, value]);
 
   return (
-    <div className="border rounded-md my-4">
+    <div className="rounded-md my-4">
       <BlogDetailCommentHeader
         userProfile={userProfile}
         username={username}
@@ -111,12 +110,12 @@ export const BlogDetailCommentBody = ({
       {shownReply && (
         <Button
           variant="light"
-          className="flex items-center my-1"
+          className="flex items-center my-1 ml-1"
           color={shouldShowReply ? 'danger' : 'default'}
           onClick={handleShowReply}
         >
-          <ChatBubbleOutlineRoundedIcon fontSize="inherit" className="mt-0.5" />
-          {shouldShowReply ? 'Dismiss' : 'Reply'}
+          <LucideIcon size={20} name="message-square" className="mt-0.5" />
+          {shouldShowReply ? 'Dismiss' : `Reply (${replyLength})`}
         </Button>
       )}
 

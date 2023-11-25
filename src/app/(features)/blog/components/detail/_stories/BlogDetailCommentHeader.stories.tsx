@@ -39,30 +39,21 @@ export const Author: StoryObj<StoryProps> = {
   },
 };
 
-export const DeletedHeader: StoryObj<StoryProps> = {
-  render: Template,
-
-  args: {
-    ...Default.args,
-    isDeleted: true,
-  },
-};
-
 export const Anonymous: StoryObj<StoryProps> = {
   render: Template,
 
   args: {
     ...Default.args,
+    username: '익명',
     isAnonymous: true,
   },
 };
 
-export const AnonymousAndDeleted: StoryObj<StoryProps> = {
+export const DeletedHeader: StoryObj<StoryProps> = {
   render: Template,
 
   args: {
     ...Default.args,
-    isAnonymous: true,
     isDeleted: true,
   },
 };

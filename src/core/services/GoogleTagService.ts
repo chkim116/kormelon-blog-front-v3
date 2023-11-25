@@ -1,12 +1,13 @@
 import { env } from '@core/env';
 
-export const GA_TRACKING_ID = 'G-H1V3329QVH';
+export const GA_TRACKING_ID = 'G-BF4XPBNQXM';
 
 interface GoogleTagServiceEventProps {
   action?: string;
   category?: string;
   label?: string;
-  value?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value?: any;
 }
 
 class GoogleTagService {

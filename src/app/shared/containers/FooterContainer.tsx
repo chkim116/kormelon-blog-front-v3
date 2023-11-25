@@ -1,0 +1,10 @@
+import { actSharedViewLoad } from 'src/app/shared/actions/sharedView.action';
+import { FooterContainerClient } from './FooterContainer.client';
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface FooterContainerProps {}
+
+export async function FooterContainer(_: FooterContainerProps) {
+  const { data: view } = await actSharedViewLoad();
+  return <FooterContainerClient view={view} />;
+}

@@ -1,13 +1,13 @@
 import { faker } from '@faker-js/faker';
-import { UserModel } from '@domain/uiStates';
-import { UserRoleEnum } from '@server/entities';
+import { AuthUserUiState } from '@domain/auth/auth.uiState';
+import { AuthRoleEnum } from '@server/entities';
 
 function getUser(isAdmin = false) {
-  const result: UserModel = {
+  const result: AuthUserUiState = {
     id: faker.string.uuid(),
     profileImage: faker.image.avatar(),
     username: faker.person.fullName(),
-    role: isAdmin ? UserRoleEnum.ADMIN : UserRoleEnum.MEMBER,
+    role: isAdmin ? AuthRoleEnum.ADMIN : AuthRoleEnum.MEMBER,
   };
 
   return result;

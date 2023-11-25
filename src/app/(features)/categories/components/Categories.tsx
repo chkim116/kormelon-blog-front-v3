@@ -1,18 +1,18 @@
 'use client';
 import NextLInk from 'next/link';
 import { Link } from '@nextui-org/react';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import { CategoryModel } from '@domain/uiStates';
+import { LucideIcon } from '@shared/components/common/Icon';
+import { CategorySearchUiState } from '@domain/category/category.uiState';
 
 interface CategoriesProps {
-  categories: CategoryModel[];
+  categories: CategorySearchUiState[];
 }
 
 export function Categories({ categories }: CategoriesProps) {
   return (
-    <section className="flow-root max-w-xl mx-auto mt-12">
+    <section className="flow-root max-w-xl mx-auto my-12">
       <ul className="divide-gray-300 -my-6 divide-y">
-        {categories.map(({ value, id, posts }) => (
+        {categories?.map(({ value, id, posts }) => (
           <li
             key={id}
             className="group relative flex items-center font-semibold justify-between py-6"
@@ -28,7 +28,10 @@ export function Categories({ categories }: CategoriesProps) {
             <p className="group-hover:text-primary-900 flex-shrink-0 text-sm font-semibold text-gray-500 ml-auto sm:text-base">
               {posts} posts
             </p>
-            <ArrowRightIcon className="ml-1  leading-6 text-gray-500 group-hover:text-primary-900" />
+            <LucideIcon
+              name="arrow-right"
+              className="ml-1  leading-6 text-gray-500 group-hover:text-primary-900"
+            />
           </li>
         ))}
       </ul>

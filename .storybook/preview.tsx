@@ -1,8 +1,10 @@
 import type { Preview } from '@storybook/react';
 import React from 'react';
-import { Provider } from '../src/app/shared/stores/Provider';
 import { NextUIProviders } from '../src/app/shared/styles/NextUIProviders';
 import '@shared/styles/tailwind.global.css';
+import { useTheme } from 'next-themes';
+import { Button } from '@nextui-org/react';
+import { Sun, Moon } from 'lucide-react';
 
 export const parameters: Preview['parameters'] = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -17,14 +19,31 @@ export const parameters: Preview['parameters'] = {
   },
 };
 
+const GlobalNavForStory = () => {
+  const { theme, setTheme } = useTheme();
+
+  const handleChangeTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
+  return (
+    <div className="mb-5">
+      <Button onClick={handleChangeTheme}>
+        {theme === 'dark' ? <Moon /> : <Sun />}
+      </Button>
+    </div>
+  );
+};
+
 export const decorators: Preview['decorators'] = [
-  (Story) => (
-    <Provider>
+  (Story) => {
+    return (
       <NextUIProviders>
+        <GlobalNavForStory />
         <div className="max-w5xl w-full p-0 m-0">
           <Story />
         </div>
       </NextUIProviders>
-    </Provider>
-  ),
+    );
+  },
 ];

@@ -1,20 +1,17 @@
-'use client';
-import { useCallback, useEffect } from 'react';
-import { useAppDispatch } from '@shared/stores';
-import { toast } from '@shared/services';
-import { BlogPrivatePostContainer } from '../../containers/private';
-import { effBlogPrivatePostsLoad } from '../../stores';
+import { actSharedCheckAdmin } from '@shared/actions/sharedAuth.action';
+import { actBlogPrivateSearchLoad } from '@app/blog/actions/blogSearch.action';
+import { BlogPrivatePostContainerClient } from '../../containers/private/BlogPrivatePostContainer.client';
 
-export default function BlogPrivatePostPage() {
-  const dispatch = useAppDispatch();
+export const dynamic = 'force-dynamic';
 
-  const loadPrivatePosts = useCallback(() => {
-    dispatch(effBlogPrivatePostsLoad())
-      .unwrap()
-      .catch((err) => toast.open('error', err.message));
-  }, [dispatch]);
+export default async function BlogPrivatePostPage() {
+  const { isError } = await actSharedCheckAdmin();
 
-  useEffect(loadPrivatePosts, [loadPrivatePosts]);
+  if (isError) {
+    throw new Error();
+  }
 
-  return <BlogPrivatePostContainer />;
+  const { blogs, total } = await actBlogPrivateSearchLoad();
+
+  return <BlogPrivatePostContainerClient blogs={blogs} total={total} />;
 }

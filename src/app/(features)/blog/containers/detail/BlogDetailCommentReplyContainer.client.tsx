@@ -1,81 +1,104 @@
 'use client';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Divider } from '@nextui-org/react';
+import { commentService } from '@domain/comment';
 import {
-  BaseCommentCreateParamsModel,
-  BlogPostCommentReplyDeleteParamsModel,
-  BlogPostCommentReplySearchModel,
-  BlogPostCommentReplyUpdateParamsModel,
-} from '@domain/uiStates';
-import { toast } from '@shared/services';
-import { useAppDispatch, useAppSelector } from '@shared/stores';
-import { selUserData } from '@shared/stores/auth';
+  CommentCreateUiParams,
+  CommentReplyCreateUiParams,
+  CommentReplyDeleteUiParams,
+  CommentReplySearchUiState,
+  CommentReplyUpdateUiParams,
+} from '@domain/comment/comment.uiState';
+import { useQueryParser } from 'src/app/shared/hooks/useQueryParser';
+import { toast } from 'src/app/shared/services/ToastService';
+import { useFormActionState } from 'src/app/shared/hooks/useFormActionState';
 import {
-  BlogDetailCommentBody,
-  BlogDetailCommentTextarea,
-} from '@app/blog/components/detail';
-import { useBlogPostDetailCommentParamsCtx } from '@app/blog/contexts';
-import {
-  effBlogPostCommentReplyCreate,
-  effBlogPostCommentReplyDelete,
-  effBlogPostCommentReplyUpdate,
-} from '@app/blog/stores';
+  actCommentReplyCreate,
+  actCommentReplyDelete,
+  actCommentReplyUpdate,
+} from '@app/blog/actions/comment.action';
+import { BlogDetailCommentBody } from '@app/blog/components/detail/BlogDetailCommentBody';
+import { BlogDetailCommentTextarea } from '@app/blog/components/detail/BlogDetailCommentTextarea';
 
 interface BlogDetailCommentReplyContainerClientProps {
-  comments: BlogPostCommentReplySearchModel[];
+  comments: CommentReplySearchUiState[];
   commentId: string;
+  userId: string;
 }
 
 export const BlogDetailCommentReplyContainerClient = ({
   comments,
   commentId,
+  userId,
 }: BlogDetailCommentReplyContainerClientProps) => {
-  const dispatch = useAppDispatch();
-  const { id: userId } = useAppSelector(selUserData);
-  const { postId } = useBlogPostDetailCommentParamsCtx();
+  const { postId } = useQueryParser(commentService.refineQueryParams);
 
-  const isAnonymous = useMemo(() => Boolean(userId), [userId]);
-
-  const handleSubmit = async (commentValue: BaseCommentCreateParamsModel) => {
-    await dispatch(
-      effBlogPostCommentReplyCreate({ ...commentValue, commentId, postId }),
-    )
-      .unwrap()
-      .then(() => {
+  const { formAction: createAction } = useFormActionState(
+    actCommentReplyCreate,
+    {
+      onSuccess() {
         toast.open('success', '댓글이 작성되었습니다.');
-      })
-      .catch((err) => {
-        toast.open('error', err.message);
-      });
+      },
+      onError({ message }) {
+        toast.open('error', message);
+      },
+    },
+  );
+
+  const { formAction: updateAction } = useFormActionState(
+    actCommentReplyUpdate,
+    {
+      onSuccess() {
+        toast.open('success', '댓글이 수정되었습니다.');
+      },
+      onError({ message }) {
+        toast.open('error', message);
+      },
+    },
+  );
+
+  const { formAction: deleteAction } = useFormActionState(
+    actCommentReplyDelete,
+    {
+      onSuccess() {
+        toast.open('success', '댓글이 삭제되었습니다.');
+      },
+      onError({ message }) {
+        toast.open('error', message);
+      },
+    },
+  );
+
+  const isAnonymous = useMemo(() => !userId, [userId]);
+
+  const handleSubmit = async (commentValue: CommentCreateUiParams) => {
+    const createParams: CommentReplyCreateUiParams = {
+      ...commentValue,
+      commentId,
+      postId,
+    };
+    await createAction(createParams);
   };
 
-  const handleEdit = async (editValue: BaseCommentCreateParamsModel) => {
-    const updateParams: BlogPostCommentReplyUpdateParamsModel = {
+  const handleEdit = async (editValue: CommentReplyUpdateUiParams) => {
+    const updateParams: CommentReplyUpdateUiParams = {
       commentValue: editValue.commentValue,
       password: editValue.password,
-      commentId: editValue.id,
+      commentId: editValue.commentId,
       postId,
     };
 
-    await dispatch(effBlogPostCommentReplyUpdate(updateParams))
-      .unwrap()
-      .then(() => {
-        toast.open('success', '댓글이 수정되었습니다.');
-      })
-      .catch((err) => toast.open('error', err.message));
+    await updateAction(updateParams);
   };
 
   const handleDelete = async (commentId: string, password: string) => {
-    const deleteParams: BlogPostCommentReplyDeleteParamsModel = {
+    const deleteParams: CommentReplyDeleteUiParams = {
       password,
       commentId,
       postId,
     };
 
-    await dispatch(effBlogPostCommentReplyDelete(deleteParams))
-      .unwrap()
-      .then(() => toast.open('success', '댓글이 삭제되었습니다.'))
-      .catch((err) => toast.open('error', err.message));
+    await deleteAction(deleteParams);
   };
 
   return (

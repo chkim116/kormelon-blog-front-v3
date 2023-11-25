@@ -1,12 +1,12 @@
 import { faker } from '@faker-js/faker';
-import { toBlogPostModels } from '@domain/manipulates';
-import { BlogPostDetailNearPost, BlogPostEntity } from '@server/entities';
-import { BlogPostDetailModel } from '@domain/uiStates';
+import { PostDetailNearPostEntity, PostSearchEntity } from '@server/entities';
+import { toBlogSearchUiStates } from '@domain/blog/search/blogSearch.convert';
+import { BlogDetailUiState } from '@domain/blog/detail/blogDetail.uiState';
 import { userFixtures } from './user.fixtures';
 
 function getBlogList(length = 6) {
-  const results: BlogPostEntity[] = Array.from({ length }, () => {
-    const result: BlogPostEntity = {
+  const results: PostSearchEntity[] = Array.from({ length }, () => {
+    const result: PostSearchEntity = {
       id: faker.number.int(),
       title: faker.lorem.sentence(),
       thumbnail: faker.image.dataUri(),
@@ -18,11 +18,11 @@ function getBlogList(length = 6) {
     return result;
   });
 
-  return toBlogPostModels(results);
+  return toBlogSearchUiStates(results);
 }
 
 function getBlogDetail() {
-  const result: BlogPostDetailModel = {
+  const result: BlogDetailUiState = {
     readTime: '3 min read',
     category: {
       id: faker.number.int(),
@@ -47,7 +47,7 @@ function getBlogDetail() {
 }
 
 function getNearPost() {
-  const nearPost: BlogPostDetailNearPost = {
+  const nearPost: PostDetailNearPostEntity = {
     id: faker.number.int(),
     title: faker.lorem.paragraph(),
     thumbnail: faker.image.dataUri(),
