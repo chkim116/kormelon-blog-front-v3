@@ -2,7 +2,7 @@
 
 import { MouseEventHandler } from 'react';
 import { Button } from '@nextui-org/react';
-import { LucideIcon } from '@shared/components/common/Icon';
+import { LucideIcon } from '@shared/components/common/LucideIcon';
 
 interface SettingsCategoryExtraActionProps {
   isEditMode: boolean;

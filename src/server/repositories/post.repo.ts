@@ -17,6 +17,7 @@ import { authApiServer, baseApiServer } from '@core/network/apiServer';
 import { PostRepository } from './types';
 
 export const FETCH_POST_BY_ID_CACHE_TAG = 'fetchPostById';
+export const FETCH_POSTS_CACHE_TAG = 'fetchPosts';
 export const FETCH_RECOMMEND_POSTS_CACHE_TAG = 'fetchRecommendPosts';
 
 class PostRepositoryImpl implements PostRepository {
@@ -38,6 +39,9 @@ class PostRepositoryImpl implements PostRepository {
     return baseApiServer<Response<PostSearchEntity[], PagingMeta>>('/post', {
       method: 'GET',
       query: params,
+      next: {
+        tags: [FETCH_POSTS_CACHE_TAG],
+      },
     });
   }
 

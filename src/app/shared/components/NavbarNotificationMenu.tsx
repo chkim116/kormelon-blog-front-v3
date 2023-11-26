@@ -10,7 +10,7 @@ import {
   DropdownItem,
   Badge,
 } from '@nextui-org/react';
-import { LucideIcon } from '@shared/components/common/Icon';
+import { LucideIcon } from '@shared/components/common/LucideIcon';
 import { NotificationSearchUiState } from '@domain/notification/notification.uiState';
 
 interface NavbarNotificationMenuProps {
@@ -43,7 +43,7 @@ export function NavbarNotificationMenu({
         >
           <DropdownTrigger as="div">
             <Button isIconOnly variant="solid" aria-label="알림">
-              <LucideIcon name='bell' />
+              <LucideIcon name="bell" />
             </Button>
           </DropdownTrigger>
         </Badge>

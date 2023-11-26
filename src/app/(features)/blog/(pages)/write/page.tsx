@@ -1,3 +1,5 @@
+import { isNullish } from 'safers';
+import { notFound } from 'next/navigation';
 import { actSharedCheckAdmin } from 'src/app/shared/actions/sharedAuth.action';
 import { blogWriteService } from '@domain/blog/write';
 import { createBlogDetailUiState } from '@domain/blog/detail/blogDetail.create';
@@ -30,10 +32,24 @@ export default async function BlogWritePage({
 
   if (editId) {
     if (isPrivateMode) {
-      blog = (await actBlogWritePrivateDetailLoad(searchParams)).data;
+      const { data: privateBlog } = await actBlogWritePrivateDetailLoad(
+        searchParams,
+      );
+
+      if (privateBlog) {
+        blog = privateBlog;
+      }
     } else {
-      blog = (await actBlogWriteDetailLoad(searchParams)).data;
+      const { data: blogData } = await actBlogWriteDetailLoad(searchParams);
+
+      if (blogData) {
+        blog = blogData;
+      }
     }
+  }
+
+  if (isNullish(blog)) {
+    notFound();
   }
 
   const { data: categories } = await actCategoriesLoad();

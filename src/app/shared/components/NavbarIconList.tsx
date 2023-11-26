@@ -1,7 +1,7 @@
 'use client';
 import NextLink from 'next/link';
 import { Button } from '@nextui-org/react';
-import { LucideIcon } from '@shared/components/common/Icon';
+import { LucideIcon } from '@shared/components/common/LucideIcon';
 
 export function NavbarIconList() {
   return (

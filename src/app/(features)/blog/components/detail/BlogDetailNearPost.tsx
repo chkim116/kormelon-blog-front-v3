@@ -2,7 +2,7 @@
 import NextLink from 'next/link';
 import { Card, CardBody, Link } from '@nextui-org/react';
 import { BlogDetailNearDto } from '@domain/blog/detail/blogDetail.uiState';
-import { LucideIcon } from '@shared/components/common/Icon';
+import { LucideIcon } from '@shared/components/common/LucideIcon';
 
 interface BlogDetailNearPostProps {
   nearPost: BlogDetailNearDto;

@@ -8,9 +8,15 @@ import {
   useState,
 } from 'react';
 import { Button, Textarea } from '@nextui-org/react';
-import { LucideIcon } from '@shared/components/common/Icon';
+import dynamic from 'next/dynamic';
+import { LucideIcon } from '@shared/components/common/LucideIcon';
 import { Dialog } from 'src/app/shared/components/common/Dialog';
-import { Markdown } from 'src/app/shared/components/common/Markdown';
+
+const Markdown = dynamic(
+  () =>
+    import('@shared/components/common/Markdown').then((comp) => comp.Markdown),
+  { ssr: false },
+);
 
 interface BlogWriteContentProps {
   content: string;

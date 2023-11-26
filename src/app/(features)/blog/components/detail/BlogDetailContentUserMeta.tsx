@@ -6,7 +6,7 @@ import {
   USER_DESCRIPTION,
   USER_IMAGE,
 } from '@shared/constants/user.const';
-import { LucideIcon } from '@shared/components/common/Icon';
+import { LucideIcon } from '@shared/components/common/LucideIcon';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface BlogDetailContentUserMetaProps {}
