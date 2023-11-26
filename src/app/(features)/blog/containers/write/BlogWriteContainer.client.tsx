@@ -1,5 +1,6 @@
 'use client';
 import { useMemo } from 'react';
+import { toBoolean } from 'safers';
 import { toast } from 'src/app/shared/services/ToastService';
 import { BlogDetailUiState } from '@domain/blog/detail/blogDetail.uiState';
 import { BlogWriteCreateUiParams } from '@domain/blog/write/blogWrite.uiState';
@@ -25,11 +26,12 @@ export function BlogWriteContainerClient({
 }: BlogWriteContainerClientProps) {
   const navigate = useQueryPush();
 
-  const isEditMode = useMemo(() => !!editId, [editId]);
+  const isEditMode = useMemo(() => toBoolean(editId), [editId]);
 
   const { formAction: updateSubmit } = useFormActionState(actBlogWriteUpdate, {
     onSuccess({ data }) {
-      toast.open('success', '게시글이 수정 되었습니다.');
+      const toastText = data.isPrivate ? '비공개' : '수정';
+      toast.open('success', `게시글이 ${toastText} 되었습니다.`);
       navigate(
         { categoryId: data.categoryId, subCategory: data.subCategoryId },
         '/blog',
@@ -54,17 +56,15 @@ export function BlogWriteContainerClient({
   });
 
   const handleSubmit = (params: BlogWriteCreateUiParams) => {
-    const defaultParams = { ...params };
-
     if (isEditMode) {
       updateSubmit({
-        ...defaultParams,
+        ...params,
         id: blog.id,
       });
       return;
     }
 
-    createSubmit(defaultParams);
+    createSubmit(params);
   };
 
   return (

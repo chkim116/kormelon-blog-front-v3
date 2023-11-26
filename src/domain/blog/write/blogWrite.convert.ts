@@ -1,4 +1,4 @@
-import { toNumber } from 'safers';
+import { toBoolean, toNumber } from 'safers';
 import { PostCreateParams, PostUpdateParams } from '@server/entities';
 import {
   BlogWriteCreateUiParams,
@@ -10,7 +10,7 @@ import { BlogDetailUiState } from '../detail/blogDetail.uiState';
 export function refineBlogWriteUiParams(raw: Record<string, unknown>) {
   const result: BlogWriteUiParams = {
     editId: toNumber(raw.editId),
-    isPrivateMode: raw.isPrivate === 'true' ? true : false,
+    isPrivateMode: toBoolean(raw.isPrivate),
   };
 
   return result;

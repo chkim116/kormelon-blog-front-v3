@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from 'react';
 import { Button } from '@nextui-org/react';
-import useDeepCompareEffect from 'use-deep-compare-effect';
-import { LucideIcon } from '@shared/components/common/Icon';
+import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
+import { LucideIcon } from '@shared/components/common/LucideIcon';
 import { BlogWriteCreateUiParams } from '@domain/blog/write/blogWrite.uiState';
 import { toast } from 'src/app/shared/services/ToastService';
 import { CategorySearchUiState } from '@domain/category/category.uiState';
@@ -66,7 +66,7 @@ export const BlogWriteFormContainerClient = ({
     [form.isPrivate],
   );
 
-  useDeepCompareEffect(() => {
+  useDeepCompareEffectNoCheck(() => {
     setForm(toBlogWriteCreateUiParams(blog));
   }, [blog]);
 

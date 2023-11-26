@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Button, Input, User } from '@nextui-org/react';
 import { Dialog } from 'src/app/shared/components/common/Dialog';
-import { LucideIcon } from '@shared/components/common/Icon';
+import { LucideIcon } from '@shared/components/common/LucideIcon';
 
 interface BlogDetailCommentHeaderProps {
   userProfile: string;

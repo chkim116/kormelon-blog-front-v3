@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import copy from 'copy-to-clipboard';
 import qs from 'qs';
 import { redirect } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import { blogDetailService } from '@domain/blog/detail';
 import { BlogDetailUiState } from '@domain/blog/detail/blogDetail.uiState';
-import { Markdown } from 'src/app/shared/components/common/Markdown';
 import { useFormActionState } from 'src/app/shared/hooks/useFormActionState';
 import { toast } from 'src/app/shared/services/ToastService';
 import {
@@ -17,6 +17,12 @@ import { BlogDetailContentHeader } from '@app/blog/components/detail/BlogDetailC
 import { BlogDetailContentLayout } from '@app/blog/components/detail/BlogDetailContentLayout';
 import { BlogDetailContentUserMeta } from '@app/blog/components/detail/BlogDetailContentUserMeta';
 import { BlogDetailContentNavigationClientContainer } from './BlogDetailContentNavigationContainer';
+
+const Markdown = dynamic(
+  () =>
+    import('@shared/components/common/Markdown').then((comp) => comp.Markdown),
+  { ssr: false },
+);
 
 interface BlogDetailContentContainerClientProps {
   blog: BlogDetailUiState;

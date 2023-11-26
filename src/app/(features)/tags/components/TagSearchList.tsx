@@ -1,7 +1,7 @@
 'use client';
 import NextLink from 'next/link';
 import { Chip } from '@nextui-org/react';
-import { LucideIcon} from '@shared/components/common/Icon';
+import { LucideIcon } from '@shared/components/common/LucideIcon';
 import { TagSearchWithPostCountUiState } from '@domain/tag/tag.uiState';
 
 interface TagSearchListProps {
@@ -18,7 +18,7 @@ export const TagSearchList = ({ tags }: TagSearchListProps) => (
           as={NextLink}
           key={tag.id}
           href={`/search/tags?tagId=${tag.id}&tagValue=${tag.value}`}
-          startContent={<LucideIcon name='tag' size={16} />}
+          startContent={<LucideIcon name="tag" size={16} />}
           variant="bordered"
         >
           {tag.value}

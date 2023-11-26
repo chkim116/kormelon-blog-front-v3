@@ -9,7 +9,7 @@ import {
 import NextImage from 'next/image';
 import NextLink from 'next/link';
 import { numberFormat } from 'safers';
-import { LucideIcon } from '@shared/components/common/Icon';
+import { LucideIcon } from '@shared/components/common/LucideIcon';
 import { BlogDetailUiState } from '@domain/blog/detail/blogDetail.uiState';
 import {
   IMAGE_DEFAULT_HEIGHT_SIZE,

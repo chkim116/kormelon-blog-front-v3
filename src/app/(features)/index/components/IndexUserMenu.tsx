@@ -1,6 +1,6 @@
 'use client';
 import { Avatar, Button } from '@nextui-org/react';
-import { LucideIcon } from '@shared/components/common/Icon';
+import { LucideIcon } from '@shared/components/common/LucideIcon';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IndexUserMenuProps {}

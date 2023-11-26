@@ -7,7 +7,7 @@ import {
   CommentUpdateUiParams,
 } from '@domain/comment/comment.uiState';
 import { createCommentUpdateUiParams } from '@domain/comment/comment.create';
-import { LucideIcon } from '@shared/components/common/Icon';
+import { LucideIcon } from '@shared/components/common/LucideIcon';
 import { BlogDetailCommentBodyText } from './BlogDetailCommentBodyText';
 import { BlogDetailCommentEditConfirmModal } from './BlogDetailCommentEditConfirmModal';
 import { BlogDetailCommentHeader } from './BlogDetailCommentHeader';
