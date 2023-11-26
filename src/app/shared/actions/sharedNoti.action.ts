@@ -8,6 +8,8 @@ import {
 } from 'src/app/shared/manipulates/sharedActions.create';
 import { ActionFnType } from 'src/app/shared/uiStates/sharedActions.uiState';
 import 'server-only';
+import { FETCH_NOTIFICATION_LIST_CACHE_TAG } from '@server/repositories/notification.repo';
+import { actSharedRevalidateTags } from './sharedUtils.action';
 
 export const actSharedNotificationLoad: ActionFnType<
   void,
@@ -29,6 +31,7 @@ export const actSharedNotificationRead: ActionFnType<
   try {
     await notificationService.readNoti(id);
 
+    await actSharedRevalidateTags(FETCH_NOTIFICATION_LIST_CACHE_TAG);
     return createActionResolve();
   } catch (err) {
     return createActionRejectedWithError(err);
