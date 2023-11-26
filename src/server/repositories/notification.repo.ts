@@ -2,6 +2,8 @@ import { NotificationSearchEntity, Response } from '@server/entities';
 import { authApiServer } from '@core/network/apiServer';
 import { NotificationRepository } from './types';
 
+export const FETCH_NOTIFICATION_LIST_CACHE_TAG = 'fetchNotiList';
+
 class NotificationRepositoryImpl implements NotificationRepository {
   /**
    * 알림을 가져온다.
@@ -10,7 +12,13 @@ class NotificationRepositoryImpl implements NotificationRepository {
   fetchList() {
     return authApiServer<Response<NotificationSearchEntity[]>>(
       '/notification',
-      { method: 'GET' },
+      {
+        method: 'GET',
+        next: {
+          revalidate: 60,
+          tags: [FETCH_NOTIFICATION_LIST_CACHE_TAG],
+        },
+      },
     );
   }
 

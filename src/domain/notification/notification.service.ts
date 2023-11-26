@@ -1,4 +1,4 @@
-import { notificationRepository } from '@server/repositories/notification.repo';
+import { NotificationRepository } from '@server/repositories/types';
 import { NotificationSearchUiState } from './notification.uiState';
 
 interface NotificationService {
@@ -15,7 +15,7 @@ interface NotificationService {
 }
 
 export class NotificationServiceImpl implements NotificationService {
-  constructor(private notiRepo: typeof notificationRepository) {}
+  constructor(private notiRepo: NotificationRepository) {}
 
   async fetchNoti(): Promise<NotificationSearchUiState[]> {
     const { payload } = await this.notiRepo.fetchList();

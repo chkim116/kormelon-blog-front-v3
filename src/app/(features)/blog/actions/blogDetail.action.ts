@@ -17,6 +17,7 @@ import {
   FETCH_POSTS_CACHE_TAG,
   FETCH_RECOMMEND_POSTS_CACHE_TAG,
 } from '@server/repositories/post.repo';
+import { FETCH_CATEGORIES_CACHE_TAG } from '@server/repositories/category.repo';
 
 export const actBlogDetailAddLike: ActionFnType<number, void> = async (
   id: number,
@@ -40,6 +41,7 @@ export const actBlogDetailDeleteBlog: ActionFormFnType<number, void> = async (
     await actSharedRevalidateTags([
       FETCH_POSTS_CACHE_TAG,
       FETCH_RECOMMEND_POSTS_CACHE_TAG,
+      FETCH_CATEGORIES_CACHE_TAG,
     ]);
     return createActionResolve();
   } catch (err) {
