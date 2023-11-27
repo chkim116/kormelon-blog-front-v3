@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Button,
   Link,
@@ -53,6 +53,10 @@ export function Navbar({
     setIsMenuOpen((prev) => !prev);
   };
 
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
+
   return (
     <NextUiNavbar
       isBordered
@@ -64,6 +68,7 @@ export function Navbar({
         <NavbarMenuToggle
           aria-label={isMenuOpen ? '메뉴 닫기' : '메뉴 열기'}
           className="sm:hidden"
+          isSelected={isMenuOpen}
         />
 
         <NavbarBrand>
@@ -102,7 +107,7 @@ export function Navbar({
       </NavbarContent>
 
       <NavbarContent as="div" className="items-center gap-2" justify="end">
-        <Button variant="light" isIconOnly onPress={onClickSearchMode}>
+        <Button variant="light" isIconOnly onClick={onClickSearchMode}>
           <LucideIcon name="search" size={18} />
         </Button>
 

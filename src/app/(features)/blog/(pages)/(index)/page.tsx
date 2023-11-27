@@ -1,4 +1,5 @@
 import { toNumber } from 'safers';
+import { notFound } from 'next/navigation';
 import { BlogSearchPostPaginationContainerClient } from '../../containers/search/BlogSearchPostPaginationContainer.client';
 import { actBlogSearchLoad } from '../../actions/blogSearch.action';
 import { BlogCommonCardGrid } from '../../components/common/BlogCommonCardGrid';
@@ -11,10 +12,13 @@ interface BlogSearchPageProps {
 export default async function BlogSearchPage({
   searchParams,
 }: BlogSearchPageProps) {
-  const {
-    data: { blogData, currentCategoryName, currentSubCategoryName },
-  } = await actBlogSearchLoad(searchParams);
+  const { data } = await actBlogSearchLoad(searchParams);
 
+  if (!data) {
+    notFound();
+  }
+
+  const { blogData, currentCategoryName, currentSubCategoryName } = data;
   const { blogs, totalPage } = blogData;
 
   const titlePrefix = currentSubCategoryName ? currentSubCategoryName : 'All';

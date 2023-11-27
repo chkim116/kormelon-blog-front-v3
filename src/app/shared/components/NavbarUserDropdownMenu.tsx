@@ -8,6 +8,7 @@ import {
   Avatar,
   DropdownSection,
 } from '@nextui-org/react';
+import { toString } from 'safers';
 import {
   NAV_BAR_ADMIN_USER_MENU_ITEM_LIST,
   NAV_BAR_MEMBER_USER_MENU_ITEM_LIST,
@@ -37,7 +38,7 @@ export function NavbarUserDropdownMenu({
       return;
     }
 
-    onAction(String(key));
+    onAction(toString(key));
   };
 
   return (
