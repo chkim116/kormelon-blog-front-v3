@@ -54,7 +54,7 @@ export const BlogDetailCommentTextarea = ({
               required
               size="sm"
               classNames={{
-                inputWrapper: 'w-40 h-10',
+                inputWrapper: 'md:w-40 h-10',
               }}
               value={value.username}
               placeholder="익명"
@@ -68,7 +68,7 @@ export const BlogDetailCommentTextarea = ({
               placeholder="패스워드"
               variant="bordered"
               classNames={{
-                inputWrapper: 'w-40 h-10',
+                inputWrapper: 'md:w-40 h-10',
               }}
               onValueChange={handleChangePassword}
             />
