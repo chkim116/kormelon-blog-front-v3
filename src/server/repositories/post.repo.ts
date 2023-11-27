@@ -49,7 +49,7 @@ class PostRepositoryImpl implements PostRepository {
   fetchPrivatePosts(): ResponseWithFetch<
     PostPrivateSearchEntity[],
     PagingMeta
-  > {
+    > {
     return authApiServer<Response<PostPrivateSearchEntity[], PagingMeta>>(
       '/private',
       {
