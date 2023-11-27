@@ -1,5 +1,5 @@
 import { NotificationSearchEntity, Response } from '@server/entities';
-import { authApiServer } from '@core/network/apiServer';
+import { authApiServer } from '@server/apiServer';
 import { NotificationRepository } from './types';
 
 export const FETCH_NOTIFICATION_LIST_CACHE_TAG = 'fetchNotiList';

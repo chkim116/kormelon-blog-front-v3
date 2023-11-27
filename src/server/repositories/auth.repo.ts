@@ -5,7 +5,7 @@ import {
   Response,
   AuthUserEntity,
 } from '@server/entities';
-import { authApiServer, baseApiServer } from '@core/network/apiServer';
+import { authApiServer, baseApiServer } from '@server/apiServer';
 import {
   getCookies,
   removeCookies,

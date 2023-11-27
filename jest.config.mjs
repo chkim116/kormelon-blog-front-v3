@@ -18,7 +18,7 @@ const config = {
   },
   rootDir: '.',
   coverageReporters: ['lcov', 'text'],
-  collectCoverageFrom: ['src/core/**/*.[jt]s?(x)', 'src/domain/**/*.[jt]s?(x)'],
+  collectCoverageFrom: ['src/domain/**/*.[jt]s?(x)'],
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

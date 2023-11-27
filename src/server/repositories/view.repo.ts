@@ -1,5 +1,5 @@
 import { Response, ViewEntity } from '@server/entities';
-import { baseApiServer } from '@core/network/apiServer';
+import { baseApiServer } from '@server/apiServer';
 import { ViewRepository } from './types';
 
 class ViewRepositoryImpl implements ViewRepository {

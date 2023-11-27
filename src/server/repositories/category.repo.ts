@@ -7,7 +7,7 @@ import {
   SubCategoryEntity,
   SubCategoryUpdateParams,
 } from '@server/entities';
-import { authApiServer, baseApiServer } from '@core/network/apiServer';
+import { authApiServer, baseApiServer } from '@server/apiServer';
 import { CategoryRepository } from './types';
 
 export const FETCH_CATEGORIES_CACHE_TAG = 'fetchCategories';

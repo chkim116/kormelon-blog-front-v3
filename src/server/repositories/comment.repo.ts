@@ -1,4 +1,4 @@
-import { authApiServer, baseApiServer } from '@core/network/apiServer';
+import { authApiServer, baseApiServer } from '@server/apiServer';
 import {
   CommentCreateParams,
   CommentDeleteParams,

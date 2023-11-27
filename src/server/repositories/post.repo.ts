@@ -14,7 +14,7 @@ import {
   Response,
   ResponseWithFetch,
 } from '@server/entities';
-import { authApiServer, baseApiServer } from '@core/network/apiServer';
+import { authApiServer, baseApiServer } from '@server/apiServer';
 import { PostRepository } from './types';
 
 export const FETCH_POST_BY_ID_CACHE_TAG = 'fetchPostById';
@@ -49,7 +49,7 @@ class PostRepositoryImpl implements PostRepository {
   fetchPrivatePosts(): ResponseWithFetch<
     PostPrivateSearchEntity[],
     PagingMeta
-    > {
+  > {
     return authApiServer<Response<PostPrivateSearchEntity[], PagingMeta>>(
       '/private',
       {

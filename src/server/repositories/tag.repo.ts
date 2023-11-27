@@ -6,7 +6,7 @@ import {
   TagSearchMetaEntity,
   TagSearchWithPostEntity,
 } from '@server/entities';
-import { authApiServer, baseApiServer } from '@core/network/apiServer';
+import { authApiServer, baseApiServer } from '@server/apiServer';
 import { TagRepository } from './types';
 
 class TagRepositoryImpl implements TagRepository {
