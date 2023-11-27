@@ -7,23 +7,27 @@ const nextConfig = {
   swcMinify: true,
   images: {
     disableStaticImages: true,
-    domains: [
-      'www.gravatar.com',
-      'assets-kormelon-v2.s3.ap-northeast-2.amazonaws.com',
-      'assets-kormelon-v3.s3.ap-northeast-2.amazonaws.com',
-      'images.unsplash.com',
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.gravatar.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'assets-kormelon-v2.s3.ap-northeast-2.amazonaws.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'assets-kormelon-v3.s3.ap-northeast-2.amazonaws.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
     ],
   },
-
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/blog',
-        permanent: true,
-      },
-    ];
-  },
+  experimental: {},
+  transpilePackages: ['lucide-react'],
 };
 
 module.exports = withImages({

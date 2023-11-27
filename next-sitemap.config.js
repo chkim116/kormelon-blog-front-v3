@@ -21,9 +21,10 @@ module.exports = {
     '/resume',
     '/settings/*',
     '/search',
-    '/server-sitemap-index.xml',
+    '/search/*',
+    '/server-sitemap.xml',
   ],
   robotsTxtOptions: {
-    additionalSitemaps: [URL + '/server-sitemap-index.xml'],
+    additionalSitemaps: [URL + '/server-sitemap.xml'],
   },
 };
