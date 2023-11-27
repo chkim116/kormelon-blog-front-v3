@@ -5,6 +5,7 @@ import { PrismAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import rehypeRaw from 'rehype-raw';
 import NextImage from 'next/image';
+import { replace } from 'safers';
 
 interface MarkdownProps {
   content: string;
@@ -41,7 +42,7 @@ export const Markdown = ({ content }: MarkdownProps) => (
             PreTag="div"
             {...props}
           >
-            {String(children).replace(/\n$/, '')}
+            {replace(children, /\n$/, '')}
           </SyntaxHighlighter>
         ) : (
           <code>{children}</code>

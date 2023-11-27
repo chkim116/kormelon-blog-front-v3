@@ -1,3 +1,4 @@
+import { toNumber } from 'safers';
 import { tokenProvider } from '@core/storage/tokenProvider';
 import { STORAGE_LIKE_KEY } from '@core/storage/token.const';
 import {
@@ -48,7 +49,7 @@ class PostRepositoryImpl implements PostRepository {
   fetchPrivatePosts(): ResponseWithFetch<
     PostPrivateSearchEntity[],
     PagingMeta
-    > {
+  > {
     return authApiServer<Response<PostPrivateSearchEntity[], PagingMeta>>(
       '/private',
       {
@@ -99,7 +100,7 @@ class PostRepositoryImpl implements PostRepository {
     if (exist) {
       tokenProvider.set(
         STORAGE_LIKE_KEY,
-        currentLiked.filter((currentId) => Number(currentId) !== id),
+        currentLiked.filter((currentId) => toNumber(currentId) !== id),
       );
 
       return;

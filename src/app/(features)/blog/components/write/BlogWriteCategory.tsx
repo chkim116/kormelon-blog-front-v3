@@ -1,5 +1,6 @@
 import { ChangeEventHandler } from 'react';
 import { Select, SelectItem } from '@nextui-org/react';
+import { toString, toNumber } from 'safers';
 import { CategorySearchUiState } from '@domain/category/category.uiState';
 
 interface BlogWriteCategoryProps {
@@ -20,7 +21,7 @@ export const BlogWriteCategory = ({
     [];
 
   const handleCategoryChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
-    onChangeCategory(e.target.name, Number(e.target.value));
+    onChangeCategory(e.target.name, toNumber(e.target.value));
   };
 
   return (
@@ -30,7 +31,7 @@ export const BlogWriteCategory = ({
         label="상위카테고리"
         data-cy="category-select"
         name="categoryId"
-        selectedKeys={[String(categoryId)]}
+        selectedKeys={[toString(categoryId)]}
         onChange={handleCategoryChange}
         items={categories}
       >
@@ -49,7 +50,7 @@ export const BlogWriteCategory = ({
         label="하위 카테고리"
         data-cy="sub-category-select"
         name="subCategoryId"
-        selectedKeys={[String(subCategoryId)]}
+        selectedKeys={[toString(subCategoryId)]}
         onChange={handleCategoryChange}
         items={subCategories}
       >

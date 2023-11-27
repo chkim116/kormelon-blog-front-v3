@@ -10,7 +10,7 @@ interface CategoriesProps {
 
 export function Categories({ categories }: CategoriesProps) {
   return (
-    <section className="flow-root max-w-xl mx-auto my-12">
+    <section className="flow-root max-w-xl mx-auto my-12 px-2">
       <ul className="divide-gray-300 -my-6 divide-y">
         {categories?.map(({ value, id, posts }) => (
           <li
