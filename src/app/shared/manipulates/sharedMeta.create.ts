@@ -110,7 +110,7 @@ export function createMetaData({
     },
     manifest: '/favicons/manifest.json',
     verification: {
-      google: '3yQnN4a3laP_8uJlbw0p-c0XNOQlISHhCfBdGfGTq4w',
+      google: '4UCsVYTeUB7uEuUimIPiptpwMhR7khoKT2Ud57mvtVE',
     },
     alternates: {
       canonical: '/',
