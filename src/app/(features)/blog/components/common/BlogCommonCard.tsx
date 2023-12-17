@@ -39,7 +39,7 @@ export function BlogCommonCard({
             alt={title}
             width={IMAGE_DEFAULT_WIDTH_SIZE}
             height={IMAGE_DEFAULT_HEIGHT_SIZE}
-            className="aspect-[16/9] w-full h-full object-cover"
+            className="aspect-[16/9] min-w-full min-h-full object-cover"
             src={thumbnail}
             placeholder="blur"
             blurDataURL={BLUR_IMAGE}
