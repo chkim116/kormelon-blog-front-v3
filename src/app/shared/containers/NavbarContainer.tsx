@@ -6,6 +6,8 @@ import { NavbarContainerClient } from './NavbarContainer.client';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface NavbarContainerProps {}
 
+export const dynamic = 'force-dynamic';
+
 export default async function NavbarContainer(_: NavbarContainerProps) {
   const { data: user } = await actSharedCheckUser();
 
