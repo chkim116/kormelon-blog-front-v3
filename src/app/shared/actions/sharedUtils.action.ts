@@ -6,12 +6,18 @@ import { toArray } from 'safers';
 
 export const actSharedRevalidatePath = async (path: string) => {
   revalidatePath(path);
+
+  return Promise.resolve();
 };
 
 export const actSharedRevalidateTags = async (tags: string | string[]) => {
   const arr = toArray(tags);
 
-  arr.forEach((tag) => {
-    revalidateTag(tag);
+  return new Promise((resolve) => {
+    arr.forEach((tag) => {
+      revalidateTag(tag);
+    });
+
+    resolve(true);
   });
 };

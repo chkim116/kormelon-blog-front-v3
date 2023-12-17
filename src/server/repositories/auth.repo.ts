@@ -17,6 +17,8 @@ import {
 } from '@server/constants/cookie.const';
 import { AuthRepository } from './types';
 
+export const POST_LOGIN_CACHE_TAG = 'login';
+
 export class AuthRepositoryImpl implements AuthRepository {
   /**
    * 유저가 로그인한다.
@@ -28,6 +30,9 @@ export class AuthRepositoryImpl implements AuthRepository {
     return baseApiServer<Response<AuthEntity>>('/auth/signin', {
       body: params,
       method: 'POST',
+      next: {
+        tags: [POST_LOGIN_CACHE_TAG],
+      },
     });
   }
 

@@ -10,6 +10,8 @@ import {
   createActionRejectedWithError,
   createActionResolveWithData,
 } from 'src/app/shared/manipulates/sharedActions.create';
+import { POST_LOGIN_CACHE_TAG } from '@server/repositories/auth.repo';
+import { actSharedRevalidateTags } from './sharedUtils.action';
 
 export const actSharedCheckAdmin: ActionFnType<
   void,
@@ -55,5 +57,6 @@ export const actSharedCheckAuth: ActionFnType<void, boolean> = async () => {
 export async function actSharedLogout() {
   await authService.logout();
 
+  await actSharedRevalidateTags(POST_LOGIN_CACHE_TAG);
   revalidatePath('/');
 }

@@ -20,7 +20,7 @@ export function BlogCommonCardGrid({
       </h2>
       {shouldPostCardRender ? (
         <div className="lg:col-span-12 mx-auto">
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:gap-y-12 xl:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:gap-y-12 lg:grid-cols-3">
             {blogs.map((post) => (
               <BlogCommonCard key={post.id} {...post} />
             ))}
