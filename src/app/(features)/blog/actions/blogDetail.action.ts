@@ -13,10 +13,7 @@ import {
 } from 'src/app/shared/uiStates/sharedActions.uiState';
 import { BlogDetailPayloadData } from '@domain/blog/detail/blogDetail.uiState';
 import { actSharedRevalidateTags } from '@shared/actions/sharedUtils.action';
-import {
-  FETCH_POSTS_CACHE_TAG,
-  FETCH_RECOMMEND_POSTS_CACHE_TAG,
-} from '@server/repositories/post.repo';
+import { FETCH_RECOMMEND_POSTS_CACHE_TAG } from '@server/repositories/post.repo';
 import { FETCH_CATEGORIES_CACHE_TAG } from '@server/repositories/category.repo';
 
 export const actBlogDetailAddLike: ActionFnType<number, void> = async (
@@ -39,7 +36,6 @@ export const actBlogDetailDeleteBlog: ActionFormFnType<number, void> = async (
     await blogDetailService.deleteBlog(id);
 
     await actSharedRevalidateTags([
-      FETCH_POSTS_CACHE_TAG,
       FETCH_RECOMMEND_POSTS_CACHE_TAG,
       FETCH_CATEGORIES_CACHE_TAG,
     ]);

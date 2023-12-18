@@ -17,10 +17,7 @@ import {
   ActionFormFnType,
 } from 'src/app/shared/uiStates/sharedActions.uiState';
 import { actSharedRevalidateTags } from '@shared/actions/sharedUtils.action';
-import {
-  FETCH_POSTS_CACHE_TAG,
-  FETCH_POST_BY_ID_CACHE_TAG,
-} from '@server/repositories/post.repo';
+import { FETCH_POST_BY_ID_CACHE_TAG } from '@server/repositories/post.repo';
 import { FETCH_CATEGORIES_CACHE_TAG } from '@server/repositories/category.repo';
 
 export const actBlogWriteDetailLoad: ActionFnType<
@@ -66,10 +63,7 @@ export const actBlogWriteCreate: ActionFormFnType<
   try {
     await blogWriteService.createBlog(params);
 
-    await actSharedRevalidateTags([
-      FETCH_POSTS_CACHE_TAG,
-      FETCH_CATEGORIES_CACHE_TAG,
-    ]);
+    await actSharedRevalidateTags([FETCH_CATEGORIES_CACHE_TAG]);
     return createActionResolveWithData(params);
   } catch (err) {
     return createActionRejectedWithError(err);
@@ -85,7 +79,6 @@ export const actBlogWriteUpdate: ActionFormFnType<
 
     await actSharedRevalidateTags([
       FETCH_POST_BY_ID_CACHE_TAG,
-      FETCH_POSTS_CACHE_TAG,
       FETCH_CATEGORIES_CACHE_TAG,
     ]);
 
