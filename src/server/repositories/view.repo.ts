@@ -9,10 +9,6 @@ class ViewRepositoryImpl implements ViewRepository {
   fetchView() {
     return baseApiServer<Response<ViewEntity>>('/view', {
       method: 'GET',
-      next: {
-        revalidate: 86400,
-      },
-      cache: 'force-cache',
     });
   }
 }

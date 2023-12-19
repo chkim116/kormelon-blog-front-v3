@@ -10,8 +10,6 @@ import {
 import { authApiServer, baseApiServer } from '@server/apiServer';
 import { CategoryRepository } from './types';
 
-export const FETCH_CATEGORIES_CACHE_TAG = 'fetchCategories';
-
 export class CategoryRepositoryImpl implements CategoryRepository {
   /**
    * 카테고리들을 조회한다.
@@ -23,9 +21,6 @@ export class CategoryRepositoryImpl implements CategoryRepository {
   fetchCategories() {
     return baseApiServer<Response<CategoryEntity[]>>('/category', {
       method: 'GET',
-      next: {
-        tags: [FETCH_CATEGORIES_CACHE_TAG],
-      },
     });
   }
 

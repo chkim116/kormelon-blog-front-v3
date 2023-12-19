@@ -17,9 +17,6 @@ import {
 import { authApiServer, baseApiServer } from '@server/apiServer';
 import { PostRepository } from './types';
 
-export const FETCH_POST_BY_ID_CACHE_TAG = 'fetchPostById';
-export const FETCH_RECOMMEND_POSTS_CACHE_TAG = 'fetchRecommendPosts';
-
 class PostRepositoryImpl implements PostRepository {
   fetchRecommendPosts(
     excludeId: number,
@@ -29,11 +26,6 @@ class PostRepositoryImpl implements PostRepository {
       `/post/recommend?take=${take}&excludeId=${excludeId}`,
       {
         method: 'GET',
-        cache: 'force-cache',
-        next: {
-          revalidate: 86400,
-          tags: [FETCH_RECOMMEND_POSTS_CACHE_TAG],
-        },
       },
     );
   }
@@ -50,7 +42,7 @@ class PostRepositoryImpl implements PostRepository {
   fetchPrivatePosts(): ResponseWithFetch<
     PostPrivateSearchEntity[],
     PagingMeta
-  > {
+    > {
     return authApiServer<Response<PostPrivateSearchEntity[], PagingMeta>>(
       '/private',
       {
@@ -62,10 +54,6 @@ class PostRepositoryImpl implements PostRepository {
   fetchPostRss(): ResponseWithFetch<PostRssEntity[], null> {
     return baseApiServer<Response<PostRssEntity[]>>('/post/rss', {
       method: 'GET',
-      cache: 'force-cache',
-      next: {
-        revalidate: 86400,
-      },
     });
   }
 
@@ -76,11 +64,6 @@ class PostRepositoryImpl implements PostRepository {
       `/post/${id}`,
       {
         method: 'GET',
-        cache: 'force-cache',
-        next: {
-          revalidate: 60,
-          tags: [FETCH_POST_BY_ID_CACHE_TAG],
-        },
       },
     );
   }
@@ -123,10 +106,6 @@ class PostRepositoryImpl implements PostRepository {
   addPostView(id: number): ResponseWithFetch {
     return baseApiServer<Response>(`/post/${id}`, {
       method: 'PUT',
-      cache: 'force-cache',
-      next: {
-        revalidate: 86400,
-      },
     });
   }
 
