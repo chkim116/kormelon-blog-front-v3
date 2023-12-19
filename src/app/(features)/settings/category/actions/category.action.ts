@@ -17,8 +17,6 @@ import {
   SubCategoryUpdateUiParams,
   CategorySearchUiState,
 } from '@domain/category/category.uiState';
-import { FETCH_CATEGORIES_CACHE_TAG } from '@server/repositories/category.repo';
-import { actSharedRevalidateTags } from '@shared/actions/sharedUtils.action';
 
 export const actCategoryCreate: ActionFormFnType<
   CategoryCreateUiParams,
@@ -27,7 +25,6 @@ export const actCategoryCreate: ActionFormFnType<
   try {
     await categoryService.createCategory(params);
 
-    await actSharedRevalidateTags(FETCH_CATEGORIES_CACHE_TAG);
     return createActionResolveWithData(params.value);
   } catch (err) {
     return createActionRejectedWithError(err);
@@ -41,7 +38,6 @@ export const actCategorySubCreate: ActionFnType<
   try {
     await categoryService.createSubCategory(params);
 
-    await actSharedRevalidateTags(FETCH_CATEGORIES_CACHE_TAG);
     return createActionResolveWithData(params.value);
   } catch (err) {
     return createActionRejectedWithError(err);
@@ -52,7 +48,6 @@ export const actCategoryDelete: ActionFnType<number, void> = async (id) => {
   try {
     await categoryService.deleteCategory(id);
 
-    await actSharedRevalidateTags(FETCH_CATEGORIES_CACHE_TAG);
     return createActionResolve();
   } catch (err) {
     return createActionRejectedWithError(err);
@@ -63,7 +58,6 @@ export const actCategorySubDelete: ActionFnType<number, void> = async (id) => {
   try {
     await categoryService.deleteSubCategory(id);
 
-    await actSharedRevalidateTags(FETCH_CATEGORIES_CACHE_TAG);
     return createActionResolve();
   } catch (err) {
     return createActionRejectedWithError(err);
@@ -77,7 +71,6 @@ export const actCategoryUpdate: ActionFnType<
   try {
     await categoryService.updateCategory(params);
 
-    await actSharedRevalidateTags(FETCH_CATEGORIES_CACHE_TAG);
     return createActionResolve();
   } catch (err) {
     return createActionRejectedWithError(err);
@@ -91,7 +84,6 @@ export const actCategorySubUpdate: ActionFnType<
   try {
     await categoryService.updateSubCategory(params);
 
-    await actSharedRevalidateTags(FETCH_CATEGORIES_CACHE_TAG);
     return createActionResolve();
   } catch (err) {
     return createActionRejectedWithError(err);

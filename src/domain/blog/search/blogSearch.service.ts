@@ -37,7 +37,7 @@ interface BlogSearchServiceModel {
   /**
    * 추천 게시글 상세 조회
    */
-  fetchRecommends(): Promise<BlogSearchUiState[]>;
+  fetchRecommends(excludeId: number): Promise<BlogSearchUiState[]>;
   /**
    * rss 피드용 게시글 조회
    */
@@ -83,8 +83,8 @@ export class BlogSearchServiceImpl implements BlogSearchServiceModel {
     };
   }
 
-  async fetchRecommends(): Promise<BlogSearchUiState[]> {
-    const { payload } = await this.postRepo.fetchRecommendPosts(6);
+  async fetchRecommends(excludeId: number): Promise<BlogSearchUiState[]> {
+    const { payload } = await this.postRepo.fetchRecommendPosts(excludeId, 6);
 
     return toBlogSearchUiStates(payload);
   }

@@ -17,21 +17,17 @@ import {
 import { authApiServer, baseApiServer } from '@server/apiServer';
 import { PostRepository } from './types';
 
-export const FETCH_POST_BY_ID_CACHE_TAG = 'fetchPostById';
-export const FETCH_POSTS_CACHE_TAG = 'fetchPosts';
-export const FETCH_RECOMMEND_POSTS_CACHE_TAG = 'fetchRecommendPosts';
-
 class PostRepositoryImpl implements PostRepository {
   fetchRecommendPosts(
+    excludeId: number,
     take: number,
   ): ResponseWithFetch<PostRecommendEntity[], PagingMeta> {
-    return baseApiServer(`/post/recommend?take=${take}`, {
-      method: 'GET',
-      next: {
-        revalidate: 86400,
-        tags: [FETCH_RECOMMEND_POSTS_CACHE_TAG],
+    return baseApiServer(
+      `/post/recommend?take=${take}&excludeId=${excludeId}`,
+      {
+        method: 'GET',
       },
-    });
+    );
   }
 
   fetchPosts(
@@ -40,16 +36,13 @@ class PostRepositoryImpl implements PostRepository {
     return baseApiServer<Response<PostSearchEntity[], PagingMeta>>('/post', {
       method: 'GET',
       query: params,
-      next: {
-        tags: [FETCH_POSTS_CACHE_TAG],
-      },
     });
   }
 
   fetchPrivatePosts(): ResponseWithFetch<
     PostPrivateSearchEntity[],
     PagingMeta
-  > {
+    > {
     return authApiServer<Response<PostPrivateSearchEntity[], PagingMeta>>(
       '/private',
       {
@@ -61,9 +54,6 @@ class PostRepositoryImpl implements PostRepository {
   fetchPostRss(): ResponseWithFetch<PostRssEntity[], null> {
     return baseApiServer<Response<PostRssEntity[]>>('/post/rss', {
       method: 'GET',
-      next: {
-        revalidate: 86400,
-      },
     });
   }
 
@@ -74,10 +64,6 @@ class PostRepositoryImpl implements PostRepository {
       `/post/${id}`,
       {
         method: 'GET',
-        next: {
-          revalidate: 60,
-          tags: [FETCH_POST_BY_ID_CACHE_TAG],
-        },
       },
     );
   }
@@ -116,12 +102,10 @@ class PostRepositoryImpl implements PostRepository {
       tokenProvider.get<number[]>(STORAGE_LIKE_KEY)?.includes(postId),
     );
   }
+
   addPostView(id: number): ResponseWithFetch {
     return baseApiServer<Response>(`/post/${id}`, {
       method: 'PUT',
-      next: {
-        revalidate: 86400,
-      },
     });
   }
 

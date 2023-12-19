@@ -94,9 +94,11 @@ export interface PostSearchRepository {
   /**
    * 추천 게시글 조회
    *
+   * @param excludeId 제외할 게시글 식별자
    * @param take 취할 개수
    */
   fetchRecommendPosts(
+    excludeId: number,
     take: number,
   ): ResponseWithFetch<PostRecommendEntity[], PagingMeta>;
 

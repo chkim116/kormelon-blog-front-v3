@@ -110,7 +110,7 @@ describe('blogSearchService 성공 케이스', () => {
   });
 
   it('게시글 추천 게시글 조회', async () => {
-    const result = await blogSearchService.fetchRecommends();
+    const result = await blogSearchService.fetchRecommends(3);
 
     expect(postSearchRepositoryMock.fetchRecommendPosts).toHaveBeenCalled();
     expect(result).toEqual(toBlogSearchUiStates(RESPONSE_RECOMMEND_POSTS));
@@ -174,7 +174,7 @@ describe('blogSearchService 실패 케이스', () => {
     postSearchRepositoryMock.fetchRecommendPosts =
       createMockFunctionWithRejectedValue(new HttpError('에러 발생'));
 
-    expect(blogSearchService.fetchRecommends()).rejects.toMatchObject({
+    expect(blogSearchService.fetchRecommends(3)).rejects.toMatchObject({
       message: '에러 발생',
     });
     expect(postSearchRepositoryMock.fetchRecommendPosts).toHaveBeenCalled();

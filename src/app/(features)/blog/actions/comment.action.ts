@@ -21,8 +21,6 @@ import {
   createActionResolveWithData,
 } from 'src/app/shared/manipulates/sharedActions.create';
 import { actSharedNotificationRead } from 'src/app/shared/actions/sharedNoti.action';
-import { FETCH_COMMENTS_CACHE_TAG } from '@server/repositories/comment.repo';
-import { actSharedRevalidateTags } from '@shared/actions/sharedUtils.action';
 
 export const actCommentFetch: ActionFnType<
   Record<string, string>,
@@ -50,7 +48,6 @@ export const actCommentCreate: ActionFormFnType<
   try {
     await commentService.createComment(params);
 
-    await actSharedRevalidateTags(FETCH_COMMENTS_CACHE_TAG);
     return createActionResolve();
   } catch (err) {
     return createActionRejectedWithError(err);
@@ -64,7 +61,6 @@ export const actCommentUpdate: ActionFormFnType<
   try {
     await commentService.updateComment(params);
 
-    await actSharedRevalidateTags(FETCH_COMMENTS_CACHE_TAG);
     return createActionResolve();
   } catch (err) {
     return createActionRejectedWithError(err);
@@ -77,8 +73,6 @@ export const actCommentDelete: ActionFormFnType<
 > = async (_, params: CommentDeleteUiParams) => {
   try {
     await commentService.deleteComment(params);
-
-    await actSharedRevalidateTags(FETCH_COMMENTS_CACHE_TAG);
 
     return createActionResolve();
   } catch (err) {
@@ -93,7 +87,6 @@ export const actCommentReplyCreate: ActionFormFnType<
   try {
     await commentService.createReply(params);
 
-    await actSharedRevalidateTags(FETCH_COMMENTS_CACHE_TAG);
     return createActionResolve();
   } catch (err) {
     return createActionRejectedWithError(err);
@@ -107,7 +100,6 @@ export const actCommentReplyUpdate: ActionFormFnType<
   try {
     await commentService.updateReply(params);
 
-    await actSharedRevalidateTags(FETCH_COMMENTS_CACHE_TAG);
     return createActionResolve();
   } catch (err) {
     return createActionRejectedWithError(err);
@@ -121,7 +113,6 @@ export const actCommentReplyDelete: ActionFormFnType<
   try {
     await commentService.deleteReply(params);
 
-    await actSharedRevalidateTags(FETCH_COMMENTS_CACHE_TAG);
     return createActionResolve();
   } catch (err) {
     return createActionRejectedWithError(err);

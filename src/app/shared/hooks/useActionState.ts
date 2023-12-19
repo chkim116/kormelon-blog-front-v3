@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { startTransition, useEffect, useRef, useState } from 'react';
 import {
   ActionFormStateUiState,
   ActionFnType,
@@ -35,20 +35,34 @@ export function useActionState<Data, Params>(
     data: initialState,
   });
 
-  const action = async (params: Params): Promise<Data> => {
+  const actionWithStartTransition = async (params: Params): Promise<Data> => {
     setLoading(true);
 
     if (loading) {
       return state.data;
     }
 
-    const form = await serverAction(params);
+    let form: ActionFormStateUiState<Data> = state;
 
-    setState(form);
-    setLoading(false);
+    try {
+      form = await serverAction(params);
+      setState(form);
+    } finally {
+      setLoading(false);
+    }
 
-    return form.data;
+    return form?.data;
   };
+
+  const action = async (params: Params): Promise<Data> =>
+    await new Promise((resolve, reject) => {
+      startTransition(() => {
+        console.log('startTransition useActionState on..');
+        actionWithStartTransition(params)
+          .then((form) => resolve(form))
+          .catch(reject);
+      });
+    });
 
   useEffect(() => {
     if (state?.isError && typeof refErrorHandler.current == 'function') {
@@ -56,6 +70,7 @@ export function useActionState<Data, Params>(
     }
 
     if (state?.isSuccess && typeof refSuccessHandler.current == 'function') {
+      console.log('call');
       refSuccessHandler.current(state);
     }
   }, [state]);

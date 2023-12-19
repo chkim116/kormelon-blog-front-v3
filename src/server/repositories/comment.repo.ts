@@ -11,8 +11,6 @@ import {
 } from '@server/entities';
 import { CommentRepository } from './types';
 
-export const FETCH_COMMENTS_CACHE_TAG = 'fetchComments';
-
 class CommentRepositoryImpl implements CommentRepository {
   /**
    * 댓글을 가져온다
@@ -25,7 +23,6 @@ class CommentRepositoryImpl implements CommentRepository {
       `/comment?postId=${postId}`,
       {
         method: 'GET',
-        next: { revalidate: 60, tags: [FETCH_COMMENTS_CACHE_TAG] },
       },
     );
   }
