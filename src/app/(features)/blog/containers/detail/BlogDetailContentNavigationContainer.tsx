@@ -1,5 +1,11 @@
 'use client';
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import {
+  ReactNode,
+  startTransition,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { useDebounce } from 'use-debounce';
 import { toString } from 'safers';
 import { toBlogDetailAnchorUiStates } from '@domain/blog/detail/blogDetail.convert';
@@ -54,16 +60,18 @@ export const BlogDetailContentNavigationClientContainer = ({
   }, 200);
 
   const calcAnchors = useCallback(() => {
-    const elements = selectHeadElements();
+    startTransition(() => {
+      const elements = selectHeadElements();
 
-    if (elements.length) {
-      const heads: BlogDetailAnchorUiDto[] = [];
-      elements.forEach(({ textContent, offsetTop }) => {
-        heads.push({ textContent: toString(textContent), offsetTop });
-      });
+      if (elements.length) {
+        const heads: BlogDetailAnchorUiDto[] = [];
+        elements.forEach(({ textContent, offsetTop }) => {
+          heads.push({ textContent: toString(textContent), offsetTop });
+        });
 
-      setAnchors(toBlogDetailAnchorUiStates(heads));
-    }
+        setAnchors(toBlogDetailAnchorUiStates(heads));
+      }
+    });
   }, []);
 
   const [handleResize] = useDebounce(() => {
