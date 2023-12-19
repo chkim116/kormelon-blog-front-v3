@@ -12,6 +12,7 @@ class ViewRepositoryImpl implements ViewRepository {
       next: {
         revalidate: 86400,
       },
+      cache: 'force-cache',
     });
   }
 }

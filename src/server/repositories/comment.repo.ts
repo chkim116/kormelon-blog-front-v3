@@ -26,6 +26,7 @@ class CommentRepositoryImpl implements CommentRepository {
       {
         method: 'GET',
         next: { revalidate: 60, tags: [FETCH_COMMENTS_CACHE_TAG] },
+        cache: 'force-cache',
       },
     );
   }

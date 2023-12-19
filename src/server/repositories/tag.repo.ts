@@ -32,7 +32,7 @@ class TagRepositoryImpl implements TagRepository {
   createTag(value: string) {
     return authApiServer<Response<TagSearchEntity>>('/tag', {
       method: 'POST',
-      body: value,
+      body: { value },
     });
   }
 

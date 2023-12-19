@@ -19,7 +19,6 @@ export function createApiClient({
     baseURL,
     credentials,
     parseResponse: JSON.parse,
-    cache: 'no-store',
     async onRequest(ctx) {
       ctx.options.headers = await setHeaders(ctx.options.headers || {});
     },

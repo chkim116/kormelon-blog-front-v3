@@ -22,15 +22,20 @@ export const FETCH_RECOMMEND_POSTS_CACHE_TAG = 'fetchRecommendPosts';
 
 class PostRepositoryImpl implements PostRepository {
   fetchRecommendPosts(
+    excludeId: number,
     take: number,
   ): ResponseWithFetch<PostRecommendEntity[], PagingMeta> {
-    return baseApiServer(`/post/recommend?take=${take}`, {
-      method: 'GET',
-      next: {
-        revalidate: 86400,
-        tags: [FETCH_RECOMMEND_POSTS_CACHE_TAG],
+    return baseApiServer(
+      `/post/recommend?take=${take}&excludeId=${excludeId}`,
+      {
+        method: 'GET',
+        cache: 'force-cache',
+        next: {
+          revalidate: 86400,
+          tags: [FETCH_RECOMMEND_POSTS_CACHE_TAG],
+        },
       },
-    });
+    );
   }
 
   fetchPosts(
@@ -57,10 +62,10 @@ class PostRepositoryImpl implements PostRepository {
   fetchPostRss(): ResponseWithFetch<PostRssEntity[], null> {
     return baseApiServer<Response<PostRssEntity[]>>('/post/rss', {
       method: 'GET',
+      cache: 'force-cache',
       next: {
         revalidate: 86400,
       },
-      cache: 'force-cache',
     });
   }
 
@@ -71,11 +76,11 @@ class PostRepositoryImpl implements PostRepository {
       `/post/${id}`,
       {
         method: 'GET',
+        cache: 'force-cache',
         next: {
           revalidate: 60,
           tags: [FETCH_POST_BY_ID_CACHE_TAG],
         },
-        cache: 'force-cache',
       },
     );
   }
@@ -114,13 +119,14 @@ class PostRepositoryImpl implements PostRepository {
       tokenProvider.get<number[]>(STORAGE_LIKE_KEY)?.includes(postId),
     );
   }
+
   addPostView(id: number): ResponseWithFetch {
     return baseApiServer<Response>(`/post/${id}`, {
       method: 'PUT',
+      cache: 'force-cache',
       next: {
         revalidate: 86400,
       },
-      cache: 'force-cache',
     });
   }
 

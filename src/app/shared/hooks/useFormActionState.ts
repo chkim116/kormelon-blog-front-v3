@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { startTransition, useEffect, useRef, useState } from 'react';
 import { useFormState } from 'react-dom';
 import { redirect } from 'next/navigation';
 import {
@@ -38,12 +38,21 @@ export function useFormActionState<P, D>(
     (params: P) => Promise<ActionFormStateUiState<D>>,
   ];
 
-  const formAction = async (params: P) => {
+  const actionWithStartTransition = async (params: P) => {
     setLoading(true);
 
-    await action(params);
+    try {
+      await action(params);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    setLoading(false);
+  const formAction = async (params: P) => {
+    startTransition(() => {
+      console.log('startTransition useFormActionState on..');
+      actionWithStartTransition(params);
+    });
   };
 
   useEffect(() => {
@@ -52,6 +61,7 @@ export function useFormActionState<P, D>(
     }
 
     if (state?.isSuccess && typeof refSuccessHandler.current === 'function') {
+      console.log('call on..');
       refSuccessHandler.current(state, {
         redirectPath(path) {
           redirect(path);
