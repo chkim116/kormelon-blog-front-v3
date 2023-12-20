@@ -1,11 +1,11 @@
 import { faker } from '@faker-js/faker';
-import { AuthEntity, AuthUserEntity, AuthRoleEnum } from '@server/entities';
+import { AuthEntity, AuthUserEntity, AuthRoleEnum } from '@shared/entities';
 import { HttpError } from '@core/network/HttpError';
 import {
   createMockFunctionWithRejectedValue,
   createMockFunctionWithResolvedValue,
 } from '@fixtures/tests/mock.utils';
-import { AuthRepository } from '@server/repositories/types/auth.repo.type';
+import { AuthRepository } from '../../repositories/auth.repo.type';
 import { AuthServiceImpl } from '../auth.service';
 import { AuthLoginUiParams, AuthRegisterUiParams } from '../auth.uiState';
 import {

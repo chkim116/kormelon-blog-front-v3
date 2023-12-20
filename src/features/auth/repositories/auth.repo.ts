@@ -4,17 +4,14 @@ import {
   AuthRegisterParams,
   Response,
   AuthUserEntity,
-} from '@shared2/entities';
-import { authApiServer, baseApiServer } from '@server/apiServer';
+} from '@shared/entities';
+import { authApiServer, baseApiServer } from '@core/server/apiServer';
 import {
   getCookies,
   removeCookies,
   setCookies,
-} from '@server/cookies/serverCookieProvider';
-import {
-  COOKIE_TOKEN_KEY,
-  COOKIE_USER_KEY,
-} from '@server/constants/cookie.const';
+} from '@core/server/serverCookieProvider';
+import { COOKIE_TOKEN_KEY, COOKIE_USER_KEY } from '@core/server/constatns';
 import { AuthRepository } from './auth.repo.type';
 
 export const POST_LOGIN_CACHE_TAG = 'login';

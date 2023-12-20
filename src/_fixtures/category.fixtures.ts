@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { CategorySearchUiState } from '@domain/category/category.uiState';
+import { CategorySearchUiState } from '@features/categories/domains/category.uiState';
 
 function getCategories(length = 3) {
   return Array.from({ length }, () => {

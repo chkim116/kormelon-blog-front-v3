@@ -3,8 +3,8 @@ import { startTransition, useEffect, useRef, useState } from 'react';
 import {
   ActionFormStateUiState,
   ActionFnType,
-} from 'src/app/shared/uiStates/sharedActions.uiState';
-import { createActionFormStateUiState } from 'src/app/shared/manipulates/sharedActions.create';
+} from '@shared/domains/common/sharedActions.uiState';
+import { createActionFormStateUiState } from '@shared/domains/common/sharedActions.create';
 
 interface UseActionStateCallback<Data> {
   onSuccess?: (state: ActionFormStateUiState<Data>) => void;

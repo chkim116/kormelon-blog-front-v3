@@ -20,14 +20,10 @@
     "types": ["jest", "node"],
     "paths": {
       "@core/*": ["src/core/*"],
-      "@domain/*": ["src/domain/*"],
-      "@server/*": ["src/server/*"],
-      "@app/*": ["src/app/(features)/*"],
-      "@shared/*": ["src/app/shared/*"],
+      "@app/*": ["src/app/(routes)/*"],
+      "@shared/*": ["src/shared/*"],
       "@fixtures/*": ["src/_fixtures/*"],
-
-      "@features/*": ["src/features/*"],
-      "@shared2/*": ["src/shared/*"]
+      "@features/*": ["src/features/*"]
     },
     "plugins": [
       {

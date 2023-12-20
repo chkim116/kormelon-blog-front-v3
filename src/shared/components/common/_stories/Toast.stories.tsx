@@ -1,7 +1,7 @@
 import { ComponentProps } from 'react';
 import { ComponentStory, ComponentMeta, ArgTypes } from '@storybook/react';
 import { Button } from '@nextui-org/react';
-import { toast } from 'src/app/shared/services/ToastService';
+import { toast } from '@shared/services/ToastService';
 import { Toast } from '../Toast';
 
 type MyArgTypes = Partial<

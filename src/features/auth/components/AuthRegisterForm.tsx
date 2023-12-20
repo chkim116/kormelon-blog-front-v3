@@ -8,7 +8,7 @@ import {
   Input,
   Spacer,
 } from '@nextui-org/react';
-import { toast } from '@shared2/services/ToastService';
+import { toast } from '@shared/services/ToastService';
 import { createAuthRegisterUiParams } from '../domains/auth.create';
 import { AuthRegisterUiParams } from '../domains/auth.uiState';
 

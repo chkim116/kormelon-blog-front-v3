@@ -1,6 +1,6 @@
-import { NotificationSearchEntity, Response } from '@server/entities';
-import { authApiServer } from '@server/apiServer';
-import { NotificationRepository } from './types';
+import { NotificationSearchEntity, Response } from '@shared/entities';
+import { authApiServer } from '@core/server/apiServer';
+import { NotificationRepository } from './notification.repo.type';
 
 class NotificationRepositoryImpl implements NotificationRepository {
   /**

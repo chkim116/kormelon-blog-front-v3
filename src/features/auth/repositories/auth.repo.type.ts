@@ -4,7 +4,7 @@ import {
   AuthRegisterParams,
   AuthUserEntity,
   ResponseWithFetch,
-} from '@shared2/entities';
+} from '@shared/entities';
 
 export interface AuthRepository {
   /**

@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { PostDetailNearPostEntity, PostSearchEntity } from '@server/entities';
-import { toBlogSearchUiStates } from '@domain/blog/search/blogSearch.convert';
-import { BlogDetailUiState } from '@domain/blog/detail/blogDetail.uiState';
+import { PostDetailNearPostEntity, PostSearchEntity } from '@shared/entities';
+import { toBlogSearchUiStates } from '@features/blog/domains/search/blogSearch.convert';
+import { BlogDetailUiState } from '@features/blog/domains/detail/blogDetail.uiState';
 import { userFixtures } from './user.fixtures';
 
 function getBlogList(length = 6) {

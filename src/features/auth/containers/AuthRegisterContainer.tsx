@@ -1,10 +1,10 @@
 'use client';
 import { Button } from '@nextui-org/react';
 import gravatar from 'gravatar';
-import { toast } from '@shared2/services/ToastService';
-import { useFormActionState } from '@shared2/hooks/useFormActionState';
-import { useActionState } from '@shared2/hooks/useActionState';
-import { SubmitButton } from '@shared2/components/common/SubmitButton';
+import { toast } from '@shared/services/ToastService';
+import { useFormActionState } from '@shared/hooks/useFormActionState';
+import { useActionState } from '@shared/hooks/useActionState';
+import { SubmitButton } from '@shared/components/common/SubmitButton';
 import AuthRegisterForm from '../components/AuthRegisterForm';
 import { actAuthProfileUpload, actAuthRegister } from '../actions/auth.action';
 

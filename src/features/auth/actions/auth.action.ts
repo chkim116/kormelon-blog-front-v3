@@ -5,11 +5,11 @@ import {
   createActionRejectedWithError,
   createActionResolve,
   createActionResolveWithData,
-} from '@shared2/domains/sharedActions.create';
+} from '@shared/domains/common/sharedActions.create';
 import {
   ActionFormFnType,
   ActionFnType,
-} from '@shared2/domains/sharedActions.uiState';
+} from '@shared/domains/common/sharedActions.uiState';
 import {
   AuthLoginUiParams,
   AuthRegisterUiParams,

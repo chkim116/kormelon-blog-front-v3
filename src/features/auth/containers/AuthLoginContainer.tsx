@@ -1,8 +1,8 @@
 'use client';
 import { Button } from '@nextui-org/react';
-import { toast } from '@shared2/services/ToastService';
-import { SubmitButton } from '@shared2/components/common/SubmitButton';
-import { useFormActionState } from '@shared2/hooks/useFormActionState';
+import { toast } from '@shared/services/ToastService';
+import { SubmitButton } from '@shared/components/common/SubmitButton';
+import { useFormActionState } from '@shared/hooks/useFormActionState';
 import AuthLoginForm from '../components/AuthLoginForm';
 import { actAuthLogin } from '../actions/auth.action';
 

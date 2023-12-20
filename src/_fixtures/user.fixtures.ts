@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
-import { AuthUserUiState } from '@domain/auth/auth.uiState';
-import { AuthRoleEnum } from '@server/entities';
+import { AuthRoleEnum } from '@shared/entities';
+import { AuthUserUiState } from '@features/auth/domains/auth.uiState';
 
 function getUser(isAdmin = false) {
   const result: AuthUserUiState = {

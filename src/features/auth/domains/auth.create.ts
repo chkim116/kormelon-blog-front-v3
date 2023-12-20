@@ -1,4 +1,4 @@
-import { AuthRoleEnum } from '@server/entities';
+import { AuthRoleEnum } from '@shared/entities';
 import {
   AuthLoginUiParams,
   AuthRegisterUiParams,

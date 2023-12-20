@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { CommentSearchUiState } from '@domain/comment/comment.uiState';
-import { CommentSearchEntity } from '@server/entities';
-import { toCommentSearchUiStates } from '@domain/comment/comment.convert';
+import { CommentSearchEntity } from '@shared/entities';
+import { CommentSearchUiState } from '@features/blog/domains/comment/comment.uiState';
+import { toCommentSearchUiStates } from '@features/blog/domains/comment/comment.convert';
 
 function getCommentList(length = 6, isAnonymous = false) {
   const results: CommentSearchEntity[] = Array.from({ length }, () => {

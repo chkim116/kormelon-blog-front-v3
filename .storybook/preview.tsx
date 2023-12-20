@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/react';
 import React from 'react';
-import { NextUIProviders } from '../src/app/shared/styles/NextUIProviders';
-import '@shared/styles/tailwind.global.css';
+import { NextUIProviders } from '../src/shared/styles/NextUIProviders';
+import '../src/shared/styles/tailwind.global.css';
 import { useTheme } from 'next-themes';
 import { Button } from '@nextui-org/react';
 import { Sun, Moon } from 'lucide-react';

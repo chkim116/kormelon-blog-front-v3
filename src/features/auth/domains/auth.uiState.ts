@@ -2,7 +2,7 @@ import {
   AuthLoginParams,
   AuthRegisterParams,
   AuthUserEntity,
-} from '@shared2/entities';
+} from '@shared/entities';
 
 export type AuthUserUiState = AuthUserEntity;
 

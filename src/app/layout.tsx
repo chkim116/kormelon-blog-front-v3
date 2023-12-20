@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 import { Metadata, Viewport } from 'next';
 import Script from 'next/script';
-import { createMetaData } from 'src/app/shared/manipulates/sharedMeta.create';
+import { NextUIProviders } from '@shared/styles/NextUIProviders';
+import { createMetaData } from '@shared/domains/meta/sharedMeta.create';
 import { GA_TRACKING_ID } from '@core/services/GoogleTagService';
-import { NextUIProviders } from 'src/app/shared/styles/NextUIProviders';
 
 import '@shared/styles/tailwind.global.css';
 import { RouteProgress } from '@shared/components/common/RouteProgress';

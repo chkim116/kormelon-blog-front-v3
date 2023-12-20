@@ -1,7 +1,9 @@
 import { ComponentProps } from 'react';
 import { ArgTypes, Meta, StoryFn, StoryObj } from '@storybook/react';
-import AuthContainer from '@features/auth/containers/AuthContainer';
+import { Button } from '@nextui-org/react';
+import { action } from '@storybook/addon-actions';
 import AuthLayout from '../AuthLayout';
+import AuthLoginForm from '../AuthLoginForm';
 
 interface StoryProps extends ComponentProps<typeof AuthLayout> {}
 
@@ -22,6 +24,10 @@ export const Default: StoryObj<StoryProps> = {
   render: Template,
 
   args: {
-    children: <AuthContainer />,
+    children: (
+      <AuthLoginForm onSubmit={action('onSubmit')}>
+        <Button>확인</Button>
+      </AuthLoginForm>
+    ),
   },
 };

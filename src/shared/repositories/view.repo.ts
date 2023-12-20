@@ -1,6 +1,6 @@
-import { Response, ViewEntity } from '@server/entities';
-import { baseApiServer } from '@server/apiServer';
-import { ViewRepository } from './types';
+import { Response, ViewEntity } from '@shared/entities';
+import { baseApiServer } from '@core/server/apiServer';
+import { ViewRepository } from './view.repo.type';
 
 class ViewRepositoryImpl implements ViewRepository {
   /**

@@ -1,10 +1,10 @@
 import Image from 'next/image';
+import { BadgeCheck } from 'lucide-react';
 import {
   USER_IMAGE,
   USER_NAME,
   USER_DESCRIPTION,
-} from '@shared2/constants/user.const';
-import { BadgeCheck } from 'lucide-react';
+} from '@shared/constants/user.const';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IndexUserImageProps {}

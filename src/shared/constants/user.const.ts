@@ -1,4 +1,4 @@
-import myImage from '../../../../public/my.jpg';
+import myImage from '../../../public/my.jpg';
 
 export const USER_IMAGE = myImage;
 export const USER_NAME = '김창회';
