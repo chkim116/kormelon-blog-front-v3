@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import '@shared/styles/tailwind.global.css';
+import '@shared2/styles/tailwind.global.css';
 
 interface LayoutProps {
   children: ReactNode;

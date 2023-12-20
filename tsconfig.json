@@ -24,7 +24,10 @@
       "@server/*": ["src/server/*"],
       "@app/*": ["src/app/(features)/*"],
       "@shared/*": ["src/app/shared/*"],
-      "@fixtures/*": ["src/_fixtures/*"]
+      "@fixtures/*": ["src/_fixtures/*"],
+
+      "@features/*": ["src/features/*"],
+      "@shared2/*": ["src/shared/*"]
     },
     "plugins": [
       {
