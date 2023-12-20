@@ -1,9 +1,9 @@
 'use client';
 import { useState } from 'react';
 import { Input, Textarea } from '@nextui-org/react';
+import { SubmitButton } from '@shared/components/common/SubmitButton';
 import { CommentCreateUiParams } from '@features/blog/domains/comment/comment.uiState';
 import { createCommentCreateUiParams } from '@features/blog/domains/comment/comment.create';
-import { SubmitButton } from '@shared/components/common/SubmitButton';
 
 interface BlogDetailCommentTextareaProps {
   isAnonymous: boolean;

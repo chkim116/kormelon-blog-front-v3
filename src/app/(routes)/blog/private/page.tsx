@@ -1,6 +1,6 @@
+import { actSharedCheckAdmin } from '@shared/actions/sharedAuth.action';
 import { actBlogPrivateSearchLoad } from '@features/blog/actions/blogSearch.action';
 import { BlogPrivatePostContainerClient } from '@features/blog/containers/private/BlogPrivatePostContainer.client';
-import { actSharedCheckAdmin } from '@shared/actions/sharedAuth.action';
 
 export const dynamic = 'force-dynamic';
 

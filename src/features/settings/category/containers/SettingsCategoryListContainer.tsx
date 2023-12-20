@@ -1,11 +1,11 @@
 'use client';
 
+import { toast } from '@shared/services/ToastService';
 import {
   CategorySearchUiState,
   CategoryUpdateUiParams,
   SubCategoryUpdateUiParams,
 } from '@features/categories/domains/category.uiState';
-import { toast } from '@shared/services/ToastService';
 import { SettingsCategoryCategoryList } from '../components/SettingsCategoryCategoryList';
 import { SettingsSubCategoryCreateArgs } from '../components/SettingsCategoryCategoryItem';
 import {

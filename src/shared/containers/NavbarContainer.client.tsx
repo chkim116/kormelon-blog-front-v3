@@ -2,10 +2,10 @@
 import { useRef } from 'react';
 import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
-import { AuthUserUiState } from '@features/auth/domains/auth.uiState';
 import { toast } from '@shared/services/ToastService';
 import { actSharedLogout } from '@shared/actions/sharedAuth.action';
 import { NotificationSearchUiState } from '@shared/domains/notification/notification.uiState';
+import { AuthUserUiState } from '@features/auth/domains/auth.uiState';
 import { Navbar, ThemeModeType } from '../components/Navbar';
 import { NavbarNotificationMenu } from '../components/NavbarNotificationMenu';
 import {

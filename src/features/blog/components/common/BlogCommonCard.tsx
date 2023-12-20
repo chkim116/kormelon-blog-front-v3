@@ -9,12 +9,12 @@ import {
 } from '@nextui-org/react';
 import NextLink from 'next/link';
 import NextImage from 'next/image';
-import { BlogSearchUiState } from '@features/blog/domains/search/blogSearch.uiState';
 import {
   BLUR_IMAGE,
   IMAGE_DEFAULT_HEIGHT_SIZE,
   IMAGE_DEFAULT_WIDTH_SIZE,
 } from '@shared/constants/img.const';
+import { BlogSearchUiState } from '@features/blog/domains/search/blogSearch.uiState';
 
 interface BlogCommonCardProps extends BlogSearchUiState {}
 

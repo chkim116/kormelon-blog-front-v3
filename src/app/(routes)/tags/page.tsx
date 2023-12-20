@@ -1,5 +1,5 @@
-import { TagSearchList } from '@features/tags/components/TagSearchList';
 import { actTagsSearchAllLoad } from '@shared/actions/sharedTag.action';
+import { TagSearchList } from '@features/tags/components/TagSearchList';
 
 interface TagsPageProps {
   params: Record<string, string>;

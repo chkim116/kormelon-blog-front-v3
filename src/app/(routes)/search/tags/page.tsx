@@ -1,6 +1,6 @@
-import { SearchList } from '@features/search/components/SearchList';
 import { actTagWithBlogsLoad } from '@shared/actions/sharedTag.action';
 import { tagService } from '@shared/domains/tag';
+import { SearchList } from '@features/search/components/SearchList';
 
 interface SearchTagsPageProps {
   params: Record<string, string>;

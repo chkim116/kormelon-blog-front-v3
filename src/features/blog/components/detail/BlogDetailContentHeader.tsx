@@ -9,12 +9,12 @@ import {
 import NextImage from 'next/image';
 import NextLink from 'next/link';
 import { numberFormat } from 'safers';
-import { BlogDetailUiState } from '@features/blog/domains/detail/blogDetail.uiState';
 import { LucideIcon } from '@shared/components/common/LucideIcon';
 import {
   IMAGE_DEFAULT_HEIGHT_SIZE,
   IMAGE_DEFAULT_WIDTH_SIZE,
 } from '@shared/constants/img.const';
+import { BlogDetailUiState } from '@features/blog/domains/detail/blogDetail.uiState';
 
 interface BlogDetailContentHeaderProps extends BlogDetailUiState {
   isAuthor: boolean;

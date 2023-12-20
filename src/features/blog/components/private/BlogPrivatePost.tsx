@@ -2,8 +2,8 @@
 
 import NextLink from 'next/link';
 import { Button } from '@nextui-org/react';
-import { BlogSearchPrivateUiState } from '@features/blog/domains/search/blogSearch.uiState';
 import { LucideIcon } from '@shared/components/common/LucideIcon';
+import { BlogSearchPrivateUiState } from '@features/blog/domains/search/blogSearch.uiState';
 import { BlogCommonCard } from '../common/BlogCommonCard';
 import { BlogCommonPostEmpty } from '../common/BlogCommonPostEmpty';
 

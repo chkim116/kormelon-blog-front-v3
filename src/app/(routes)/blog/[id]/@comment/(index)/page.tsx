@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
+import { actSharedCheckUser } from '@shared/actions/sharedAuth.action';
 import { actCommentFetch } from '@features/blog/actions/comment.action';
 import { BlogDetailCommentBodyContainerClient } from '@features/blog/containers/detail/BlogDetailCommentBodyContainer.client';
 import { BlogDetailCommentTextareaContainerClient } from '@features/blog/containers/detail/BlogDetailCommentTextareaContainer.client';
-import { actSharedCheckUser } from '@shared/actions/sharedAuth.action';
 
 interface CommentPageProps {
   params: Record<string, string>;

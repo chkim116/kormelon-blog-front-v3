@@ -1,9 +1,9 @@
-import { PostWriteRepository } from '@features/blog/repositories/post.repo.type';
 import { HttpError } from '@core/network/HttpError';
 import {
   createMockFunctionWithRejectedValue,
   createMockFunctionWithResolvedValue,
 } from '@fixtures/tests';
+import { PostWriteRepository } from '@features/blog/repositories/post.repo.type';
 import {
   toPostCreateParams,
   toPostUpdateParams,

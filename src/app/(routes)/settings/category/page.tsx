@@ -1,7 +1,7 @@
+import { actSharedCheckAdmin } from '@shared/actions/sharedAuth.action';
 import { actCategoriesLoad } from '@features/settings/category/actions/category.action';
 import { SettingsCategoryCreatorContainer } from '@features/settings/category/containers/SettingsCategoryCreatorContainer';
 import { SettingsCategoryListContainer } from '@features/settings/category/containers/SettingsCategoryListContainer';
-import { actSharedCheckAdmin } from '@shared/actions/sharedAuth.action';
 
 export const dynamic = 'force-dynamic';
 

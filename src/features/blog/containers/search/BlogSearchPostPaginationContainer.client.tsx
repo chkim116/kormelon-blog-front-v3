@@ -1,6 +1,6 @@
 'use client';
-import { BlogCommonPagination } from '@features/blog/components/common/BlogCommonPagination';
 import { useQueryPush } from '@shared/hooks/useQueryPush';
+import { BlogCommonPagination } from '@features/blog/components/common/BlogCommonPagination';
 
 interface BlogSearchPostPaginationContainerClientProps {
   totalPage: number;

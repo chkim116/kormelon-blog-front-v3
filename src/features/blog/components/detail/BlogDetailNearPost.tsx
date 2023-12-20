@@ -1,8 +1,8 @@
 'use client';
 import NextLink from 'next/link';
 import { Card, CardBody, Link } from '@nextui-org/react';
-import { BlogDetailNearDto } from '@features/blog/domains/detail/blogDetail.uiState';
 import { LucideIcon } from '@shared/components/common/LucideIcon';
+import { BlogDetailNearDto } from '@features/blog/domains/detail/blogDetail.uiState';
 
 interface BlogDetailNearPostProps {
   nearPost: BlogDetailNearDto;

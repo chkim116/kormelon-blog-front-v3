@@ -1,8 +1,8 @@
 'use client';
 import NextLInk from 'next/link';
 import { Link } from '@nextui-org/react';
-import { CategorySearchUiState } from '@features/categories/domains/category.uiState';
 import { LucideIcon } from '@shared/components/common/LucideIcon';
+import { CategorySearchUiState } from '@features/categories/domains/category.uiState';
 
 interface CategoriesProps {
   categories: CategorySearchUiState[];

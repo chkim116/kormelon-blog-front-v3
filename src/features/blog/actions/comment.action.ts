@@ -5,6 +5,12 @@ import {
   ActionFnType,
   ActionFormFnType,
 } from '@shared/domains/common/sharedActions.uiState';
+import {
+  createActionRejectedWithError,
+  createActionResolve,
+  createActionResolveWithData,
+} from '@shared/domains/common/sharedActions.create';
+import { actSharedNotificationRead } from '@shared/actions/sharedNoti.action';
 import { commentService } from '@features/blog/domains/comment';
 import {
   CommentCreateUiParams,
@@ -15,12 +21,6 @@ import {
   CommentReplyDeleteUiParams,
   CommentSearchUiState,
 } from '@features/blog/domains/comment/comment.uiState';
-import {
-  createActionRejectedWithError,
-  createActionResolve,
-  createActionResolveWithData,
-} from '@shared/domains/common/sharedActions.create';
-import { actSharedNotificationRead } from '@shared/actions/sharedNoti.action';
 
 export const actCommentFetch: ActionFnType<
   Record<string, string>,
