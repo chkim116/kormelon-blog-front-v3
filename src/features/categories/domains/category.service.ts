@@ -1,4 +1,4 @@
-import { CategoryRepository } from '@features/categories/repositories/category.repo.type';
+import { CategoryRepository } from '@core/repositories/category.repo.type';
 import {
   CategoryCreateUiParams,
   CategorySearchUiState,

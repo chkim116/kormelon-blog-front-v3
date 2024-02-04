@@ -9,6 +9,8 @@ interface OthersPageProps {
   params: Record<string, string>;
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function OthersPage({ params }: OthersPageProps) {
   const id = toNumber(params.id);
   const { data, isError } = await actBlogDetailSearch(id);

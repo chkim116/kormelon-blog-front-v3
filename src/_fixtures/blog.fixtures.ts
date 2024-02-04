@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { PostDetailNearPostEntity, PostSearchEntity } from '@shared/entities';
+import { PostDetailNearPostEntity, PostSearchEntity } from '@core/entities';
 import { toBlogSearchUiStates } from '@features/blog/domains/search/blogSearch.convert';
 import { BlogDetailUiState } from '@features/blog/domains/detail/blogDetail.uiState';
 import { userFixtures } from './user.fixtures';
@@ -11,7 +11,7 @@ function getBlogList(length = 6) {
       title: faker.lorem.sentence(),
       thumbnail: faker.image.dataUri(),
       preview: faker.lorem.paragraphs(),
-      createdAt: faker.date.anytime().toString(),
+      createdAt: faker.date.past(),
       readTime: faker.number.int({ max: 20 }),
     };
 
@@ -51,7 +51,7 @@ function getNearPost() {
     id: faker.number.int(),
     title: faker.lorem.paragraph(),
     thumbnail: faker.image.dataUri(),
-    createdAt: faker.date.anytime().toString(),
+    createdAt: faker.date.past(),
   };
 
   return {

@@ -8,7 +8,6 @@ import {
   actTagsSearchLoad,
 } from '@shared/actions/sharedTag.action';
 import { useActionState } from '@shared/hooks/useActionState';
-import { toast } from '@shared/services/ToastService';
 import { BlogWriteCreateUiParams } from '@features/blog/domains/write/blogWrite.uiState';
 import { BlogWriteTagSearch } from '@features/blog/components/write/BlogWriteTagSearch';
 
@@ -47,17 +46,9 @@ export const BlogWriteTagSearchContainerClient = ({
   const { action: createTag } = useActionState(
     createTagSearchUiState(),
     actTagsCreate,
-    {
-      onError({ message }) {
-        toast.open('error', message);
-      },
-    },
   );
-  const { action: fetchTags } = useActionState([], actTagsSearchLoad, {
-    onError({ message }) {
-      toast.open('error', message);
-    },
-  });
+
+  const { action: fetchTags } = useActionState([], actTagsSearchLoad);
 
   const [searchedTags, setSearchedTags] = useState<TagSearchUiState[]>([]);
   const [selectedTags, setSelectedTags] =

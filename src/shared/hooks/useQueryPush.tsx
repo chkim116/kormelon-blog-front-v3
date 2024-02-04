@@ -5,6 +5,10 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { useDeepCompareMemoize } from 'use-deep-compare-effect';
 import { removeEmptyKeys } from 'safers';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const createPath = (path: string, query: Record<string, any> = {}) =>
+  path + qs.stringify(removeEmptyKeys(query), { addQueryPrefix: true });
+
 export const useQueryPush = () => {
   const pathname = usePathname();
   const { push } = useRouter();
@@ -27,9 +31,8 @@ export const useQueryPush = () => {
       isScroll = true,
     ) => {
       const queries = isMerge ? { ...query, ...object } : object;
-      const newQueries = removeEmptyKeys(queries);
 
-      push(basePath + qs.stringify(newQueries, { addQueryPrefix: true }), {
+      push(createPath(basePath, queries), {
         scroll: isScroll,
       });
     },

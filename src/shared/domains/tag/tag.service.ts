@@ -1,4 +1,4 @@
-import { TagRepository } from '@shared/repositories/tag.repo.type';
+import { TagRepository } from '@core/repositories/tag.repo.type';
 import { toBlogSearchUiStates } from '@features/blog/domains/search/blogSearch.convert';
 import {
   refineTagWithBlogsSearchUiParams,

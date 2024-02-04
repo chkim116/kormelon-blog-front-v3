@@ -16,9 +16,7 @@ export const SettingsCategoryCreatorContainer = (
     onSuccess({ data }) {
       toast.open('success', `카테고리 ${data} 생성`);
     },
-    onError({ message }) {
-      toast.open('error', message);
-    },
+    revalidate: true,
   });
 
   return (

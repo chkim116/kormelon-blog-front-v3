@@ -5,9 +5,9 @@ import {
 import {
   PostDetailEntity,
   PostDetailResultEntityPayload,
-} from '@shared/entities';
+} from '@core/entities';
 import { HttpError } from '@core/network/HttpError';
-import { PostDetailRepository } from '@features/blog/repositories/post.repo.type';
+import { PostDetailRepository } from '@core/repositories/post.repo.type';
 import {
   toBlogDetailUiState,
   toBlogDetailNearUiState,
@@ -17,7 +17,7 @@ import { BlogDetailServiceImpl } from '../detail/blogDetail.service';
 const mockBlogDetailEntity: PostDetailEntity = {
   category: { id: 1, value: '카테고리' },
   content: '',
-  createdAt: '',
+  createdAt: new Date(),
   isPrivate: false,
   id: 1,
   like: 0,

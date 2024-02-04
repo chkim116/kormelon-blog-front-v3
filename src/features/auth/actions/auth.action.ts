@@ -2,54 +2,32 @@
 import 'server-only';
 
 import {
-  createActionRejectedWithError,
-  createActionResolve,
-  createActionResolveWithData,
+  createSafeAction,
+  createSafeFormAction,
 } from '@shared/domains/common/sharedActions.create';
 import {
-  ActionFormFnType,
-  ActionFnType,
+  CreateSafeFormAction,
+  CreateSafeAction,
 } from '@shared/domains/common/sharedActions.uiState';
 import {
   AuthLoginUiParams,
   AuthRegisterUiParams,
-} from '../domains/auth.uiState';
-import { authService } from '../domains';
+} from '../../../shared/domains/auth/auth.uiState';
+import { authService } from '../../../shared/domains/auth';
 
-export const actAuthLogin: ActionFormFnType<AuthLoginUiParams, void> = async (
-  _,
-  params,
-) => {
-  try {
+export const actAuthLogin: CreateSafeFormAction<AuthLoginUiParams, void> =
+  createSafeFormAction(async (params) => {
     await authService.login(params);
+  });
 
-    return createActionResolve();
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
-
-export const actAuthRegister: ActionFormFnType<
-  AuthRegisterUiParams,
-  void
-> = async (_, params) => {
-  try {
+export const actAuthRegister: CreateSafeFormAction<AuthRegisterUiParams, void> =
+  createSafeFormAction(async (params) => {
     await authService.register(params);
+  });
 
-    return createActionResolve();
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
-
-export const actAuthProfileUpload: ActionFnType<FormData, string> = async (
-  fd: FormData,
-) => {
-  try {
+export const actAuthProfileUpload: CreateSafeAction<FormData, string> =
+  createSafeAction(async (fd: FormData) => {
     const imageUrl = await authService.profileUpload(fd);
 
-    return createActionResolveWithData(imageUrl);
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+    return imageUrl;
+  });

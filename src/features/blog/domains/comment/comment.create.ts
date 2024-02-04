@@ -5,6 +5,7 @@ import {
 
 export function createCommentCreateUiParams(): CommentCreateUiParams {
   return {
+    userId: '',
     postId: 0,
     commentValue: '',
     password: '',
@@ -14,6 +15,7 @@ export function createCommentCreateUiParams(): CommentCreateUiParams {
 
 export function createCommentUpdateUiParams(): CommentUpdateUiParams {
   return {
+    userId: '',
     commentId: '',
     commentValue: '',
     password: '',

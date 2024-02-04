@@ -1,7 +1,8 @@
 import { marked } from 'marked';
+import { unstable_noStore } from 'next/cache';
 import { env } from '@core/env';
-import { PostRssEntity } from '@shared/entities';
-import { postRepository } from '@features/blog/repositories/post.repo';
+import { PostRssEntity } from '@core/entities';
+import { postRepository } from '@core/repositories/post.repo';
 
 const URL = env.domain;
 const TITLE = 'Kormelon Dev Blog';
@@ -19,9 +20,9 @@ const postRssXml = (posts: PostRssEntity[]) => {
   let rssItemsXml = '';
 
   posts.forEach((post) => {
-    const postDate = Date.parse(post.createdAt);
+    const postDate = new Date(post.createdAt).getTime();
     if (!latestPostDate || postDate > Date.parse(latestPostDate)) {
-      latestPostDate = post.createdAt;
+      latestPostDate = post.createdAt.toDateString();
     }
 
     rssItemsXml += `
@@ -64,6 +65,8 @@ const generateRss = async () => {
 };
 
 export async function GET(): Promise<Response> {
+  unstable_noStore();
+
   const rss = await generateRss();
 
   return new Response(rss, {

@@ -9,9 +9,9 @@ import {
   PostRecommendEntity,
   PostRssEntity,
   PostSearchEntity,
-} from '@shared/entities';
+} from '@core/entities';
 import { calcTotalPage } from '@shared/utils/calcTotalPage';
-import { PostSearchRepository } from '@features/blog/repositories/post.repo.type';
+import { PostSearchRepository } from '@core/repositories/post.repo.type';
 import {
   refineBlogSearchUiParams,
   toBlogSearchPrivateUiStates,
@@ -35,7 +35,7 @@ const RESPONSE_POSTS: PostSearchEntity[] = [
     thumbnail: '',
     preview: '',
     readTime: 0,
-    createdAt: '',
+    createdAt: new Date(),
   },
 ];
 const RESPONSE_PRIVATE_POSTS: PostPrivateSearchEntity[] = [
@@ -45,14 +45,14 @@ const RESPONSE_PRIVATE_POSTS: PostPrivateSearchEntity[] = [
     thumbnail: '',
     preview: '',
     readTime: 0,
-    createdAt: '',
+    createdAt: new Date(),
     isPrivate: true,
   },
 ];
 const RESPONSE_RECOMMEND_POSTS: PostRecommendEntity[] = [
   {
     id: 1,
-    createdAt: '',
+    createdAt: new Date(),
     preview: '',
     readTime: 3,
     thumbnail: '',
@@ -64,7 +64,7 @@ const RESPONSE_RSS: PostRssEntity[] = [
   {
     id: 1,
     content: '',
-    createdAt: '',
+    createdAt: new Date(),
     title: '',
   },
 ];

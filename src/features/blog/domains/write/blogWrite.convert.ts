@@ -1,5 +1,5 @@
 import { toBoolean, toNumber } from 'safers';
-import { PostCreateParams, PostUpdateParams } from '@shared/entities';
+import { PostCreateParams, PostUpdateParams } from '@core/entities';
 import {
   BlogWriteCreateUiParams,
   BlogWriteUiParams,
@@ -17,8 +17,16 @@ export function refineBlogWriteUiParams(raw: Record<string, unknown>) {
 }
 
 export function toBlogWriteCreateUiParams(params: BlogDetailUiState) {
-  const { category, content, isPrivate, preview, thumbnail, tags, title } =
-    params;
+  const {
+    category,
+    content,
+    isPrivate,
+    preview,
+    thumbnail,
+    tags,
+    title,
+    user,
+  } = params;
 
   const result: BlogWriteCreateUiParams = {
     categoryId: category.id,
@@ -29,6 +37,7 @@ export function toBlogWriteCreateUiParams(params: BlogDetailUiState) {
     preview,
     thumbnail,
     title,
+    userId: user.id,
   };
 
   return result;
@@ -44,6 +53,7 @@ export function toPostCreateParams(params: BlogWriteCreateUiParams) {
     thumbnail,
     tags,
     title,
+    userId,
   } = params;
 
   const result: PostCreateParams = {
@@ -55,6 +65,7 @@ export function toPostCreateParams(params: BlogWriteCreateUiParams) {
     preview,
     thumbnail,
     title,
+    userId,
   };
 
   return result;

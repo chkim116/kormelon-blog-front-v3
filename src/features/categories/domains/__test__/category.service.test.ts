@@ -1,10 +1,10 @@
-import { CategoryEntity, SubCategoryEntity } from '@shared/entities';
+import { CategoryEntity, SubCategoryEntity } from '@core/entities';
 import { HttpError } from '@core/network/HttpError';
 import {
   createMockFunctionWithRejectedValue,
   createMockFunctionWithResolvedValue,
 } from '@fixtures/tests';
-import { CategoryRepository } from '@features/categories/repositories/category.repo.type';
+import { CategoryRepository } from '@core/repositories/category.repo.type';
 import {
   toCategorySearchUiStates,
   toSubCategorySearchUiStates,
@@ -38,8 +38,9 @@ describe('categoryService 성공 케이스', () => {
       {
         id: 1,
         value: '카테고리',
-        posts: 3,
-        subCategories: [],
+        post: [{ id: 1 }, { id: 2 }, { id: 3 }],
+        subCategory: [],
+        ordering: 1,
       },
     ];
     categoryRepositoryMock.fetchCategories =
@@ -55,8 +56,9 @@ describe('categoryService 성공 케이스', () => {
       {
         id: 1,
         value: '카테고리',
-        posts: 3,
-        subCategories: [],
+        post: [{ id: 1 }, { id: 2 }, { id: 3 }],
+        subCategory: [],
+        ordering: 1,
       },
     ];
     categoryRepositoryMock.fetchCategories =
@@ -74,8 +76,9 @@ describe('categoryService 성공 케이스', () => {
       {
         id: 1,
         value: '서브카테고리',
-        posts: 3,
-        category: { id: 1, value: '카테고리' },
+        post: [{ id: 1 }, { id: 2 }, { id: 3 }],
+        category: { id: 1, value: '카테고리', ordering: 1 },
+        ordering: 1,
       },
     ];
     categoryRepositoryMock.fetchSubCategories =
@@ -96,8 +99,9 @@ describe('categoryService 성공 케이스', () => {
       {
         id: 1,
         value: '카테고리',
-        posts: 3,
-        subCategories: [],
+        post: [{ id: 1 }, { id: 2 }, { id: 3 }],
+        subCategory: [],
+        ordering: 1,
       },
     ];
     const nextResponse: CategoryEntity[] = [
@@ -105,8 +109,9 @@ describe('categoryService 성공 케이스', () => {
       {
         id: 2,
         value: '카테고리2',
-        posts: 3,
-        subCategories: [],
+        post: [{ id: 1 }, { id: 2 }, { id: 3 }],
+        subCategory: [],
+        ordering: 1,
       },
     ];
     categoryRepositoryMock.fetchCategories = jest

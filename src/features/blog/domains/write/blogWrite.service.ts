@@ -1,4 +1,5 @@
-import { PostWriteRepository } from '@features/blog/repositories/post.repo.type';
+import { PostWriteRepository } from '@core/repositories/post.repo.type';
+import { FileRepository } from '@core/repositories/file.repo.type';
 import {
   BlogWriteCreateUiParams,
   BlogWriteUiParams,
@@ -26,14 +27,19 @@ interface BlogWriteServiceModel {
   /**
    * 이미지 업로드
    *
-   * FormData에 `image`가 Key값으로 있어야 한다.
+   * FormData에 `file`가 Key값으로 있어야 한다.
    *
    */
   uploadImage(fd: FormData): Promise<string>;
 }
 
+export const BLOG_UPLOAD_TAG = 'blog-detail';
+
 export class BlogWriteService implements BlogWriteServiceModel {
-  constructor(private postRepo: PostWriteRepository) {}
+  constructor(
+    private postRepo: PostWriteRepository,
+    private fileRepo: FileRepository,
+  ) {}
 
   refineQueryParams(raw: Record<string, unknown>): BlogWriteUiParams {
     try {
@@ -52,7 +58,7 @@ export class BlogWriteService implements BlogWriteServiceModel {
   }
 
   async uploadImage(fd: FormData): Promise<string> {
-    const { payload } = await this.postRepo.uploadImage(fd);
+    const { payload } = await this.fileRepo.uploadImage(fd, BLOG_UPLOAD_TAG);
 
     return payload;
   }

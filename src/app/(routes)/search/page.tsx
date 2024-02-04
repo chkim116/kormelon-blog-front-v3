@@ -6,6 +6,8 @@ interface SearchPageProps {
   searchParams: Record<string, string>;
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function SearchPage({ searchParams }: SearchPageProps) {
   const {
     data: { blogData, params },

@@ -1,24 +1,24 @@
 import { faker } from '@faker-js/faker';
-import { CommentSearchEntity } from '@shared/entities';
+import { CommentSearchEntity } from '@core/entities';
 import { CommentSearchUiState } from '@features/blog/domains/comment/comment.uiState';
 import { toCommentSearchUiStates } from '@features/blog/domains/comment/comment.convert';
 
 function getCommentList(length = 6, isAnonymous = false) {
   const results: CommentSearchEntity[] = Array.from({ length }, () => {
     const result: CommentSearchEntity = {
-      commentReplies: [],
+      commentReply: [],
       id: faker.string.uuid(),
       value: faker.lorem.paragraphs(),
       isAnonymous,
-
       userId:
         !isAnonymous && faker.datatype.boolean() ? faker.string.uuid() : null,
-      username: faker.person.fullName(),
       user: {
+        username: faker.person.fullName(),
         profileImage: faker.image.dataUri(),
       },
-      createdAt: faker.date.anytime().toString(),
+      createdAt: faker.date.past(),
       deletedAt: null,
+      username: '',
     };
 
     return result;

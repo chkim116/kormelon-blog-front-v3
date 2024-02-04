@@ -32,18 +32,14 @@ export const BlogDetailCommentBodyContainerClient = ({
     onSuccess() {
       toast.open('success', '댓글이 수정되었습니다.');
     },
-    onError({ message }) {
-      toast.open('error', message);
-    },
+    revalidate: true,
   });
 
   const { formAction: deleteAction } = useFormActionState(actCommentDelete, {
     onSuccess() {
       toast.open('success', '댓글이 삭제되었습니다.');
     },
-    onError({ message }) {
-      toast.open('error', message);
-    },
+    revalidate: true,
   });
 
   const [shownReplyId, setShownReplyId] = useState<string[]>([]);
@@ -72,6 +68,7 @@ export const BlogDetailCommentBodyContainerClient = ({
       password: editValue.password,
       commentId: editValue.commentId,
       postId,
+      userId,
     };
 
     await updateAction(updateParams);
@@ -82,6 +79,7 @@ export const BlogDetailCommentBodyContainerClient = ({
       password,
       commentId,
       postId,
+      userId,
     };
 
     await deleteAction(deleteParams);

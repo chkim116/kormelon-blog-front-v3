@@ -1,5 +1,4 @@
 import { toNumber } from 'safers';
-import { notFound } from 'next/navigation';
 import { BlogSearchPostPaginationContainerClient } from '@features/blog/containers/search/BlogSearchPostPaginationContainer.client';
 import { actBlogSearchLoad } from '@features/blog/actions/blogSearch.action';
 import { BlogCommonCardGrid } from '@features/blog/components/common/BlogCommonCardGrid';
@@ -9,13 +8,15 @@ interface BlogSearchPageProps {
   searchParams: Record<string, string>;
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function BlogSearchPage({
   searchParams,
 }: BlogSearchPageProps) {
-  const { data } = await actBlogSearchLoad(searchParams);
+  const { data, isError } = await actBlogSearchLoad(searchParams);
 
-  if (!data) {
-    notFound();
+  if (isError) {
+    throw new Error('블로그 글 목록을 불러오는데 실패했습니다.');
   }
 
   const { blogData, currentCategoryName, currentSubCategoryName } = data;

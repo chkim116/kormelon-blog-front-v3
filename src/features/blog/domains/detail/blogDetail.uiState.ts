@@ -1,5 +1,3 @@
-import { AuthUserUiState } from '@features/auth/domains/auth.uiState';
-
 export interface BlogDetailCategoryUiState {
   /**
    * 카테고리 식별자
@@ -19,7 +17,20 @@ export interface BlogDetailCategoryUiState {
   subCategoryValue: string;
 }
 
-export interface BlogDetailAuthUiState extends Omit<AuthUserUiState, 'role'> {}
+export interface BlogDetailAuthUiState {
+  /**
+   * 유저 식별자
+   */
+  id: string;
+  /**
+   * 유저 프로필
+   */
+  profileImage: string;
+  /**
+   * 유저 닉네임
+   */
+  username: string;
+}
 
 export interface BlogDetailTagUiState {
   id: number;

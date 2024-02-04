@@ -14,9 +14,9 @@ import {
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 import { LucideIcon } from '@shared/components/common/LucideIcon';
-import { AuthRoleEnum } from '@shared/entities';
+import { AuthRoleEnum } from '@core/entities';
 import { NAV_BAR_MENU_ITEM_LIST } from '@shared/constants/navbar.const';
-import { AuthUserUiState } from '@features/auth/domains/auth.uiState';
+import { AuthUserUiState } from '@shared/domains/auth/auth.uiState';
 import { NavbarUserDropdownMenu } from './NavbarUserDropdownMenu';
 import { NavbarMenuLink } from './NavbarMenuLink';
 import { NavbarIconList } from './NavbarIconList';
@@ -31,6 +31,7 @@ interface NavbarProps {
   onAction: (key: string) => void;
 }
 
+// TODO: 헤더의 렌더링 여부 ..
 export function Navbar({
   user,
   theme,
@@ -67,7 +68,7 @@ export function Navbar({
       <NavbarContent as="div">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? '메뉴 닫기' : '메뉴 열기'}
-          className="sm:hidden"
+          className="flex sm:hidden"
           isSelected={isMenuOpen}
         />
 
@@ -123,7 +124,7 @@ export function Navbar({
       </NavbarContent>
 
       {/* 모바일용 네비게이션 */}
-      <NavbarMenu className="py-6">
+      <NavbarMenu className="sm:block hidden py-6">
         {NAV_BAR_MENU_ITEM_LIST.map(({ label, href, isExternal }) => (
           <NavbarMenuItem key={label}>
             <NavbarMenuLink

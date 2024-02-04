@@ -1,10 +1,6 @@
 import Image from 'next/image';
 import { BadgeCheck } from 'lucide-react';
-import {
-  USER_IMAGE,
-  USER_NAME,
-  USER_DESCRIPTION,
-} from '@shared/constants/user.const';
+import { USER_NAME, USER_DESCRIPTION } from '@shared/constants/user.const';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IndexUserImageProps {}
@@ -12,7 +8,7 @@ interface IndexUserImageProps {}
 export const IndexUserImage = (_: IndexUserImageProps) => (
   <div className="flex flex-col items-center justify-center">
     <Image
-      src={USER_IMAGE}
+      src="/my.jpg"
       alt=""
       width={96}
       height={96}

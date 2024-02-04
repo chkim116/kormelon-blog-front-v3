@@ -1,7 +1,4 @@
-'use client';
-
-import { useMemo } from 'react';
-import { Skeleton } from '@nextui-org/react';
+import { Skeleton } from '@nextui-org/skeleton';
 import { BlogCommonCardSkeleton } from './BlogCommonCardSkeleton';
 
 interface BlogCommonCardGridSkeletonProps {
@@ -11,10 +8,9 @@ interface BlogCommonCardGridSkeletonProps {
 export function BlogCommonCardGridSkeleton({
   length,
 }: BlogCommonCardGridSkeletonProps) {
-  const renderSkeletons = useMemo(
-    () => Array.from({ length }, (_, i) => <BlogCommonCardSkeleton key={i} />),
-    [length],
-  );
+  const renderSkeletons = Array.from({ length }, (_, i) => (
+    <BlogCommonCardSkeleton key={i} />
+  ));
 
   return (
     <section className="w-full mx-auto px-2">

@@ -1,7 +1,7 @@
 import { calcTotalPage } from '@shared/utils/calcTotalPage';
 import { DEFAULT_PER } from '@shared/constants/page.const';
-import { PostRssEntity } from '@shared/entities';
-import { PostSearchRepository } from '@features/blog/repositories/post.repo.type';
+import { PostRssEntity } from '@core/entities';
+import { PostSearchRepository } from '@core/repositories/post.repo.type';
 import {
   BlogPrivateSearchPayloadData,
   BlogSearchPayloadData,

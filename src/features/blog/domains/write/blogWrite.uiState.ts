@@ -15,6 +15,10 @@ export interface BlogWriteUiParams {
 
 export interface BlogWriteCreateUiParams {
   /**
+   * 작성자 유저 식별자
+   */
+  userId: string;
+  /**
    * 게시글의 미리보기 내용
    */
   preview: string;

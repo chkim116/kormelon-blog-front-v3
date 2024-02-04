@@ -1,5 +1,4 @@
 'use client';
-import { toast } from '@shared/services/ToastService';
 import { useActionState } from '@shared/hooks/useActionState';
 import { BlogWriteCategory } from '@features/blog/components/write/BlogWriteCategory';
 import { BlogWriteMeta } from '@features/blog/components/write/BlogWriteMeta';
@@ -27,15 +26,12 @@ export const BlogWriteMetaWriteContainerClient = ({
   categories,
   onChange,
 }: BlogWriteMetaWriteContainerClientProps) => {
-  const { action: handleUploadImage } = useActionState(
+  const { action: handleUploadImage, loading } = useActionState(
     '',
     actBlogWriteImageUpload,
     {
       onSuccess({ data }) {
         onChange({ thumbnail: data });
-      },
-      onError({ message }) {
-        toast.open('error', message);
       },
     },
   );
@@ -51,6 +47,7 @@ export const BlogWriteMetaWriteContainerClient = ({
   return (
     <div className="max-w-4xl mx-auto">
       <BlogWriteThumbnail
+        pending={loading}
         previewThumbnail={thumbnail}
         onUploadImage={handleUploadImage}
       />

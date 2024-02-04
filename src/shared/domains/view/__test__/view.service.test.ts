@@ -3,13 +3,14 @@ import {
   createMockFunctionWithRejectedValue,
   createMockFunctionWithResolvedValue,
 } from '@fixtures/tests';
-import { ViewEntity } from '@shared/entities';
-import { ViewRepository } from '@shared/repositories/view.repo.type';
+import { ViewEntity } from '@core/entities';
+import { ViewRepository } from '@core/repositories/view.repo.type';
 import { toViewUiState } from '../view.convert';
 import { ViewServiceImpl } from '../view.service';
 
 const viewRepository: ViewRepository = {
   fetchView: jest.fn(),
+  addView: jest.fn(),
 };
 
 const viewService = new ViewServiceImpl(viewRepository);

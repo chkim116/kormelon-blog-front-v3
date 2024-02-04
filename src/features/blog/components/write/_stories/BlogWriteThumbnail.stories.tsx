@@ -25,3 +25,12 @@ export const Default = {
     previewThumbnail: faker.image.dataUri(),
   },
 };
+
+export const Loading = {
+  render: Template,
+
+  args: {
+    ...Default.args,
+    pending: true,
+  },
+};

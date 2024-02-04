@@ -7,6 +7,8 @@ interface SearchTagsPageProps {
   searchParams: Record<string, string>;
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function SearchTagsPage({
   searchParams,
 }: SearchTagsPageProps) {

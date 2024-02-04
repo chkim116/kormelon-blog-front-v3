@@ -9,11 +9,12 @@ export const NAV_BAR_MENU_ITEM_LIST = [
     href: '/categories',
     isExternal: false,
   },
-  {
-    label: 'Resume',
-    href: 'https://kimchanghoe.notion.site/kimchanghoe/3cd2b466abf34924a81f1a77f20f060f',
-    isExternal: true,
-  },
+  // TODO: resume 재단장 후 해제
+  // {
+  //   label: 'Resume',
+  //   href: 'https://kimchanghoe.notion.site/kimchanghoe/3cd2b466abf34924a81f1a77f20f060f',
+  //   isExternal: true,
+  // },
 ];
 
 export const NAV_BAR_MEMBER_USER_MENU_ITEM_LIST = [

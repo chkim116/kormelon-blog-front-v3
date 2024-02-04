@@ -3,16 +3,18 @@ import {
   CategoryUpdateParams,
   SubCategoryCreateParams,
   SubCategoryUpdateParams,
-} from '@shared/entities';
+} from '@core/entities';
 
 export interface CategorySubCategoryUiState {
   id: number;
   value: string;
+  ordering: number;
 }
 
 export interface CategorySearchUiState {
   id: number;
   value: string;
+  ordering: number;
   posts: number;
   subCategories: CategorySubCategoryUiState[];
 }
@@ -24,6 +26,7 @@ export interface CategoryCreateUiParams extends CategoryCreateParams {}
 export interface SubCategorySearchUiState {
   id: number;
   value: string;
+  ordering: number;
   categoryId: number;
   categoryName: string;
 }

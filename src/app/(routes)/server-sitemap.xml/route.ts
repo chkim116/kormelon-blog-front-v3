@@ -1,7 +1,8 @@
 import { ISitemapField, getServerSideSitemap } from 'next-sitemap';
-import { PostRssEntity } from '@shared/entities';
+import { unstable_noStore } from 'next/cache';
+import { PostRssEntity } from '@core/entities';
 import { env } from '@core/env';
-import { postRepository } from '@features/blog/repositories/post.repo';
+import { postRepository } from '@core/repositories/post.repo';
 
 const generateServerSitemap = async () => {
   const { payload: posts } = await postRepository.fetchPostRss();
@@ -17,6 +18,7 @@ const generateServerSitemap = async () => {
 };
 
 export async function GET() {
+  unstable_noStore();
   const siteMap = await generateServerSitemap();
 
   return getServerSideSitemap(siteMap);

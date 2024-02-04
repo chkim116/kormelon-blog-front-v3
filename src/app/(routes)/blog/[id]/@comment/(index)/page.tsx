@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation';
 import { actSharedCheckUser } from '@shared/actions/sharedAuth.action';
 import { actCommentFetch } from '@features/blog/actions/comment.action';
 import { BlogDetailCommentBodyContainerClient } from '@features/blog/containers/detail/BlogDetailCommentBodyContainer.client';
@@ -9,18 +8,16 @@ interface CommentPageProps {
   searchParams: Record<string, string>;
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function CommentPage({
   params,
   searchParams,
 }: CommentPageProps) {
-  const { data: comments, isError } = await actCommentFetch({
+  const { data: comments } = await actCommentFetch({
     ...params,
     ...searchParams,
   });
-
-  if (isError) {
-    notFound();
-  }
 
   const {
     data: { id: userId },

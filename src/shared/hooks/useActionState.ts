@@ -1,14 +1,26 @@
 'use client';
 import { startTransition, useEffect, useRef, useState } from 'react';
+import { redirect, useRouter } from 'next/navigation';
+import { toast } from '@shared/services/ToastService';
 import {
-  ActionFormStateUiState,
-  ActionFnType,
+  ActionStateUiState,
+  CreateSafeAction,
 } from '@shared/domains/common/sharedActions.uiState';
-import { createActionFormStateUiState } from '@shared/domains/common/sharedActions.create';
+import { createActionStateUiState } from '@shared/domains/common/sharedActions.create';
 
 interface UseActionStateCallback<Data> {
-  onSuccess?: (state: ActionFormStateUiState<Data>) => void;
-  onError?: (state: ActionFormStateUiState) => void;
+  onSuccess?: (state: ActionStateUiState<Data>) => void;
+  onError?: (state: ActionStateUiState) => void;
+  /**
+   * 셩공시 페이지 이동
+   */
+  successRedirectPath?: string;
+  /**
+   * 현재 페이지 RSC 새로고침 여부
+   *
+   * 내부적으로 router.refresh()를 호출한다.
+   */
+  revalidate?: boolean;
 }
 
 /**
@@ -19,61 +31,70 @@ interface UseActionStateCallback<Data> {
  */
 export function useActionState<Data, Params>(
   initialState: Data,
-  serverAction: ActionFnType<Params, Data>,
+  serverAction: CreateSafeAction<Params, Data>,
   {
     onSuccess = () => {},
     onError = () => {},
+    successRedirectPath,
+    revalidate = false,
   }: UseActionStateCallback<Data> = {},
 ) {
+  const router = useRouter();
+
   const refSuccessHandler = useRef(onSuccess);
   const refErrorHandler = useRef(onError);
 
   const [loading, setLoading] = useState(false);
 
-  const [state, setState] = useState<ActionFormStateUiState<Data>>({
-    ...createActionFormStateUiState(),
+  const [state, setState] = useState<ActionStateUiState<Data>>({
+    ...createActionStateUiState(),
     data: initialState,
   });
 
   const actionWithStartTransition = async (params: Params): Promise<Data> => {
-    setLoading(true);
-
-    if (loading) {
-      return state.data;
-    }
-
-    let form: ActionFormStateUiState<Data> = state;
+    let form: ActionStateUiState<Data> = state;
 
     try {
       form = await serverAction(params);
       setState(form);
     } finally {
-      setLoading(false);
+      //
     }
 
     return form?.data;
   };
 
-  const action = async (params: Params): Promise<Data> =>
-    await new Promise((resolve, reject) => {
+  const action = async (params: Params): Promise<Data> => {
+    setLoading(true);
+
+    return await new Promise((resolve, reject) => {
       startTransition(() => {
-        console.log('startTransition useActionState on..');
         actionWithStartTransition(params)
           .then((form) => resolve(form))
-          .catch(reject);
+          .catch(reject)
+          .finally(() => setLoading(false));
       });
     });
+  };
 
   useEffect(() => {
     if (state?.isError && typeof refErrorHandler.current == 'function') {
-      refErrorHandler.current(state as ActionFormStateUiState<null>);
+      refErrorHandler.current(state as ActionStateUiState<null>);
+      toast.open('error', state.message);
     }
 
     if (state?.isSuccess && typeof refSuccessHandler.current == 'function') {
-      console.log('call');
+      if (successRedirectPath) {
+        redirect(successRedirectPath);
+      }
+
+      if (revalidate) {
+        router.refresh();
+      }
+
       refSuccessHandler.current(state);
     }
-  }, [state]);
+  }, [revalidate, router, state, successRedirectPath]);
 
   return { state, loading, action };
 }

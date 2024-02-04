@@ -1,4 +1,4 @@
-import { CommentRepository } from '@features/blog/repositories/comment.repo.type';
+import { CommentRepository } from '@core/repositories/comment.repo.type';
 import {
   CommentCreateUiParams,
   CommentDeleteUiParams,
