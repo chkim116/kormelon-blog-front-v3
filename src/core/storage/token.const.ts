@@ -14,7 +14,3 @@ export const STORAGE_THEME_KEY = 'kormelon_theme';
  * 좋아요
  */
 export const STORAGE_LIKE_KEY = 'kormelon_like';
-/**
- * 방문자
- */
-export const STORAGE_VIEW_KEY = 'kormelon_view';
