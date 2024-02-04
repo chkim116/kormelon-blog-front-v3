@@ -73,16 +73,13 @@
             "group": "internal"
           },
           {
-            "pattern": "@server/**",
-            "group": "internal"
-          },
-          {
-            "pattern": "@domain/**",
-            "group": "internal"
-          },
-          {
             "pattern": "@shared/**",
             "group": "internal"
+          },
+          {
+            "pattern": "@features/**",
+            "group": "internal",
+            "position": "after"
           },
           {
             "pattern": "@app/**",

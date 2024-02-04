@@ -4,13 +4,15 @@ import {
   STORAGE_THEME_KEY,
   STORAGE_TOKEN_KEY,
   STORAGE_USER_KEY,
+  STORAGE_VIEW_KEY,
 } from './token.const';
 
 type TokenType =
   | typeof STORAGE_TOKEN_KEY
   | typeof STORAGE_USER_KEY
   | typeof STORAGE_THEME_KEY
-  | typeof STORAGE_LIKE_KEY;
+  | typeof STORAGE_LIKE_KEY
+  | typeof STORAGE_VIEW_KEY;
 
 function noop() {
   return undefined;
