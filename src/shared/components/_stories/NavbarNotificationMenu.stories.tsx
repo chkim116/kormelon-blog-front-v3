@@ -1,5 +1,6 @@
 import { ComponentProps } from 'react';
 import { ArgTypes, Meta, StoryFn, StoryObj } from '@storybook/react';
+import { toString } from 'safers';
 import { NotificationSearchUiState } from '@shared/domains/notification/notification.uiState';
 import { NavbarNotificationMenu } from '../NavbarNotificationMenu';
 
@@ -27,9 +28,9 @@ const createNotifications = (length: number) => {
     { length },
     (_, i) => ({
       id: i,
-      commentId: i,
+      commentId: toString(i),
       postId: i,
-      createdAt: '2023-08-24',
+      createdAt: new Date('2023-08-24'),
       isRead: false,
       message: '알림메시지입니다 알림메시지입니다.',
     }),

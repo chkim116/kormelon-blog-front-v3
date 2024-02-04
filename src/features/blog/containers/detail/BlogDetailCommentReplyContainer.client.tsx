@@ -39,9 +39,7 @@ export const BlogDetailCommentReplyContainerClient = ({
       onSuccess() {
         toast.open('success', '댓글이 작성되었습니다.');
       },
-      onError({ message }) {
-        toast.open('error', message);
-      },
+      revalidate: true,
     },
   );
 
@@ -51,9 +49,7 @@ export const BlogDetailCommentReplyContainerClient = ({
       onSuccess() {
         toast.open('success', '댓글이 수정되었습니다.');
       },
-      onError({ message }) {
-        toast.open('error', message);
-      },
+      revalidate: true,
     },
   );
 
@@ -63,9 +59,7 @@ export const BlogDetailCommentReplyContainerClient = ({
       onSuccess() {
         toast.open('success', '댓글이 삭제되었습니다.');
       },
-      onError({ message }) {
-        toast.open('error', message);
-      },
+      revalidate: true,
     },
   );
 
@@ -76,6 +70,7 @@ export const BlogDetailCommentReplyContainerClient = ({
       ...commentValue,
       commentId,
       postId,
+      userId,
     };
     await createAction(createParams);
   };
@@ -86,6 +81,7 @@ export const BlogDetailCommentReplyContainerClient = ({
       password: editValue.password,
       commentId: editValue.commentId,
       postId,
+      userId,
     };
 
     await updateAction(updateParams);
@@ -96,6 +92,7 @@ export const BlogDetailCommentReplyContainerClient = ({
       password,
       commentId,
       postId,
+      userId,
     };
 
     await deleteAction(deleteParams);

@@ -3,13 +3,14 @@ import {
   createMockFunctionWithRejectedValue,
   createMockFunctionWithResolvedValue,
 } from '@fixtures/tests';
-import { PostWriteRepository } from '@features/blog/repositories/post.repo.type';
+import { PostWriteRepository } from '@core/repositories/post.repo.type';
+import { FileRepository } from '@core/repositories/file.repo.type';
 import {
   toPostCreateParams,
   toPostUpdateParams,
 } from '../write/blogWrite.convert';
 import { createBlogWriteCreateUiParams } from '../write/blogWrite.create';
-import { BlogWriteService } from '../write/blogWrite.service';
+import { BLOG_UPLOAD_TAG, BlogWriteService } from '../write/blogWrite.service';
 import { BlogWriteUpdateUiParams } from '../write/blogWrite.uiState';
 
 const IMAGE_RESPONSE = 'url';
@@ -18,10 +19,16 @@ const postWriteRepositoryMock: PostWriteRepository = {
   createPost: createMockFunctionWithResolvedValue(),
   updatePost: createMockFunctionWithResolvedValue(),
   deletePost: jest.fn(),
+};
+
+const fileRepositoryMock: FileRepository = {
   uploadImage: createMockFunctionWithResolvedValue(IMAGE_RESPONSE),
 };
 
-const blogWriteService = new BlogWriteService(postWriteRepositoryMock);
+const blogWriteService = new BlogWriteService(
+  postWriteRepositoryMock,
+  fileRepositoryMock,
+);
 
 describe('BlogWriteService 성공 케이스', () => {
   beforeEach(() => {
@@ -65,7 +72,10 @@ describe('BlogWriteService 성공 케이스', () => {
 
     const result = await blogWriteService.uploadImage(fd);
 
-    expect(postWriteRepositoryMock.uploadImage).toHaveBeenCalledWith(fd);
+    expect(fileRepositoryMock.uploadImage).toHaveBeenCalledWith(
+      fd,
+      BLOG_UPLOAD_TAG,
+    );
     expect(result).toEqual(IMAGE_RESPONSE);
   });
 });

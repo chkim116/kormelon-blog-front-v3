@@ -1,12 +1,14 @@
 'use client';
 import { Button } from '@nextui-org/react';
 import gravatar from 'gravatar';
+import { toString } from 'safers';
 import { toast } from '@shared/services/ToastService';
-import { useFormActionState } from '@shared/hooks/useFormActionState';
 import { useActionState } from '@shared/hooks/useActionState';
 import { SubmitButton } from '@shared/components/common/SubmitButton';
 import AuthRegisterForm from '../components/AuthRegisterForm';
-import { actAuthProfileUpload, actAuthRegister } from '../actions/auth.action';
+import { actAuthProfileUpload } from '../actions/auth.action';
+import { AuthRegisterUiParams } from '../../../shared/domains/auth/auth.uiState';
+import { authService } from '../../../shared/domains/auth';
 
 interface AuthRegisterContainerProps {
   onChangeClick: () => void;
@@ -22,15 +24,6 @@ const defaultProfileImage = gravatar.url('default', {
 export default function AuthRegisterContainer({
   onChangeClick,
 }: AuthRegisterContainerProps) {
-  const { formAction: handleSubmit } = useFormActionState(actAuthRegister, {
-    onError({ message }) {
-      toast.open('error', message);
-    },
-    onSuccess() {
-      onChangeClick();
-    },
-  });
-
   const {
     action: handleUpload,
     state: { data: profileImage },
@@ -39,6 +32,19 @@ export default function AuthRegisterContainer({
       toast.open('error', state.message);
     },
   });
+
+  const handleSubmit = async (params: AuthRegisterUiParams) => {
+    await authService
+      .register(params)
+      .then(() => {
+        toast.open('success', '회원가입이 완료되었습니다.');
+        onChangeClick();
+        return;
+      })
+      .catch((error) => {
+        toast.open('error', toString(error.message));
+      });
+  };
 
   return (
     <>

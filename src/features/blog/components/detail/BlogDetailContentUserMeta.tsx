@@ -1,11 +1,7 @@
 'use client';
 
 import { Link, User } from '@nextui-org/react';
-import {
-  USER_NAME,
-  USER_DESCRIPTION,
-  USER_IMAGE,
-} from '@shared/constants/user.const';
+import { USER_NAME, USER_DESCRIPTION } from '@shared/constants/user.const';
 import { LucideIcon } from '@shared/components/common/LucideIcon';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -36,7 +32,7 @@ export function BlogDetailContentUserMeta(_: BlogDetailContentUserMetaProps) {
       }}
       avatarProps={{
         className: 'w-24 h-24 md:w-32 md:h-32',
-        src: USER_IMAGE as unknown as string,
+        src: '/my.jpg',
         alt: USER_NAME,
       }}
     />

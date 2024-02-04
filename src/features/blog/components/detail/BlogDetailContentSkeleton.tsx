@@ -1,5 +1,4 @@
-'use client';
-import { Skeleton } from '@nextui-org/react';
+import { Skeleton } from '@nextui-org/skeleton';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface BlogDetailContentSkeletonProps {}

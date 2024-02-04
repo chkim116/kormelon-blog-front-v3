@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import copy from 'copy-to-clipboard';
 import qs from 'qs';
-import { redirect } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { toast } from '@shared/services/ToastService';
 import { useFormActionState } from '@shared/hooks/useFormActionState';
@@ -33,24 +32,21 @@ export const BlogDetailContentContainerClient = ({
   blog,
   isAuthor,
 }: BlogDetailContentContainerClientProps) => {
+  const path =
+    '/blog' +
+    qs.stringify(
+      {
+        categoryId: blog.category.id,
+        subCategoryId: blog.category.subCategoryId,
+      },
+      { addQueryPrefix: true },
+    );
+
   const { formAction } = useFormActionState(actBlogDetailDeleteBlog, {
     onSuccess() {
-      const path =
-        '/blog' +
-        qs.stringify(
-          {
-            categoryId: blog.category.id,
-            subCategoryId: blog.category.subCategoryId,
-          },
-          { addQueryPrefix: true },
-        );
-
       toast.open('success', '게시글이 삭제 되었습니다.');
-      redirect(path);
     },
-    onError({ message }) {
-      toast.open('error', message);
-    },
+    successRedirectPath: path,
   });
 
   const [isLiked, setIsLiked] = useState(false);

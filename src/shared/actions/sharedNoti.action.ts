@@ -1,37 +1,36 @@
 'use server';
 import 'server-only';
 
-import { ActionFnType } from '@shared/domains/common/sharedActions.uiState';
+import { toString } from 'safers';
+import { createSafeAction } from '@shared/domains/common/sharedActions.create';
 import { notificationService } from '@shared/domains/notification';
-import { NotificationSearchUiState } from '@shared/domains/notification/notification.uiState';
-import {
-  createActionRejectedWithError,
-  createActionResolve,
-  createActionResolveWithData,
-} from '@shared/domains/common/sharedActions.create';
+import { getServerUserSession } from './sharedAuth.action';
 
-export const actSharedNotificationLoad: ActionFnType<
-  void,
-  NotificationSearchUiState[]
-> = async () => {
-  try {
-    const notifications = await notificationService.fetchNoti();
+export const actSharedNotificationLoad = createSafeAction(async () => {
+  const session = await getServerUserSession();
 
-    return createActionResolveWithData(notifications);
-  } catch (err) {
-    return createActionRejectedWithError(err);
+  const userId = toString(session.id);
+
+  if (!userId) {
+    throw new Error('로그인이 필요합니다.');
   }
-};
 
-export const actSharedNotificationRead: ActionFnType<
-  number,
-  NotificationSearchUiState[]
-> = async (id) => {
-  try {
-    await notificationService.readNoti(id);
+  const notifications = await notificationService.fetchNoti(userId);
 
-    return createActionResolve();
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+  return notifications;
+}, []);
+
+export const actSharedNotificationRead = createSafeAction(
+  async (id: number) => {
+    const session = await getServerUserSession();
+
+    const userId = toString(session.id);
+
+    if (!userId) {
+      throw new Error('로그인이 필요합니다.');
+    }
+
+    await notificationService.readNoti(id, userId);
+  },
+  null,
+);

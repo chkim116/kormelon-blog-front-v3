@@ -1,10 +1,12 @@
 'use client';
 import { Button } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
+import { toString } from 'safers';
 import { toast } from '@shared/services/ToastService';
 import { SubmitButton } from '@shared/components/common/SubmitButton';
-import { useFormActionState } from '@shared/hooks/useFormActionState';
 import AuthLoginForm from '../components/AuthLoginForm';
-import { actAuthLogin } from '../actions/auth.action';
+import { AuthLoginUiParams } from '../../../shared/domains/auth/auth.uiState';
+import { authService } from '../../../shared/domains/auth';
 
 interface AuthLoginContainerPropsProps {
   onChangeClick: () => void;
@@ -13,18 +15,23 @@ interface AuthLoginContainerPropsProps {
 export default function AuthLoginContainer({
   onChangeClick,
 }: AuthLoginContainerPropsProps) {
-  const { formAction: handleSubmit } = useFormActionState(actAuthLogin, {
-    onError({ message }) {
-      toast.open('error', message);
-    },
-    onSuccess(_, { redirectPath }) {
-      redirectPath('/blog');
-    },
-  });
+  const router = useRouter();
+
+  const handleLogin = async (params: AuthLoginUiParams) => {
+    await authService
+      .login(params)
+      .then(() => {
+        toast.open('success', '로그인 되었습니다.');
+        router.push('/blog');
+      })
+      .catch((err) => {
+        toast.open('error', toString(err.message));
+      });
+  };
 
   return (
     <>
-      <AuthLoginForm onSubmit={handleSubmit}>
+      <AuthLoginForm onSubmit={handleLogin}>
         <SubmitButton
           className="w-full"
           type="submit"

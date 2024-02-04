@@ -9,7 +9,7 @@ import {
   CommentReplyUpdateParams,
   CommentSearchEntity,
   CommentUpdateParams,
-} from '@shared/entities';
+} from '@core/entities';
 import { formattingDate } from '@shared/utils/formattingDate';
 import {
   CommentCreateUiParams,
@@ -41,15 +41,17 @@ export function toCommentReplySearchUiStates(
       deletedAt,
       id,
       isAnonymous,
+      username,
       userId,
       value,
       user,
-      username = '익명',
     } = entity;
+
+    const name = toString(user?.username || username, '익명', false);
 
     const userProfile = toString(
       user?.profileImage,
-      gravatar.url(username, {
+      gravatar.url(name, {
         s: '100',
         r: 'pg',
         d: 'retro',
@@ -62,7 +64,7 @@ export function toCommentReplySearchUiStates(
       isAnonymous,
       userProfile,
       userId: toString(userId),
-      username,
+      username: name,
       value,
       createdAt: formattingDate(createdAt, 'YYYY-MM-DD'),
       isDeleted: Boolean(deletedAt),
@@ -75,20 +77,22 @@ export function toCommentSearchUiStates(
 ): CommentSearchUiState[] {
   return entities.map((entity) => {
     const {
-      commentReplies,
+      commentReply,
       createdAt,
       deletedAt,
       id,
       isAnonymous,
+      username,
       userId,
       value,
       user,
-      username = '익명',
     } = entity;
+
+    const name = toString(user?.username || username, '익명', false);
 
     const userProfile = toString(
       user?.profileImage,
-      gravatar.url(username, {
+      gravatar.url(name, {
         s: '100',
         r: 'pg',
         d: 'retro',
@@ -99,9 +103,9 @@ export function toCommentSearchUiStates(
     return {
       id,
       isAnonymous,
-      commentReplies: toCommentReplySearchUiStates(commentReplies),
+      commentReplies: toCommentReplySearchUiStates(commentReply || []),
       userProfile,
-      username,
+      username: name,
       value,
       userId: toString(userId),
       createdAt: formattingDate(createdAt, 'YYYY-MM-DD'),
@@ -115,6 +119,7 @@ export function toCommentCreateParams(
 ): CommentCreateParams {
   return {
     postId: toNumber(params.postId),
+    userId: params.userId,
     value: params.commentValue,
     username: params.username,
     password: params.password,
@@ -126,6 +131,7 @@ export function toCommentUpdateParams(
 ): CommentUpdateParams {
   return {
     id: params.commentId,
+    userId: params.userId,
     postId: toNumber(params.postId),
     value: params.commentValue,
     password: params.password,
@@ -137,6 +143,7 @@ export function toCommentDeleteParams(
 ): CommentDeleteParams {
   return {
     id: params.commentId,
+    userId: params.userId,
     password: params.password,
   };
 }

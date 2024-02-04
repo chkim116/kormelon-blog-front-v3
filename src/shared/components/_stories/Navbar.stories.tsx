@@ -1,10 +1,11 @@
 import { ComponentProps, useRef } from 'react';
 import { ArgTypes, Meta, StoryFn, StoryObj } from '@storybook/react';
 import { useTheme } from 'next-themes';
-import { AuthRoleEnum } from '@shared/entities';
+import { toString } from 'safers';
+import { AuthRoleEnum } from '@core/entities';
 import { DEFAULT_IMAGE } from '@shared/constants/img.const';
 import { NotificationSearchUiState } from '@shared/domains/notification/notification.uiState';
-import { createAuthUserUiState } from '@features/auth/domains/auth.create';
+import { createAuthUserUiState } from '@shared/domains/auth/auth.create';
 import { Navbar } from '../Navbar';
 import { NavbarNotificationMenu } from '../NavbarNotificationMenu';
 import {
@@ -35,9 +36,9 @@ const createNotifications = (length: number) => {
     { length },
     (_, i) => ({
       id: i,
-      commentId: i,
+      commentId: toString(i),
       postId: i,
-      createdAt: '2023-08-24',
+      createdAt: new Date('2023-08-24'),
       isRead: false,
       message: '알림메시지입니다 알림메시지입니다.',
     }),
@@ -88,6 +89,7 @@ export const User: StoryObj<StoryProps> = {
   args: {
     user: {
       id: 'sfsd',
+      email: 'wow@gmail.com',
       role: AuthRoleEnum.ADMIN,
       profileImage: DEFAULT_IMAGE,
       username: 'kimchanghoe',

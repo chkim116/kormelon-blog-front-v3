@@ -1,7 +1,8 @@
-import { padLeft, padRight, toString } from 'safers';
-import { PostDetailEntity, PostDetailNearPostEntity } from '@shared/entities';
+import { padLeft, padRight, toNumber, toString } from 'safers';
+import { PostDetailEntity, PostDetailNearPostEntity } from '@core/entities';
 import { date } from '@core/lib/date';
 import { DEFAULT_IMAGE } from '@shared/constants/img.const';
+import { formattingDate } from '@shared/utils/formattingDate';
 import {
   BlogDetailAnchorUiDto,
   BlogDetailAnchorUiState,
@@ -13,10 +14,10 @@ import { createBlogDetailNearUiState } from './blogDetail.create';
 export function toBlogDetailUiState(entity: PostDetailEntity) {
   const result: BlogDetailUiState = {
     category: {
-      id: entity.category.id,
-      value: entity.category.value,
-      subCategoryId: entity.subCategory.id,
-      subCategoryValue: entity.subCategory.value,
+      id: toNumber(entity.category?.id),
+      value: toString(entity.category?.value),
+      subCategoryId: toNumber(entity.subCategory?.id),
+      subCategoryValue: toString(entity.subCategory?.value),
     },
     createdAt: date(entity.createdAt).format('ll'),
     readTime: padRight(entity.readTime, ' minute read'),
@@ -28,11 +29,11 @@ export function toBlogDetailUiState(entity: PostDetailEntity) {
     like: entity.like,
     content: entity.content,
     user: {
-      id: entity.user.id,
-      profileImage: entity.user.profileImage,
-      username: entity.user.username,
+      id: toString(entity.user?.id),
+      profileImage: toString(entity.user?.profileImage),
+      username: toString(entity.user?.username),
     },
-    tags: entity.tags,
+    tags: entity.tags || [],
     isPrivate: entity.isPrivate,
   };
 
@@ -49,7 +50,7 @@ export function toBlogDetailNearUiState(
     id: entity.id,
     title: entity.title,
     thumbnail: toString(entity.thumbnail, DEFAULT_IMAGE, false),
-    createdAt: entity.createdAt,
+    createdAt: formattingDate(entity.createdAt),
   };
 
   return result;

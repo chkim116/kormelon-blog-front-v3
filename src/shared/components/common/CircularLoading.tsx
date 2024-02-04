@@ -1,5 +1,4 @@
-'use client';
-import { CircularProgress } from '@nextui-org/react';
+import { CircularProgress } from '@nextui-org/progress';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface CircularLoadingProps {}

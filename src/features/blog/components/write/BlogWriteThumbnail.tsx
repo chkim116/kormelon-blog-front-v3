@@ -1,14 +1,21 @@
+'use client';
 import { ChangeEventHandler } from 'react';
-import { Input } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 import Image from 'next/image';
 import { toast } from '@shared/services/ToastService';
+import {
+  IMAGE_DEFAULT_WIDTH_SIZE,
+  IMAGE_DEFAULT_HEIGHT_SIZE,
+} from '@shared/constants/img.const';
 
 interface BlogWriteThumbnailProps {
+  pending: boolean;
   onUploadImage: (fd: FormData) => Promise<string>;
   previewThumbnail: string;
 }
 
 export const BlogWriteThumbnail = ({
+  pending,
   onUploadImage,
   previewThumbnail,
 }: BlogWriteThumbnailProps) => {
@@ -21,7 +28,7 @@ export const BlogWriteThumbnail = ({
     }
 
     const fd = new FormData();
-    fd.append('image', file);
+    fd.append('file', file);
 
     onUploadImage(fd);
   };
@@ -29,24 +36,23 @@ export const BlogWriteThumbnail = ({
   return (
     <div className="flex gap-4">
       <div className="flex-col">
-        <div className="relative w-full max-h-[480px] pb-[56.25%]">
-          <div className="absolute w-full h-full">
-            <Image
-              className="w-full h-full object-cover"
-              src={previewThumbnail}
-              alt="미리보는 썸네일"
-              layout="fill"
-            />
-          </div>
-        </div>
-
-        <Input
-          labelPlacement="outside-left"
-          label="썸네일"
-          variant="underlined"
-          type="file"
-          onChange={handleUploadImage}
+        <Image
+          width={IMAGE_DEFAULT_WIDTH_SIZE}
+          height={IMAGE_DEFAULT_HEIGHT_SIZE}
+          className="object-cover shadow-xl rounded-lg aspect-[16/9] relative overflow-hidden mt-12 sm:mt-16 lg:mt-20 mx-auto"
+          src={previewThumbnail}
+          alt="미리보는 썸네일"
         />
+
+        <Button fullWidth as="label" color="primary" isLoading={pending}>
+          업로드
+          <input
+            accept="image/*"
+            type="file"
+            hidden
+            onChange={handleUploadImage}
+          />
+        </Button>
       </div>
     </div>
   );

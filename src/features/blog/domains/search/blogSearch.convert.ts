@@ -4,7 +4,7 @@ import {
   PostPrivateSearchEntity,
   PostSearchEntity,
   PostSearchParams,
-} from '@shared/entities';
+} from '@core/entities';
 import { DEFAULT_IMAGE } from '@shared/constants/img.const';
 import { DEFAULT_PAGE, DEFAULT_PER } from '@shared/constants/page.const';
 import {

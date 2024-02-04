@@ -1,5 +1,5 @@
 import { removeEmptyKeys, toNumber, toString } from 'safers';
-import { TagSearchEntity, TagSearchWithPostEntity } from '@shared/entities';
+import { TagSearchEntity, TagSearchWithPostEntity } from '@core/entities';
 import {
   TagSearchUiState,
   TagSearchWithPostCountUiState,

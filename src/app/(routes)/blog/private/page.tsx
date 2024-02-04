@@ -11,7 +11,9 @@ export default async function BlogPrivatePostPage() {
     throw new Error();
   }
 
-  const { blogs, total } = await actBlogPrivateSearchLoad();
+  const {
+    data: { blogs, total },
+  } = await actBlogPrivateSearchLoad();
 
   return <BlogPrivatePostContainerClient blogs={blogs} total={total} />;
 }

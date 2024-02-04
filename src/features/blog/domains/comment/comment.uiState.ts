@@ -55,6 +55,12 @@ export interface CommentSearchUiState extends CommentReplySearchUiState {
 
 export interface CommentCreateUiParams {
   /**
+   * 유저 식별자
+   *
+   * 익명이라면 빈 값이다.
+   */
+  userId: string;
+  /**
    * 게시글 식별자
    */
   postId: number;
@@ -74,6 +80,12 @@ export interface CommentCreateUiParams {
 
 export interface CommentUpdateUiParams {
   /**
+   * 유저 식별자
+   *
+   * 익명이라면 빈 값이다.
+   */
+  userId: string;
+  /**
    * 댓글 아이디
    */
   commentId: string;
@@ -92,6 +104,12 @@ export interface CommentUpdateUiParams {
 }
 
 export interface CommentDeleteUiParams {
+  /**
+   * 유저 식별자
+   *
+   * 익명이라면 빈 값이다.
+   */
+  userId: string;
   /**
    * 삭제되는 댓글의 게시글 아이디
    *

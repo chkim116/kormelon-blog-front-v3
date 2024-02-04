@@ -2,9 +2,9 @@ import {
   createMockFunctionWithRejectedValue,
   createMockFunctionWithResolvedValue,
 } from '@fixtures/tests';
-import { CommentSearchEntity } from '@shared/entities';
+import { CommentSearchEntity } from '@core/entities';
 import { HttpError } from '@core/network/HttpError';
-import { CommentRepository } from '@features/blog/repositories/comment.repo.type';
+import { CommentRepository } from '@core/repositories/comment.repo.type';
 import {
   refineCommentSearchUiParams,
   toCommentCreateParams,
@@ -27,13 +27,14 @@ import {
 
 const commentRepository: CommentRepository = {
   fetchComments: jest.fn(),
-  fetchCommentReplies: jest.fn(),
   createComment: jest.fn(),
   updateComment: jest.fn(),
   deleteComment: jest.fn(),
   createCommentReply: jest.fn(),
   updateCommentReply: jest.fn(),
   deleteCommentReply: jest.fn(),
+  existComment: jest.fn(),
+  existCommentReply: jest.fn(),
 };
 
 const commentService = new CommentServiceImpl(commentRepository);
@@ -42,16 +43,17 @@ describe('CommentService 성공 케이스', () => {
   const responseComments: CommentSearchEntity[] = [
     {
       id: '1',
-      createdAt: '2017-01-01',
+      createdAt: new Date(),
       user: {
+        username: 'user',
         profileImage: 'profileImage',
       },
       userId: 'userId',
-      username: 'user',
       value: 'comment',
       deletedAt: null,
       isAnonymous: false,
-      commentReplies: [],
+      commentReply: [],
+      username: 'todo',
     },
   ];
 
@@ -89,6 +91,7 @@ describe('CommentService 성공 케이스', () => {
       commentValue: 'comment',
       password: '',
       username: 'user',
+      userId: '',
     };
 
     const results = await commentService.createComment(params);
@@ -109,6 +112,7 @@ describe('CommentService 성공 케이스', () => {
       postId: 1,
       commentValue: 'comment',
       password: '',
+      userId: '',
     };
 
     const results = await commentService.updateComment(params);
@@ -128,6 +132,7 @@ describe('CommentService 성공 케이스', () => {
       commentId: '1',
       postId: 1,
       password: '',
+      userId: '',
     };
 
     const results = await commentService.deleteComment(params);
@@ -150,6 +155,7 @@ describe('CommentService 성공 케이스', () => {
       commentValue: 'comment',
       password: '',
       username: 'user',
+      userId: '',
     };
 
     const results = await commentService.createReply(params);
@@ -171,6 +177,7 @@ describe('CommentService 성공 케이스', () => {
       postId: 1,
       commentValue: 'comment',
       password: '',
+      userId: '',
     };
 
     const results = await commentService.updateReply(params);
@@ -191,6 +198,7 @@ describe('CommentService 성공 케이스', () => {
       commentId: '1',
       postId: 1,
       password: '',
+      userId: '',
     };
 
     const results = await commentService.deleteReply(params);

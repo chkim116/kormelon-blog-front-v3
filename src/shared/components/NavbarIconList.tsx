@@ -1,13 +1,12 @@
-'use client';
 import NextLink from 'next/link';
-import { Button } from '@nextui-org/react';
-import { LucideIcon } from '@shared/components/common/LucideIcon';
+import { Button } from '@nextui-org/button';
+import { Github, Network, Rss, Tags } from 'lucide-react';
 
 export function NavbarIconList() {
   return (
     <div className="flex gap-6">
       <Button isIconOnly size="sm" variant="light" as={NextLink} href="/tags">
-        <LucideIcon name="tags" />
+        <Tags />
       </Button>
       <Button
         isIconOnly
@@ -16,7 +15,7 @@ export function NavbarIconList() {
         as={NextLink}
         href="/sitemap.xml"
       >
-        <LucideIcon name="network" />
+        <Network />
       </Button>
       <Button
         isIconOnly
@@ -26,10 +25,10 @@ export function NavbarIconList() {
         target="_blank"
         href="https://github.com/chkim116"
       >
-        <LucideIcon name="github" />
+        <Github />
       </Button>
       <Button isIconOnly size="sm" variant="light" as={NextLink} href="/rss">
-        <LucideIcon name="rss" />
+        <Rss />
       </Button>
     </div>
   );

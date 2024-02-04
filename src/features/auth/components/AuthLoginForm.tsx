@@ -1,8 +1,8 @@
 'use client';
 import { ChangeEventHandler, ReactNode, useState } from 'react';
 import { Card, Input, Spacer } from '@nextui-org/react';
-import { createAuthLoginUiParams } from '../domains/auth.create';
-import { AuthLoginUiParams } from '../domains/auth.uiState';
+import { createAuthLoginUiParams } from '../../../shared/domains/auth/auth.create';
+import { AuthLoginUiParams } from '../../../shared/domains/auth/auth.uiState';
 
 interface AuthLoginFormProps {
   onSubmit: (params: AuthLoginUiParams) => void;

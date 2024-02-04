@@ -2,52 +2,43 @@
 import 'server-only';
 
 import {
-  ActionFnType,
-  ActionFormFnType,
+  CreateSafeAction,
+  CreateSafeFormAction,
 } from '@shared/domains/common/sharedActions.uiState';
 import {
-  createActionRejectedWithError,
-  createActionResolve,
-  createActionResolveWithData,
+  createSafeAction,
+  createSafeFormAction,
 } from '@shared/domains/common/sharedActions.create';
 import { blogDetailService } from '@features/blog/domains/detail';
 import { BlogDetailPayloadData } from '@features/blog/domains/detail/blogDetail.uiState';
+import {
+  createBlogDetailNearUiState,
+  createBlogDetailUiState,
+} from '../domains/detail/blogDetail.create';
 
-export const actBlogDetailAddLike: ActionFnType<number, void> = async (
-  id: number,
-) => {
-  try {
+export const actBlogDetailAddLike: CreateSafeAction<number, void> =
+  createSafeAction(async (id: number) => {
     await blogDetailService.addLike(id);
+  });
 
-    return createActionResolve();
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
-
-export const actBlogDetailDeleteBlog: ActionFormFnType<number, void> = async (
-  _,
-  id: number,
-) => {
-  try {
+export const actBlogDetailDeleteBlog: CreateSafeFormAction<number, void> =
+  createSafeFormAction(async (id: number) => {
     await blogDetailService.deleteBlog(id);
+  });
 
-    return createActionResolve();
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
-
-export const actBlogDetailSearch: ActionFnType<
+export const actBlogDetailSearch: CreateSafeAction<
   number,
   BlogDetailPayloadData
-> = async (id: number) => {
-  try {
+> = createSafeAction(
+  async (id: number) => {
     const payload = await blogDetailService.fetchBlogDetail(id);
     await blogDetailService.addVisit(id);
 
-    return createActionResolveWithData(payload);
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+    return payload;
+  },
+  {
+    blog: createBlogDetailUiState(),
+    next: createBlogDetailNearUiState(),
+    prev: createBlogDetailNearUiState(),
+  },
+);

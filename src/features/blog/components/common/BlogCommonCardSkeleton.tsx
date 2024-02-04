@@ -1,11 +1,5 @@
-'use client';
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Skeleton,
-} from '@nextui-org/react';
+import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card';
+import { Skeleton } from '@nextui-org/skeleton';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface BlogCommonCardSkeletonProps {}

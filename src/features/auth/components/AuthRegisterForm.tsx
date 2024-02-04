@@ -9,8 +9,8 @@ import {
   Spacer,
 } from '@nextui-org/react';
 import { toast } from '@shared/services/ToastService';
-import { createAuthRegisterUiParams } from '../domains/auth.create';
-import { AuthRegisterUiParams } from '../domains/auth.uiState';
+import { createAuthRegisterUiParams } from '../../../shared/domains/auth/auth.create';
+import { AuthRegisterUiParams } from '../../../shared/domains/auth/auth.uiState';
 
 interface AuthRegisterFormProps {
   profileImage: string;
@@ -72,7 +72,7 @@ export default function AuthRegisterForm({
     const file = e.target.files[0];
 
     const fd = new FormData();
-    fd.append('image', file);
+    fd.append('file', file);
 
     onUpload(fd);
   };
@@ -94,6 +94,7 @@ export default function AuthRegisterForm({
           size="lg"
           errorMessage={hasEmailError && '해당 값을 입력해 주세요.'}
           name="email"
+          type="email"
           placeholder="Email"
         />
         <Spacer y={1} />
@@ -117,6 +118,7 @@ export default function AuthRegisterForm({
           color={hasUserError ? 'danger' : 'primary'}
           size="lg"
           name="username"
+          type="username"
           placeholder="Username"
           className="mb-1.5"
           errorMessage={hasUserError && '해당 값을 입력해 주세요.'}

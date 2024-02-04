@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
-import { AuthRoleEnum } from '@shared/entities';
-import { AuthUserUiState } from '@features/auth/domains/auth.uiState';
+import { AuthRoleEnum } from '@core/entities';
+import { AuthUserUiState } from '@shared/domains/auth/auth.uiState';
 
 function getUser(isAdmin = false) {
   const result: AuthUserUiState = {
@@ -8,6 +8,7 @@ function getUser(isAdmin = false) {
     profileImage: faker.image.avatar(),
     username: faker.person.fullName(),
     role: isAdmin ? AuthRoleEnum.ADMIN : AuthRoleEnum.MEMBER,
+    email: faker.internet.email(),
   };
 
   return result;

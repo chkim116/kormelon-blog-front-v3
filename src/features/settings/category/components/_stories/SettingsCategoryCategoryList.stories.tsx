@@ -23,6 +23,6 @@ export const Default: StoryObj<StoryProps> = {
   render: Template,
 
   args: {
-    categories: categoryFixtures.getCategories(),
+    categories: categoryFixtures.getCategories(10, 5),
   },
 };

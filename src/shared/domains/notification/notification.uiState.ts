@@ -1,3 +1,3 @@
-import { NotificationSearchEntity } from '@shared/entities';
+import { NotificationSearchEntity } from '@core/entities';
 
 export interface NotificationSearchUiState extends NotificationSearchEntity {}

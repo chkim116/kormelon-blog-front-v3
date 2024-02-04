@@ -1,11 +1,5 @@
 'use client';
-import {
-  ReactNode,
-  startTransition,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 import { toString } from 'safers';
 import { toBlogDetailAnchorUiStates } from '@features/blog/domains/detail/blogDetail.convert';
@@ -27,13 +21,6 @@ export const BlogDetailContentNavigationClientContainer = ({
   const [anchors, setAnchors] = useState<BlogDetailAnchorUiState[]>([]);
   const [activeId, setActiveId] = useState('');
 
-  const selectHeadElements = () => {
-    const elements =
-      document?.getElementById('blogContent')?.querySelectorAll('h2') || [];
-
-    return elements as NodeListOf<HTMLHeadingElement>;
-  };
-
   const handleClickAnchor = (id: string) => {
     const target = anchors.find(({ id: anchorId }) => anchorId === id);
 
@@ -47,8 +34,36 @@ export const BlogDetailContentNavigationClientContainer = ({
     }
   };
 
+  const calcAnchors = useCallback(() => {
+    const selectHeadElements = () => {
+      const elements =
+        document?.getElementById('blogContent')?.querySelectorAll('h2') || [];
+
+      return elements as NodeListOf<HTMLHeadingElement>;
+    };
+
+    const elements = selectHeadElements();
+
+    if (elements.length) {
+      const heads: BlogDetailAnchorUiDto[] = [];
+      elements.forEach(({ textContent, offsetTop }) => {
+        heads.push({ textContent: toString(textContent), offsetTop });
+      });
+
+      setAnchors(toBlogDetailAnchorUiStates(heads));
+    }
+  }, []);
+
+  const [handleResize] = useDebounce(() => {
+    calcAnchors();
+  }, 100);
+
   const [handleScroll] = useDebounce(() => {
     let currentId = '';
+
+    if (anchors.length === 0) {
+      calcAnchors();
+    }
 
     anchors.forEach((element) => {
       if (scrollY >= element.position - DEFAULT_OFFSET_TOP) {
@@ -59,25 +74,6 @@ export const BlogDetailContentNavigationClientContainer = ({
     setActiveId(currentId);
   }, 200);
 
-  const calcAnchors = useCallback(() => {
-    startTransition(() => {
-      const elements = selectHeadElements();
-
-      if (elements.length) {
-        const heads: BlogDetailAnchorUiDto[] = [];
-        elements.forEach(({ textContent, offsetTop }) => {
-          heads.push({ textContent: toString(textContent), offsetTop });
-        });
-
-        setAnchors(toBlogDetailAnchorUiStates(heads));
-      }
-    });
-  }, []);
-
-  const [handleResize] = useDebounce(() => {
-    calcAnchors();
-  }, 100);
-
   useEffect(() => {
     window.addEventListener('resize', handleResize);
     window.addEventListener('scroll', handleScroll);
@@ -86,10 +82,6 @@ export const BlogDetailContentNavigationClientContainer = ({
       window.removeEventListener('scroll', handleScroll);
     };
   }, [handleResize, handleScroll]);
-
-  useEffect(() => {
-    calcAnchors();
-  }, [calcAnchors]);
 
   return (
     <BlogDetailContentNavigation

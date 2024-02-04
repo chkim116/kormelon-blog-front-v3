@@ -16,12 +16,10 @@ export const BlogPrivatePostContainerClient = ({
   total,
 }: BlogPrivatePostContainerClientProps) => {
   const { formAction } = useFormActionState(actBlogDetailDeleteBlog, {
-    onSuccess(_) {
+    onSuccess() {
       toast.open('success', '게시글이 삭제 되었습니다.');
     },
-    onError({ message }) {
-      toast.open('error', message);
-    },
+    revalidate: true,
   });
 
   const handleDelete = async (id: number) => {

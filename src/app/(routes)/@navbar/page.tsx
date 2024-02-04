@@ -1,7 +1,6 @@
 import NavbarContainer from '@shared/containers/NavbarContainer';
+import NotificationsContainer from '@shared/containers/NotificationsContainer';
 
-export const dynamic = 'force-dynamic';
-
-export default async function NavbarPage() {
-  return <NavbarContainer />;
+export default function NavbarPage() {
+  return <NavbarContainer notificationsComp={<NotificationsContainer />} />;
 }

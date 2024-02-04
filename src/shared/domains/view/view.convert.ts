@@ -1,5 +1,5 @@
 import { numberFormat } from 'safers';
-import { ViewEntity } from '@shared/entities';
+import { ViewEntity } from '@core/entities';
 import { ViewUiState } from './view.uiState';
 
 export function toViewUiState(entity: ViewEntity) {

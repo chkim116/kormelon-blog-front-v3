@@ -1,6 +1,6 @@
 import { createMockFunctionWithResolvedValue } from '@fixtures/tests';
-import { TagSearchEntity, TagSearchWithPostEntity } from '@shared/entities';
-import { TagRepository } from '@shared/repositories/tag.repo.type';
+import { TagSearchEntity, TagSearchWithPostEntity } from '@core/entities';
+import { TagRepository } from '@core/repositories/tag.repo.type';
 import {
   toTagSearchUiStates,
   toTagSearchWithPostCountUiStates,

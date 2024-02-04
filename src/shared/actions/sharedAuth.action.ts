@@ -1,62 +1,43 @@
 'use server';
 import 'server-only';
 
-import { revalidatePath } from 'next/cache';
-import { ActionFnType } from '@shared/domains/common/sharedActions.uiState';
-import { AuthRoleEnum } from '@shared/entities';
-import {
-  createActionRejectedWithError,
-  createActionResolveWithData,
-} from '@shared/domains/common/sharedActions.create';
-import { authService } from '@features/auth/domains';
-import { AuthUserUiState } from '@features/auth/domains/auth.uiState';
-import { POST_LOGIN_CACHE_TAG } from '@features/auth/repositories/auth.repo';
-import { actSharedRevalidateTags } from './sharedUtils.action';
+import { getServerSession } from 'next-auth';
+import { AuthRoleEnum } from '@core/entities';
+import { nextAuthOptions } from '@core/lib/nextAuthOptions';
+import { authService } from '@shared/domains/auth';
+import { createAuthUserUiState } from '@shared/domains/auth/auth.create';
+import { createSafeAction } from '@shared/domains/common/sharedActions.create';
 
-export const actSharedCheckAdmin: ActionFnType<
-  void,
-  AuthUserUiState
-> = async () => {
-  try {
-    const user = await authService.check();
+export async function getServerUserSession() {
+  const session = await getServerSession(nextAuthOptions);
 
-    const isAdmin = user.role === AuthRoleEnum.ADMIN;
+  return session?.user || createAuthUserUiState();
+}
 
-    if (!isAdmin) {
-      throw new Error('권한이 없습니다.');
-    }
+export const actSharedCheckAdmin = createSafeAction(async () => {
+  const user = await getServerUserSession();
 
-    return createActionResolveWithData(user);
-  } catch (err) {
-    return createActionRejectedWithError(err);
+  const isAdmin = user.role === AuthRoleEnum.ADMIN;
+
+  if (!isAdmin) {
+    throw new Error('권한이 없습니다.');
   }
-};
 
-export const actSharedCheckUser: ActionFnType<
-  void,
-  AuthUserUiState
-> = async () => {
-  try {
-    const user = await authService.check();
+  return user;
+}, createAuthUserUiState());
 
-    return createActionResolveWithData(user);
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+export const actSharedCheckUser = createSafeAction(async () => {
+  const user = await getServerUserSession();
 
-export const actSharedCheckAuth: ActionFnType<void, boolean> = async () => {
-  try {
-    const user = await authService.check();
-    return createActionResolveWithData(Boolean(user.id));
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+  return user;
+}, createAuthUserUiState());
+
+export const actSharedCheckAuth = createSafeAction(async () => {
+  const user = await getServerUserSession();
+
+  return Boolean(user.id);
+}, false);
 
 export async function actSharedLogout() {
   await authService.logout();
-
-  await actSharedRevalidateTags(POST_LOGIN_CACHE_TAG);
-  revalidatePath('/');
 }

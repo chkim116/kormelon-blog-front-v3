@@ -2,7 +2,7 @@ import {
   CategoryEntity,
   CategorySubCategoryEntity,
   SubCategoryEntity,
-} from '@shared/entities';
+} from '@core/entities';
 import {
   CategorySearchUiState,
   CategorySubCategoryUiState,
@@ -16,38 +16,47 @@ function toCategorySubCategoryUiStates(
     return [];
   }
 
-  return subCategories.map((subCategory) => {
-    const result: CategorySubCategoryUiState = {
-      id: subCategory.id,
-      value: subCategory.value,
-    };
+  return subCategories
+    .map((subCategory) => {
+      const result: CategorySubCategoryUiState = {
+        id: subCategory.id,
+        value: subCategory.value,
+        ordering: subCategory.ordering,
+      };
 
-    return result;
-  });
+      return result;
+    })
+    .sort((a, b) => a.ordering - b.ordering);
 }
 
 export function toCategorySearchUiStates(entities: CategoryEntity[]) {
-  return entities.map((entity) => {
-    const result: CategorySearchUiState = {
-      id: entity.id,
-      value: entity.value,
-      posts: entity.posts,
-      subCategories: toCategorySubCategoryUiStates(entity.subCategories),
-    };
+  return entities
+    .map((entity) => {
+      const result: CategorySearchUiState = {
+        id: entity.id,
+        value: entity.value,
+        posts: entity.post.length,
+        subCategories: toCategorySubCategoryUiStates(entity.subCategory),
+        ordering: entity.ordering,
+      };
 
-    return result;
-  });
+      return result;
+    })
+    .sort((a, b) => a.ordering - b.ordering);
 }
 
 export function toSubCategorySearchUiStates(entities: SubCategoryEntity[]) {
-  return entities.map((entity) => {
-    const result: SubCategorySearchUiState = {
-      id: entity.id,
-      value: entity.value,
-      categoryId: entity.category.id,
-      categoryName: entity.category.value,
-    };
+  return entities
+    .map((entity) => {
+      const result: SubCategorySearchUiState = {
+        id: entity.id,
+        value: entity.value,
+        categoryId: entity.category.id,
+        categoryName: entity.category.value,
+        ordering: entity.ordering,
+      };
 
-    return result;
-  });
+      return result;
+    })
+    .sort((a, b) => a.ordering - b.ordering);
 }

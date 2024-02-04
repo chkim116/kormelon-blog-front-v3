@@ -4,6 +4,7 @@ import { toBoolean } from 'safers';
 import { toast } from '@shared/services/ToastService';
 import { useFormActionState } from '@shared/hooks/useFormActionState';
 import { useQueryPush } from '@shared/hooks/useQueryPush';
+import { useUserSession } from '@shared/hooks/useUserSession';
 import {
   actBlogWriteCreate,
   actBlogWriteUpdate,
@@ -25,6 +26,7 @@ export function BlogWriteContainerClient({
   blog,
 }: BlogWriteContainerClientProps) {
   const navigate = useQueryPush();
+  const { id: userId } = useUserSession();
 
   const isEditMode = useMemo(() => toBoolean(editId), [editId]);
 
@@ -37,9 +39,7 @@ export function BlogWriteContainerClient({
         '/blog',
       );
     },
-    onError({ message }) {
-      toast.open('error', message);
-    },
+    revalidate: true,
   });
 
   const { formAction: createSubmit } = useFormActionState(actBlogWriteCreate, {
@@ -50,21 +50,20 @@ export function BlogWriteContainerClient({
         '/blog',
       );
     },
-    onError({ message }) {
-      toast.open('error', message);
-    },
+    revalidate: true,
   });
 
   const handleSubmit = (params: BlogWriteCreateUiParams) => {
     if (isEditMode) {
       updateSubmit({
         ...params,
+        userId,
         id: blog.id,
       });
       return;
     }
 
-    createSubmit(params);
+    createSubmit({ ...params, userId });
   };
 
   return (

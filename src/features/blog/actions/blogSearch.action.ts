@@ -2,20 +2,21 @@
 import 'server-only';
 
 import { toString } from 'safers';
-import { ActionFnType } from '@shared/domains/common/sharedActions.uiState';
-import {
-  createActionRejectedWithError,
-  createActionResolveWithData,
-} from '@shared/domains/common/sharedActions.create';
+import { createSafeAction } from '@shared/domains/common/sharedActions.create';
+import { CreateSafeAction } from '@shared/domains/common/sharedActions.uiState';
 import { blogSearchService } from '@features/blog/domains/search';
-import { BlogSearchPreloadData } from '@features/blog/domains/search/blogSearch.uiState';
+import {
+  BlogPrivateSearchPayloadData,
+  BlogSearchPreloadData,
+} from '@features/blog/domains/search/blogSearch.uiState';
 import { categoryService } from '@features/categories/domains';
+import { createBlogSearchUiParams } from '../domains/search/blogSearch.create';
 
-export const actBlogSearchLoad: ActionFnType<
+export const actBlogSearchLoad: CreateSafeAction<
   Record<string, string>,
   BlogSearchPreloadData
-> = async (pageParams) => {
-  try {
+> = createSafeAction(
+  async (pageParams) => {
     const params = blogSearchService.refineQueryParams(pageParams);
     const blogData = await blogSearchService.fetchBlogs(params);
     const categories = await categoryService.fetchCategories();
@@ -31,19 +32,37 @@ export const actBlogSearchLoad: ActionFnType<
       )?.value,
     );
 
-    return createActionResolveWithData({
+    return {
       params,
       blogData,
       currentCategoryName,
       currentSubCategoryName,
-    });
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+    };
+  },
+  {
+    params: createBlogSearchUiParams(),
+    blogData: {
+      blogs: [],
+      total: 0,
+      totalPage: 0,
+    },
+    currentCategoryName: '',
+    currentSubCategoryName: '',
+  },
+);
 
-export async function actBlogPrivateSearchLoad() {
-  const blogData = await blogSearchService.fetchPrivateBlogs();
+export const actBlogPrivateSearchLoad: CreateSafeAction<
+  void,
+  BlogPrivateSearchPayloadData
+> = createSafeAction(
+  async () => {
+    const blogData = await blogSearchService.fetchPrivateBlogs();
 
-  return blogData;
-}
+    return blogData;
+  },
+  {
+    blogs: [],
+    total: 0,
+    totalPage: 0,
+  },
+);

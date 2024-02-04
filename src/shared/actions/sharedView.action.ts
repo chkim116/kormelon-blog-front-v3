@@ -1,16 +1,18 @@
-import { ActionFnType } from '@shared/domains/common/sharedActions.uiState';
-import { viewService } from '@shared/domains/view';
-import { ViewUiState } from '@shared/domains/view/view.uiState';
-import {
-  createActionResolveWithData,
-  createActionRejectedWithError,
-} from '@shared/domains/common/sharedActions.create';
+'use server';
+import 'server-only';
 
-export const actSharedViewLoad: ActionFnType<void, ViewUiState> = async () => {
-  try {
-    const view = await viewService.fetchView();
-    return createActionResolveWithData(view);
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+import { viewService } from '@shared/domains/view';
+import {
+  createSafeAction,
+  createSafeFormAction,
+} from '@shared/domains/common/sharedActions.create';
+import { createViewUiState } from '@shared/domains/view/view.create';
+
+export const actSharedViewLoad = createSafeAction(
+  async () => await viewService.fetchView(),
+  createViewUiState(),
+);
+
+export const actSharedViewAdd = createSafeFormAction(async () => {
+  await viewService.addView();
+});

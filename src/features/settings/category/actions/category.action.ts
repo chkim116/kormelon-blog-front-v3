@@ -1,104 +1,63 @@
 'use server';
 import 'server-only';
-import {
-  ActionFnType,
-  ActionFormFnType,
-} from '@shared/domains/common/sharedActions.uiState';
+
 import {
   createActionRejectedWithError,
-  createActionResolve,
   createActionResolveWithData,
+  createSafeAction,
+  createSafeFormAction,
 } from '@shared/domains/common/sharedActions.create';
 import { categoryService } from '@features/categories/domains';
 import {
   CategoryCreateUiParams,
-  SubCategoryCreateUiParams,
   CategoryUpdateUiParams,
-  SubCategoryUpdateUiParams,
-  CategorySearchUiState,
-} from '@features/categories/domains/category.uiState';
-
-export const actCategoryCreate: ActionFormFnType<
-  CategoryCreateUiParams,
-  string
-> = async (_, params) => {
-  try {
-    await categoryService.createCategory(params);
-
-    return createActionResolveWithData(params.value);
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
-
-export const actCategorySubCreate: ActionFnType<
   SubCategoryCreateUiParams,
-  string
-> = async (params) => {
-  try {
+  SubCategoryUpdateUiParams,
+} from '@features/categories/domains/category.uiState';
+import 'server-only';
+
+export const actCategoryCreate = createSafeFormAction(
+  async (params: CategoryCreateUiParams) => {
+    try {
+      await categoryService.createCategory(params);
+
+      return createActionResolveWithData(params.value);
+    } catch (err) {
+      return createActionRejectedWithError(err);
+    }
+  },
+);
+
+export const actCategorySubCreate = createSafeFormAction(
+  async (params: SubCategoryCreateUiParams) => {
     await categoryService.createSubCategory(params);
 
-    return createActionResolveWithData(params.value);
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+    return params.value;
+  },
+);
 
-export const actCategoryDelete: ActionFnType<number, void> = async (id) => {
-  try {
-    await categoryService.deleteCategory(id);
+export const actCategoryDelete = createSafeFormAction(async (id: number) => {
+  await categoryService.deleteCategory(id);
+});
 
-    return createActionResolve();
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+export const actCategorySubDelete = createSafeFormAction(async (id: number) => {
+  await categoryService.deleteSubCategory(id);
+});
 
-export const actCategorySubDelete: ActionFnType<number, void> = async (id) => {
-  try {
-    await categoryService.deleteSubCategory(id);
-
-    return createActionResolve();
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
-
-export const actCategoryUpdate: ActionFnType<
-  CategoryUpdateUiParams,
-  void
-> = async (params) => {
-  try {
+export const actCategoryUpdate = createSafeFormAction(
+  async (params: CategoryUpdateUiParams) => {
     await categoryService.updateCategory(params);
+  },
+);
 
-    return createActionResolve();
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
-
-export const actCategorySubUpdate: ActionFnType<
-  SubCategoryUpdateUiParams,
-  void
-> = async (params) => {
-  try {
+export const actCategorySubUpdate = createSafeFormAction(
+  async (params: SubCategoryUpdateUiParams) => {
     await categoryService.updateSubCategory(params);
+  },
+);
 
-    return createActionResolve();
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+export const actCategoriesLoad = createSafeAction(async () => {
+  const results = await categoryService.fetchCategories();
 
-export const actCategoriesLoad: ActionFnType<
-  void,
-  CategorySearchUiState[]
-> = async () => {
-  try {
-    const results = await categoryService.fetchCategories();
-
-    return createActionResolveWithData(results);
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+  return results;
+}, []);

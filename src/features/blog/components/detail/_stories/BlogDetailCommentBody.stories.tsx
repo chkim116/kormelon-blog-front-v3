@@ -23,6 +23,7 @@ export const Default: StoryObj<StoryProps> = {
 
   args: {
     ...commentFixtures.getCommentList(1, false)[0],
+    replyLength: 3,
   },
 };
 
@@ -30,7 +31,7 @@ export const Author: StoryObj<StoryProps> = {
   render: Template,
 
   args: {
-    ...commentFixtures.getCommentList(1, false)[0],
+    ...Default.args,
     isAuthor: true,
   },
 };
@@ -39,7 +40,7 @@ export const Anonymous: StoryObj<StoryProps> = {
   render: Template,
 
   args: {
-    ...commentFixtures.getCommentList(1, false)[0],
+    ...Default.args,
     isAnonymous: true,
   },
 };
@@ -48,7 +49,7 @@ export const Deleted: StoryObj<StoryProps> = {
   render: Template,
 
   args: {
-    ...commentFixtures.getCommentList(1, false)[0],
+    ...Default.args,
     isDeleted: true,
   },
 };
@@ -57,6 +58,7 @@ export const WithReplies: StoryObj<StoryProps> = {
   render: Template,
 
   args: {
+    ...Default.args,
     ...commentFixtures.getCommentListWithReplies(1, 1)[0],
   },
 };
@@ -65,6 +67,7 @@ export const NoReplyButton: StoryObj<StoryProps> = {
   render: Template,
 
   args: {
+    ...Default.args,
     ...commentFixtures.getCommentListWithReplies(1, 1)[0],
     shownReply: false,
   },
@@ -81,5 +84,7 @@ const ManyTemplate: StoryFn<StoryProps> = ({ ...templateProps }) => (
 export const Many: StoryObj<StoryProps> = {
   render: ManyTemplate,
 
-  args: {},
+  args: {
+    replyLength: 1,
+  },
 };

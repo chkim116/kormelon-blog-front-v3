@@ -1,7 +1,7 @@
 'use server';
 import 'server-only';
 
-import { ActionFnType } from '@shared/domains/common/sharedActions.uiState';
+import { CreateSafeAction } from '@shared/domains/common/sharedActions.uiState';
 import { tagService } from '@shared/domains/tag';
 import {
   TagSearchUiState,
@@ -9,58 +9,42 @@ import {
   TagWithBlogsSearchUiParams,
   TagSearchWithPostCountUiState,
 } from '@shared/domains/tag/tag.uiState';
-import {
-  createActionRejectedWithError,
-  createActionResolveWithData,
-} from '@shared/domains/common/sharedActions.create';
+import { createSafeAction } from '@shared/domains/common/sharedActions.create';
 
-export const actTagsSearchLoad: ActionFnType<
-  string,
-  TagSearchUiState[]
-> = async (value) => {
-  try {
+export const actTagsSearchLoad: CreateSafeAction<string, TagSearchUiState[]> =
+  createSafeAction(async (value) => {
     const tags = await tagService.fetchTagsByValue(value);
 
-    return createActionResolveWithData(tags);
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+    return tags;
+  }, []);
 
-export const actTagsSearchAllLoad: ActionFnType<
+export const actTagsSearchAllLoad: CreateSafeAction<
   void,
   TagSearchWithPostCountUiState[]
-> = async () => {
-  try {
-    const { tags } = await tagService.fetchAllTags();
+> = createSafeAction(async () => {
+  const { tags } = await tagService.fetchAllTags();
 
-    return createActionResolveWithData(tags);
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+  return tags;
+}, []);
 
-export const actTagsCreate: ActionFnType<string, TagSearchUiState> = async (
-  value,
-) => {
-  try {
+export const actTagsCreate: CreateSafeAction<string, TagSearchUiState> =
+  createSafeAction(async (value) => {
     const tag = await tagService.createTag(value);
 
-    return createActionResolveWithData(tag);
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+    return tag;
+  });
 
-export const actTagWithBlogsLoad: ActionFnType<
+export const actTagWithBlogsLoad: CreateSafeAction<
   TagWithBlogsSearchUiParams,
   TagWithBlogsSearchPayloadData
-> = async (params) => {
-  try {
+> = createSafeAction(
+  async (params) => {
     const tag = await tagService.fetchBlogByTagId(params);
 
-    return createActionResolveWithData(tag);
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+    return tag;
+  },
+  {
+    blogs: [],
+    total: 0,
+  },
+);

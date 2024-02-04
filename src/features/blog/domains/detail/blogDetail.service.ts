@@ -1,4 +1,4 @@
-import { PostDetailRepository } from '@features/blog/repositories/post.repo.type';
+import { PostDetailRepository } from '@core/repositories/post.repo.type';
 import { BlogDetailPayloadData } from './blogDetail.uiState';
 import {
   toBlogDetailNearUiState,

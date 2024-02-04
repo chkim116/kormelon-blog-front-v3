@@ -1,7 +1,6 @@
 'use client';
 import { useRef } from 'react';
 import { useActionState } from '@shared/hooks/useActionState';
-import { toast } from '@shared/services/ToastService';
 import { actBlogWriteImageUpload } from '@features/blog/actions/blogWrite.action';
 import {
   BlogWriteContent,
@@ -27,9 +26,6 @@ export const BlogWriteContentWriteContainerClient = ({
       onSuccess({ data }) {
         refEditor.current?.setImage(data);
         refEditor.current?.focus();
-      },
-      onError({ message }) {
-        toast.open('error', message);
       },
     },
   );

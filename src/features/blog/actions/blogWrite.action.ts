@@ -2,13 +2,13 @@
 import 'server-only';
 
 import {
-  ActionFnType,
-  ActionFormFnType,
-} from '@shared/domains/common/sharedActions.uiState';
-import {
-  createActionRejectedWithError,
-  createActionResolveWithData,
+  createSafeAction,
+  createSafeFormAction,
 } from '@shared/domains/common/sharedActions.create';
+import {
+  CreateSafeAction,
+  CreateSafeFormAction,
+} from '@shared/domains/common/sharedActions.uiState';
 import { blogDetailService } from '@features/blog/domains/detail';
 import { BlogDetailUiState } from '@features/blog/domains/detail/blogDetail.uiState';
 import { blogWriteService } from '@features/blog/domains/write';
@@ -17,76 +17,55 @@ import {
   BlogWriteUpdateUiParams,
 } from '@features/blog/domains/write/blogWrite.uiState';
 
-export const actBlogWriteDetailLoad: ActionFnType<
+export const actBlogWriteDetailLoad: CreateSafeAction<
   Record<string, string>,
   BlogDetailUiState
-> = async (raw: Record<string, string>) => {
-  try {
-    const params = blogWriteService.refineQueryParams(raw);
+> = createSafeAction(async (raw: Record<string, string>) => {
+  const params = blogWriteService.refineQueryParams(raw);
 
-    if (!params.editId) {
-      throw new Error('게시글 번호가 0입니다.');
-    }
-
-    const { blog } = await blogDetailService.fetchBlogDetail(params.editId);
-
-    return createActionResolveWithData(blog);
-  } catch (err) {
-    return createActionRejectedWithError(err);
+  if (!params.editId) {
+    throw new Error('게시글 번호가 0입니다.');
   }
-};
 
-export const actBlogWritePrivateDetailLoad: ActionFnType<
+  const { blog } = await blogDetailService.fetchBlogDetail(params.editId);
+
+  return blog;
+});
+
+export const actBlogWritePrivateDetailLoad: CreateSafeAction<
   Record<string, string>,
   BlogDetailUiState
-> = async (raw: Record<string, string>) => {
-  try {
-    const params = blogWriteService.refineQueryParams(raw);
+> = createSafeAction(async (raw: Record<string, string>) => {
+  const params = blogWriteService.refineQueryParams(raw);
 
-    const { blog } = await blogDetailService.fetchPrivateBlogDetail(
-      params.editId,
-    );
+  const { blog } = await blogDetailService.fetchPrivateBlogDetail(
+    params.editId,
+  );
 
-    return createActionResolveWithData(blog);
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+  return blog;
+});
 
-export const actBlogWriteCreate: ActionFormFnType<
+export const actBlogWriteCreate: CreateSafeFormAction<
   BlogWriteCreateUiParams,
   BlogWriteCreateUiParams
-> = async (_, params) => {
-  try {
-    await blogWriteService.createBlog(params);
+> = createSafeFormAction(async (params) => {
+  await blogWriteService.createBlog(params);
 
-    return createActionResolveWithData(params);
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+  return params;
+});
 
-export const actBlogWriteUpdate: ActionFormFnType<
+export const actBlogWriteUpdate: CreateSafeFormAction<
   BlogWriteUpdateUiParams,
   BlogWriteUpdateUiParams
-> = async (_, params) => {
-  try {
-    await blogWriteService.updateBlog(params);
+> = createSafeFormAction(async (params) => {
+  await blogWriteService.updateBlog(params);
 
-    return createActionResolveWithData(params);
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+  return params;
+});
 
-export const actBlogWriteImageUpload: ActionFnType<FormData, string> = async (
-  fd: FormData,
-) => {
-  try {
+export const actBlogWriteImageUpload: CreateSafeAction<FormData, string> =
+  createSafeAction(async (fd: FormData) => {
     const imageUrl = await blogWriteService.uploadImage(fd);
 
-    return createActionResolveWithData(imageUrl);
-  } catch (err) {
-    return createActionRejectedWithError(err);
-  }
-};
+    return imageUrl;
+  });

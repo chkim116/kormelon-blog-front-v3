@@ -11,5 +11,6 @@ export function createBlogWriteCreateUiParams(): BlogWriteCreateUiParams {
     categoryId: 0,
     subCategoryId: 0,
     isPrivate: false,
+    userId: '',
   };
 }
