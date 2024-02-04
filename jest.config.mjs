@@ -14,11 +14,12 @@ const config = {
   moduleNameMapper: {
     '^@core/(.*)$': '<rootDir>/src/core/$1',
     '^@server/(.*)$': '<rootDir>/src/server/$1',
-    '^@shared/(.*)$': '<rootDir>/src/app/shared/$1',
+    '^@fixtures/(.*)$': '<rootDir>/src/_fixtures/$1',
+    '^@shared/(.*)$': '<rootDir>/src/shared/$1',
   },
   rootDir: '.',
   coverageReporters: ['lcov', 'text'],
-  collectCoverageFrom: ['src/domain/**/*.[jt]s?(x)'],
+  collectCoverageFrom: ['src/**/domains/**/*.[jt]s?(x)'],
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
