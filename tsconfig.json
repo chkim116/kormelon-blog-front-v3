@@ -20,10 +20,11 @@
     "types": ["jest", "node"],
     "paths": {
       "@core/*": ["src/core/*"],
-      "@app/*": ["src/app/(routes)/*"],
-      "@shared/*": ["src/shared/*"],
-      "@fixtures/*": ["src/_fixtures/*"],
-      "@features/*": ["src/features/*"]
+      "@domain/*": ["src/domain/*"],
+      "@server/*": ["src/server/*"],
+      "@app/*": ["src/app/(features)/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@fixtures/*": ["src/_fixtures/*"]
     },
     "plugins": [
       {
@@ -38,5 +39,5 @@
     ".next/types/**/*.ts",
     "jest.config.mjs"
   ],
-  "exclude": ["node_modules", "cypress", "cypress.config.ts", "**.test.*"]
+  "exclude": ["node_modules", "cypress", "cypress.config.ts"]
 }

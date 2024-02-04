@@ -1,8 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { toNumber } from 'safers';
-import { CategorySearchUiState } from '@features/categories/domains/category.uiState';
+import { CategorySearchUiState } from '@domain/category/category.uiState';
 
-function getCategories(length = 3, subLength = 3) {
+function getCategories(length = 3) {
   return Array.from({ length }, () => {
     const categoryId = faker.number.int();
     const categoryValue = faker.lorem.word();
@@ -11,16 +10,16 @@ function getCategories(length = 3, subLength = 3) {
       id: categoryId,
       value: categoryValue,
       posts: faker.number.int(30),
-      ordering: toNumber((Math.random() * 10).toFixed()),
-      subCategories: Array.from({ length: subLength }, () => ({
-        id: faker.number.int(),
-        value: faker.lorem.word(),
-        ordering: toNumber((Math.random() * 10).toFixed()),
-      })).sort((a, b) => a.ordering - b.ordering),
+      subCategories: [
+        {
+          id: faker.number.int(),
+          value: faker.lorem.word(),
+        },
+      ],
     };
 
     return result;
-  }).sort((a, b) => a.ordering - b.ordering);
+  });
 }
 
 export const categoryFixtures = {
