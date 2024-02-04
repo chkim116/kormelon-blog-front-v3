@@ -3,6 +3,10 @@
 
 generator client {
   provider = "prisma-client-js"
+
+  // vercel 배포 설정
+  // https://www.prisma.io/docs/orm/prisma-client/deployment/serverless/deploy-to-vercel
+  output   = "./generated/client"
 }
 
 datasource db {
