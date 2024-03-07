@@ -11,9 +11,9 @@ import {
   PostUpdateParams,
 } from '@core/entities';
 import prisma from '@core/lib/prisma';
-import { prismaResolveHandler } from '@core/network/payloadHandler';
-import { STORAGE_LIKE_KEY } from '@core/storage/token.const';
-import { tokenProvider } from '@core/storage/tokenProvider';
+import { prismaResolveHandler } from '@core/lib/network/payloadHandler';
+import { STORAGE_LIKE_KEY } from '@core/lib/storage/token.const';
+import { tokenProvider } from '@core/lib/storage/tokenProvider';
 import { PostRepository } from './post.repo.type';
 
 class PostRepositoryImpl implements PostRepository {

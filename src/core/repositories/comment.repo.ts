@@ -10,7 +10,7 @@ import {
   CommentUpdateParams,
 } from '@core/entities';
 import prisma from '@core/lib/prisma';
-import { prismaResolveHandler } from '@core/network/payloadHandler';
+import { prismaResolveHandler } from '@core/lib/network/payloadHandler';
 import { createHashPassword } from '@core/lib/createHashPassword';
 import { CommentRepository } from './comment.repo.type';
 import { authRepository } from './auth.repo';

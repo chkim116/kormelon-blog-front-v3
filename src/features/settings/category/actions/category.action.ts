@@ -6,7 +6,7 @@ import {
   createActionResolveWithData,
   createSafeAction,
   createSafeFormAction,
-} from '@shared/domains/common/sharedActions.create';
+} from '@common/lib/createSafeAction';
 import { categoryService } from '@features/categories/domains';
 import {
   CategoryCreateUiParams,

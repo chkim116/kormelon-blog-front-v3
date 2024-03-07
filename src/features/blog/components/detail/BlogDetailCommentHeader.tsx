@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
 import { Button, Input, User } from '@nextui-org/react';
-import { Dialog } from '@shared/components/common/Dialog';
-import { LucideIcon } from '@shared/components/common/LucideIcon';
+import { Dialog } from '@common/components/Dialog';
+import { LucideIcon } from '@common/components/LucideIcon';
 
 interface BlogDetailCommentHeaderProps {
   userProfile: string;

@@ -1,5 +1,5 @@
 'use client';
-import { CircularLoading } from '@shared/components/common/CircularLoading';
+import { CircularLoading } from '@common/components/CircularLoading';
 
 export default function BlogWritePageLoading() {
   return <CircularLoading />;

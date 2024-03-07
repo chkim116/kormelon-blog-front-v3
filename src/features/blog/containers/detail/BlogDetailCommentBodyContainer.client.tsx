@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
-import { toast } from '@shared/services/ToastService';
-import { useQueryParser } from '@shared/hooks/useQueryParser';
-import { useFormActionState } from '@shared/hooks/useFormActionState';
+import { toast } from '@common/lib/ToastService';
+import { useQueryParser } from '@common/hooks/useQueryParser';
+import { useFormActionState } from '@common/hooks/useFormActionState';
 import {
   actCommentDelete,
   actCommentUpdate,

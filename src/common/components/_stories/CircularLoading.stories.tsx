@@ -8,7 +8,7 @@ type MyArgTypes = Partial<Record<keyof StoryProps, ArgTypes[string]>>;
 const argTypes: MyArgTypes = {};
 
 export default {
-  title: 'shared/common/CircularLoading',
+  title: 'common/CircularLoading',
   component: CircularLoading,
   argTypes,
 } as Meta;

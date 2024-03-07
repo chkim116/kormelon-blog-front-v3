@@ -1,6 +1,6 @@
 import { ComponentType, useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Dialog } from '@shared/components/common/Dialog';
+import { Dialog } from '@common/components/Dialog';
 import { env } from '@core/env';
 
 function usePreventPageLeave(path = '/blog') {

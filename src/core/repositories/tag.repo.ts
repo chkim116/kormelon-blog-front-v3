@@ -1,6 +1,6 @@
 import { PostSearchByTagParams } from '@core/entities';
 import prisma from '@core/lib/prisma';
-import { prismaResolveHandler } from '@core/network/payloadHandler';
+import { prismaResolveHandler } from '@core/lib/network/payloadHandler';
 import { TagRepository } from './tag.repo.type';
 
 class TagRepositoryImpl implements TagRepository {

@@ -8,8 +8,12 @@ import {
   useState,
 } from 'react';
 import { Input } from '@nextui-org/react';
-import { Dialog, DialogOkCallback } from '@shared/components/common/Dialog';
-import { PromiseResolver } from '@shared/domains/common/sharedCommon.uiState';
+import { Dialog, DialogOkCallback } from '@common/components/Dialog';
+
+interface PromiseResolver<T, E = undefined> {
+  resolve: (value: T) => void;
+  reject: (value?: E) => void;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface SettingsCategorySubCategoryCreatorProps {}

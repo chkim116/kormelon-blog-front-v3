@@ -3,7 +3,7 @@ import {
   NotificationSearchEntity,
 } from '@core/entities';
 import prisma from '@core/lib/prisma';
-import { prismaResolveHandler } from '@core/network/payloadHandler';
+import { prismaResolveHandler } from '@core/lib/network/payloadHandler';
 import { NotificationRepository } from './notification.repo.type';
 
 class NotificationRepositoryImpl implements NotificationRepository {

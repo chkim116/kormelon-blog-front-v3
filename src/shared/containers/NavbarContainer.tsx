@@ -4,7 +4,7 @@ import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
 import { authService } from '@shared/domains/auth';
 import { useUserSession } from '@shared/hooks/useUserSession';
-import { toast } from '@shared/services/ToastService';
+import { toast } from '@common/lib/ToastService';
 import { Navbar, ThemeModeType } from '../components/Navbar';
 import {
   NavbarSearchModal,

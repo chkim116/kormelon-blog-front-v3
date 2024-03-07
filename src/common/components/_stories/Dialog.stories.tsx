@@ -9,7 +9,7 @@ type MyArgTypes = Partial<
 const argTypes: MyArgTypes = {};
 
 export default {
-  title: 'shared/common/Dialog',
+  title: 'common/Dialog',
   component: Dialog,
   argTypes,
 } as ComponentMeta<typeof Dialog>;

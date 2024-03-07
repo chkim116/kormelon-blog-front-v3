@@ -4,11 +4,11 @@ import 'server-only';
 import {
   createSafeAction,
   createSafeFormAction,
-} from '@shared/domains/common/sharedActions.create';
+} from '@common/lib/createSafeAction';
 import {
   CreateSafeFormAction,
   CreateSafeAction,
-} from '@shared/domains/common/sharedActions.uiState';
+} from '@common/lib/createSafeAction.uiState';
 import {
   AuthLoginUiParams,
   AuthRegisterUiParams,

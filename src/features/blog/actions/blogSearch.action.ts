@@ -2,8 +2,8 @@
 import 'server-only';
 
 import { toString } from 'safers';
-import { createSafeAction } from '@shared/domains/common/sharedActions.create';
-import { CreateSafeAction } from '@shared/domains/common/sharedActions.uiState';
+import { createSafeAction } from '@common/lib/createSafeAction';
+import { CreateSafeAction } from '@common/lib/createSafeAction.uiState';
 import { blogSearchService } from '@features/blog/domains/search';
 import {
   BlogPrivateSearchPayloadData,

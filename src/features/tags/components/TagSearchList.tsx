@@ -1,7 +1,7 @@
 'use client';
 import NextLink from 'next/link';
 import { Chip } from '@nextui-org/react';
-import { LucideIcon } from '@shared/components/common/LucideIcon';
+import { LucideIcon } from '@common/components/LucideIcon';
 import { TagSearchWithPostCountUiState } from '@shared/domains/tag/tag.uiState';
 
 interface TagSearchListProps {

@@ -1,9 +1,9 @@
 'use client';
 import { useMemo } from 'react';
 import { Divider } from '@nextui-org/react';
-import { useQueryParser } from '@shared/hooks/useQueryParser';
-import { toast } from '@shared/services/ToastService';
-import { useFormActionState } from '@shared/hooks/useFormActionState';
+import { useQueryParser } from '@common/hooks/useQueryParser';
+import { toast } from '@common/lib/ToastService';
+import { useFormActionState } from '@common/hooks/useFormActionState';
 import {
   actCommentReplyCreate,
   actCommentReplyDelete,

@@ -2,7 +2,7 @@
 import { ChangeEventHandler } from 'react';
 import { Button } from '@nextui-org/react';
 import Image from 'next/image';
-import { toast } from '@shared/services/ToastService';
+import { toast } from '@common/lib/ToastService';
 import {
   IMAGE_DEFAULT_WIDTH_SIZE,
   IMAGE_DEFAULT_HEIGHT_SIZE,

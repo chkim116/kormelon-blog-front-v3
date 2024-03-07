@@ -1,12 +1,11 @@
 import { ReactNode } from 'react';
 import { Metadata, Viewport } from 'next';
 import Script from 'next/script';
-import { AppProviderContainer } from '@shared/containers/AppProviderContainer';
+import { AppProvider } from '@providers/AppProvider';
+import NextAuthSessionProvider from '@providers/NextAuthSessionProvider';
 import { createMetaData } from '@shared/domains/meta/sharedMeta.create';
 import { GA_TRACKING_ID } from '@core/services/GoogleTagService';
-import { RouteProgress } from '@shared/components/common/RouteProgress';
-
-import '@shared/styles/tailwind.global.css';
+import PageViewContainer from '@shared/containers/PageViewContainer';
 
 interface RootLayoutProps {
   children: ReactNode;
@@ -30,11 +29,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       <body>
-        <AppProviderContainer>
-          <RouteProgress />
-          {children}
+        <AppProvider>
+          <PageViewContainer />
+          <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
           <div id="feedback" />
-        </AppProviderContainer>
+        </AppProvider>
 
         {/* TODO: 외부 모듈로 추출 */}
         <Script

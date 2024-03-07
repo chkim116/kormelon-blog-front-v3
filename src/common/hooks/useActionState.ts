@@ -1,12 +1,12 @@
 'use client';
 import { startTransition, useEffect, useRef, useState } from 'react';
 import { redirect, useRouter } from 'next/navigation';
-import { toast } from '@shared/services/ToastService';
+import { toast } from '@common/lib/ToastService';
 import {
   ActionStateUiState,
   CreateSafeAction,
-} from '@shared/domains/common/sharedActions.uiState';
-import { createActionStateUiState } from '@shared/domains/common/sharedActions.create';
+} from '@common/lib/createSafeAction.uiState';
+import { createActionStateUiState } from '@common/lib/createSafeAction';
 
 interface UseActionStateCallback<Data> {
   onSuccess?: (state: ActionStateUiState<Data>) => void;

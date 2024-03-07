@@ -4,11 +4,11 @@ import 'server-only';
 import {
   CreateSafeAction,
   CreateSafeFormAction,
-} from '@shared/domains/common/sharedActions.uiState';
+} from '@common/lib/createSafeAction.uiState';
 import {
   createSafeAction,
   createSafeFormAction,
-} from '@shared/domains/common/sharedActions.create';
+} from '@common/lib/createSafeAction';
 import { blogDetailService } from '@features/blog/domains/detail';
 import { BlogDetailPayloadData } from '@features/blog/domains/detail/blogDetail.uiState';
 import {

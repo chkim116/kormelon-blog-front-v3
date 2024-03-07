@@ -1,24 +1,24 @@
 'use client';
 import { ReactNode } from 'react';
 import { NextUIProvider } from '@nextui-org/react';
-import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { useRouter } from 'next/navigation';
-import { useBlogViewCount } from '@shared/hooks/useBlogViewCount';
+import RouteProgressLoader from './RouteProgressLoader';
 
-interface AppProviderContainerProps {
+import './styles/tailwind.global.css';
+
+interface AppProviderProps {
   children: ReactNode;
 }
 
-export function AppProviderContainer({ children }: AppProviderContainerProps) {
+export function AppProvider({ children }: AppProviderProps) {
   const router = useRouter();
-
-  useBlogViewCount();
 
   return (
     <NextUIProvider navigate={router.push}>
       <NextThemesProvider attribute="class" defaultTheme="dark">
-        <SessionProvider>{children}</SessionProvider>
+        <RouteProgressLoader />
+        {children}
       </NextThemesProvider>
     </NextUIProvider>
   );

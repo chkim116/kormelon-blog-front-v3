@@ -1,8 +1,8 @@
 'use client';
 
 import { Link, User } from '@nextui-org/react';
+import { LucideIcon } from '@common/components/LucideIcon';
 import { USER_NAME, USER_DESCRIPTION } from '@shared/constants/user.const';
-import { LucideIcon } from '@shared/components/common/LucideIcon';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface BlogDetailContentUserMetaProps {}

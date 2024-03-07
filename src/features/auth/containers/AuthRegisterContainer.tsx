@@ -2,9 +2,9 @@
 import { Button } from '@nextui-org/react';
 import gravatar from 'gravatar';
 import { toString } from 'safers';
-import { toast } from '@shared/services/ToastService';
-import { useActionState } from '@shared/hooks/useActionState';
-import { SubmitButton } from '@shared/components/common/SubmitButton';
+import { SubmitButton } from '@common/components/SubmitButton';
+import { toast } from '@common/lib/ToastService';
+import { useActionState } from '@common/hooks/useActionState';
 import AuthRegisterForm from '../components/AuthRegisterForm';
 import { actAuthProfileUpload } from '../actions/auth.action';
 import { AuthRegisterUiParams } from '../../../shared/domains/auth/auth.uiState';

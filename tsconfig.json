@@ -21,7 +21,9 @@
     "paths": {
       "@core/*": ["src/core/*"],
       "@app/*": ["src/app/(routes)/*"],
+      "@common/*": ["src/common/*"],
       "@shared/*": ["src/shared/*"],
+      "@providers/*": ["src/providers/*"],
       "@fixtures/*": ["src/_fixtures/*"],
       "@features/*": ["src/features/*"]
     },

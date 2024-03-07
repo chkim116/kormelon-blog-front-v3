@@ -1,6 +1,6 @@
-import { createApiClient } from '@core/network/createApiClient';
+import { createApiClient } from '@core/lib/network/createApiClient';
 import { env } from '@core/env';
-import { prismaResolveHandler } from '@core/network/payloadHandler';
+import { prismaResolveHandler } from '@core/lib/network/payloadHandler';
 import { CloudinaryFileEntity } from '@core/entities';
 import { FileRepository } from './file.repo.type';
 

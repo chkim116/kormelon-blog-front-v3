@@ -1,20 +1,20 @@
 import { ComponentProps } from 'react';
 import { ArgTypes, Meta, StoryFn, StoryObj } from '@storybook/react';
-import { RouteProgress } from '../RouteProgress';
+import { NotFoundError } from '../NotFoundError';
 
-interface StoryProps extends ComponentProps<typeof RouteProgress> {}
+interface StoryProps extends ComponentProps<typeof NotFoundError> {}
 
 type MyArgTypes = Partial<Record<keyof StoryProps, ArgTypes[string]>>;
 const argTypes: MyArgTypes = {};
 
 export default {
-  title: 'shared/common/RouteProgress',
-  component: RouteProgress,
+  title: 'common/NotFoundError',
+  component: NotFoundError,
   argTypes,
 } as Meta;
 
 const Template: StoryFn<StoryProps> = ({ ...props }) => (
-  <RouteProgress {...props} />
+  <NotFoundError {...props} />
 );
 
 export const Default: StoryObj<StoryProps> = {

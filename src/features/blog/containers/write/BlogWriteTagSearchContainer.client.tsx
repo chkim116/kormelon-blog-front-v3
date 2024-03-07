@@ -7,7 +7,7 @@ import {
   actTagsCreate,
   actTagsSearchLoad,
 } from '@shared/actions/sharedTag.action';
-import { useActionState } from '@shared/hooks/useActionState';
+import { useActionState } from '@common/hooks/useActionState';
 import { BlogWriteCreateUiParams } from '@features/blog/domains/write/blogWrite.uiState';
 import { BlogWriteTagSearch } from '@features/blog/components/write/BlogWriteTagSearch';
 

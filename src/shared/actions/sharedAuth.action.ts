@@ -2,11 +2,11 @@
 import 'server-only';
 
 import { getServerSession } from 'next-auth';
+import { createSafeAction } from '@common/lib/createSafeAction';
 import { AuthRoleEnum } from '@core/entities';
 import { nextAuthOptions } from '@core/lib/nextAuthOptions';
 import { authService } from '@shared/domains/auth';
 import { createAuthUserUiState } from '@shared/domains/auth/auth.create';
-import { createSafeAction } from '@shared/domains/common/sharedActions.create';
 
 export async function getServerUserSession() {
   const session = await getServerSession(nextAuthOptions);

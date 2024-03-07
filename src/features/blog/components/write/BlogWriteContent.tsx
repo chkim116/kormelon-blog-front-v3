@@ -9,12 +9,11 @@ import {
 } from 'react';
 import { Button, Textarea } from '@nextui-org/react';
 import dynamic from 'next/dynamic';
-import { LucideIcon } from '@shared/components/common/LucideIcon';
-import { Dialog } from '@shared/components/common/Dialog';
+import { LucideIcon } from '@common/components/LucideIcon';
+import { Dialog } from '@common/components/Dialog';
 
 const Markdown = dynamic(
-  () =>
-    import('@shared/components/common/Markdown').then((comp) => comp.Markdown),
+  () => import('@common/components/Markdown').then((comp) => comp.Markdown),
   { ssr: false },
 );
 
