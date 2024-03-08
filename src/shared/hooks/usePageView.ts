@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import router from 'next/router';
-import { googleTagService } from '@core/services/GoogleTagService';
+import { googleTagService } from '@core/lib/GoogleTagService';
 
 export function usePageView() {
   useEffect(() => {

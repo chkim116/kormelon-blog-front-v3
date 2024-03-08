@@ -4,7 +4,7 @@ import Script from 'next/script';
 import { AppProvider } from '@providers/AppProvider';
 import NextAuthSessionProvider from '@providers/NextAuthSessionProvider';
 import { createMetaData } from '@shared/domains/meta/sharedMeta.create';
-import { GA_TRACKING_ID } from '@core/services/GoogleTagService';
+import { GA_TRACKING_ID } from '@core/lib/GoogleTagService';
 import PageViewContainer from '@shared/containers/PageViewContainer';
 
 interface RootLayoutProps {
