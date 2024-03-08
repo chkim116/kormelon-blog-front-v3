@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { env } from '@core/env';
-import { HttpErrorModel } from '@core/network/HttpError';
 import {
   CreateSafeAction,
   ActionFormStateUiState,
   CreateSafeActionCallback,
   CreateSafeFormAction,
   ActionStateUiState,
-} from '@shared/domains/common/sharedActions.uiState';
+} from '@common/lib/createSafeAction.uiState';
+import { env } from '@core/env';
+import { HttpErrorModel } from '@core/lib/network/HttpError';
 
 export function createActionResolve(message = ''): ActionStateUiState {
   return {

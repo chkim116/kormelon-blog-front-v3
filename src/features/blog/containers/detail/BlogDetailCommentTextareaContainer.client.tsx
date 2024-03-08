@@ -1,7 +1,7 @@
 'use client';
-import { toast } from '@shared/services/ToastService';
-import { useQueryParser } from '@shared/hooks/useQueryParser';
-import { useFormActionState } from '@shared/hooks/useFormActionState';
+import { toast } from '@common/lib/ToastService';
+import { useQueryParser } from '@common/hooks/useQueryParser';
+import { useFormActionState } from '@common/hooks/useFormActionState';
 import { useUserSession } from '@shared/hooks/useUserSession';
 import { actCommentCreate } from '@features/blog/actions/comment.action';
 import { BlogDetailCommentTextarea } from '@features/blog/components/detail/BlogDetailCommentTextarea';

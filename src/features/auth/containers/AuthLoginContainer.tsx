@@ -2,8 +2,8 @@
 import { Button } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { toString } from 'safers';
-import { toast } from '@shared/services/ToastService';
-import { SubmitButton } from '@shared/components/common/SubmitButton';
+import { SubmitButton } from '@common/components/SubmitButton';
+import { toast } from '@common/lib/ToastService';
 import AuthLoginForm from '../components/AuthLoginForm';
 import { AuthLoginUiParams } from '../../../shared/domains/auth/auth.uiState';
 import { authService } from '../../../shared/domains/auth';

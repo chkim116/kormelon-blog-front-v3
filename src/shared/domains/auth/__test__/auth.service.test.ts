@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { HttpError } from '@core/network/HttpError';
+import { HttpError } from '@core/lib/network/HttpError';
 import {
   createMockFunctionWithRejectedValue,
   createMockFunctionWithResolvedValue,

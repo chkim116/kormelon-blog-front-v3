@@ -1,7 +1,7 @@
 import { ComponentProps } from 'react';
 import { ComponentStory, ComponentMeta, ArgTypes } from '@storybook/react';
 import { Button } from '@nextui-org/react';
-import { toast } from '@shared/services/ToastService';
+import { toast } from '@common/lib/ToastService';
 import { Toast } from '../Toast';
 
 type MyArgTypes = Partial<
@@ -10,7 +10,7 @@ type MyArgTypes = Partial<
 const argTypes: MyArgTypes = {};
 
 export default {
-  title: 'shared/common/Toast',
+  title: 'common/Toast',
   component: Toast,
   argTypes,
 } as ComponentMeta<typeof Toast>;

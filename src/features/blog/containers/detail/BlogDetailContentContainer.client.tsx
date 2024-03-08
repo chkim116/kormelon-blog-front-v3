@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import copy from 'copy-to-clipboard';
 import qs from 'qs';
 import dynamic from 'next/dynamic';
-import { toast } from '@shared/services/ToastService';
-import { useFormActionState } from '@shared/hooks/useFormActionState';
+import { toast } from '@common/lib/ToastService';
+import { useFormActionState } from '@common/hooks/useFormActionState';
 import {
   actBlogDetailAddLike,
   actBlogDetailDeleteBlog,
@@ -18,8 +18,7 @@ import { blogDetailService } from '@features/blog/domains/detail';
 import { BlogDetailContentNavigationClientContainer } from './BlogDetailContentNavigationContainer';
 
 const Markdown = dynamic(
-  () =>
-    import('@shared/components/common/Markdown').then((comp) => comp.Markdown),
+  () => import('@common/components/Markdown').then((comp) => comp.Markdown),
   { ssr: false },
 );
 

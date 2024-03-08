@@ -1,5 +1,5 @@
 'use client';
-import { NotAuthError } from '@shared/components/error/NotAuthError';
+import { NotAuthError } from '@common/components/NotAuthError';
 
 export default function SettingsCategoryErrorPage() {
   return <NotAuthError />;

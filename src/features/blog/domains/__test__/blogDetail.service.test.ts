@@ -6,7 +6,7 @@ import {
   PostDetailEntity,
   PostDetailResultEntityPayload,
 } from '@core/entities';
-import { HttpError } from '@core/network/HttpError';
+import { HttpError } from '@core/lib/network/HttpError';
 import { PostDetailRepository } from '@core/repositories/post.repo.type';
 import {
   toBlogDetailUiState,

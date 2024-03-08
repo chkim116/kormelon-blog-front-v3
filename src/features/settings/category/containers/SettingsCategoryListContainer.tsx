@@ -1,7 +1,7 @@
 'use client';
 
-import { toast } from '@shared/services/ToastService';
-import { useFormActionState } from '@shared/hooks/useFormActionState';
+import { toast } from '@common/lib/ToastService';
+import { useFormActionState } from '@common/hooks/useFormActionState';
 import {
   CategorySearchUiState,
   CategoryUpdateUiParams,

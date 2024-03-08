@@ -2,7 +2,7 @@
 
 import NextLink from 'next/link';
 import { Button } from '@nextui-org/react';
-import { LucideIcon } from '@shared/components/common/LucideIcon';
+import { LucideIcon } from '@common/components/LucideIcon';
 import { BlogSearchPrivateUiState } from '@features/blog/domains/search/blogSearch.uiState';
 import { BlogCommonCard } from '../common/BlogCommonCard';
 import { BlogCommonPostEmpty } from '../common/BlogCommonPostEmpty';

@@ -3,7 +3,7 @@ import {
   createMockFunctionWithResolvedValue,
 } from '@fixtures/tests';
 import { NotificationSearchEntity } from '@core/entities';
-import { HttpError } from '@core/network/HttpError';
+import { HttpError } from '@core/lib/network/HttpError';
 import { NotificationRepository } from '@core/repositories/notification.repo.type';
 import { NotificationServiceImpl } from '../notification.service';
 

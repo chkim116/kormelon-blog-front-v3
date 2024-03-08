@@ -1,6 +1,6 @@
 import prisma from '@core/lib/prisma';
 import { date } from '@core/lib/date';
-import { prismaResolveHandler } from '@core/network/payloadHandler';
+import { prismaResolveHandler } from '@core/lib/network/payloadHandler';
 import { ViewRepository } from './view.repo.type';
 
 class ViewRepositoryImpl implements ViewRepository {

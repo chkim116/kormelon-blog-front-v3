@@ -13,7 +13,7 @@ import {
 } from '@nextui-org/react';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LucideIcon } from '@shared/components/common/LucideIcon';
+import { LucideIcon } from '@common/components/LucideIcon';
 import { AuthRoleEnum } from '@core/entities';
 import { NAV_BAR_MENU_ITEM_LIST } from '@shared/constants/navbar.const';
 import { AuthUserUiState } from '@shared/domains/auth/auth.uiState';

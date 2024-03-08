@@ -9,7 +9,7 @@ type MyArgTypes = Partial<Record<keyof StoryProps, ArgTypes[string]>>;
 const argTypes: MyArgTypes = {};
 
 export default {
-  title: 'shared/common/Markdown',
+  title: 'common/Markdown',
   component: Markdown,
   argTypes,
 } as Meta;

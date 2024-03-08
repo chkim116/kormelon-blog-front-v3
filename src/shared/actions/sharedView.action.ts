@@ -1,11 +1,11 @@
 'use server';
 import 'server-only';
 
-import { viewService } from '@shared/domains/view';
 import {
   createSafeAction,
   createSafeFormAction,
-} from '@shared/domains/common/sharedActions.create';
+} from '@common/lib/createSafeAction';
+import { viewService } from '@shared/domains/view';
 import { createViewUiState } from '@shared/domains/view/view.create';
 
 export const actSharedViewLoad = createSafeAction(

@@ -1,6 +1,6 @@
 'use client';
 import { useRef } from 'react';
-import { useActionState } from '@shared/hooks/useActionState';
+import { useActionState } from '@common/hooks/useActionState';
 import { actBlogWriteImageUpload } from '@features/blog/actions/blogWrite.action';
 import {
   BlogWriteContent,

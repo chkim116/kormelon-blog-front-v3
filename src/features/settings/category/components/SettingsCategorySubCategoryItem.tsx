@@ -2,7 +2,7 @@
 
 import { ChangeEventHandler, useEffect, useState } from 'react';
 import { Input } from '@nextui-org/react';
-import { LucideIcon } from '@shared/components/common/LucideIcon';
+import { LucideIcon } from '@common/components/LucideIcon';
 import { SubCategoryUpdateUiParams } from '@features/categories/domains/category.uiState';
 import { SettingsCategoryExtraAction } from './SettingsCategoryExtraAction';
 

@@ -1,11 +1,7 @@
 'use client';
 import { createElement } from 'react';
 import { Root, createRoot } from 'react-dom/client';
-import {
-  Toast,
-  ToastStatusType,
-  ToastHandle,
-} from '../components/common/Toast';
+import { Toast, ToastStatusType, ToastHandle } from '../components/Toast';
 import { getPortal } from '../utils/getPortal';
 
 function ToastService() {

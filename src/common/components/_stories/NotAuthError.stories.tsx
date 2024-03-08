@@ -1,26 +1,24 @@
 import { ComponentProps } from 'react';
 import { ArgTypes, Meta, StoryFn, StoryObj } from '@storybook/react';
-import { CommonError } from '../CommonError';
+import { NotAuthError } from '../NotAuthError';
 
-interface StoryProps extends ComponentProps<typeof CommonError> {}
+interface StoryProps extends ComponentProps<typeof NotAuthError> {}
 
 type MyArgTypes = Partial<Record<keyof StoryProps, ArgTypes[string]>>;
 const argTypes: MyArgTypes = {};
 
 export default {
-  title: 'shared/error/CommonError',
-  component: CommonError,
+  title: 'common/NotAuthError',
+  component: NotAuthError,
   argTypes,
 } as Meta;
 
 const Template: StoryFn<StoryProps> = ({ ...props }) => (
-  <CommonError {...props} />
+  <NotAuthError {...props} />
 );
 
 export const Default: StoryObj<StoryProps> = {
   render: Template,
 
-  args: {
-    text: '검색 결과가 없습니다 :(',
-  },
+  args: {},
 };

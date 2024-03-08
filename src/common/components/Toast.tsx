@@ -2,7 +2,7 @@
 import { forwardRef, useImperativeHandle } from 'react';
 import { createPortal } from 'react-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import { getPortal } from '@shared/utils/getPortal';
+import { getPortal } from '@common/utils/getPortal';
 import 'react-toastify/dist/ReactToastify.css';
 
 export type ToastStatusType = 'error' | 'warning' | 'info' | 'success';

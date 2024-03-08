@@ -15,7 +15,7 @@ import {
   ModalContent,
   useDisclosure,
 } from '@nextui-org/react';
-import { LucideIcon } from '@shared/components/common/LucideIcon';
+import { LucideIcon } from '@common/components/LucideIcon';
 
 export interface NavbarSearchModalHandle {
   open: () => Promise<string>;

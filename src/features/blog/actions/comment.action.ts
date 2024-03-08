@@ -1,11 +1,11 @@
 'use server';
 import 'server-only';
 
-import { actSharedNotificationRead } from '@shared/actions/sharedNoti.action';
 import {
   createSafeAction,
   createSafeFormAction,
-} from '@shared/domains/common/sharedActions.create';
+} from '@common/lib/createSafeAction';
+import { actSharedNotificationRead } from '@shared/actions/sharedNoti.action';
 import { commentService } from '@features/blog/domains/comment';
 import {
   CommentCreateUiParams,

@@ -1,5 +1,5 @@
 'use client';
-import { useQueryPush } from '@shared/hooks/useQueryPush';
+import { useQueryPush } from '@common/hooks/useQueryPush';
 import { BlogCommonPagination } from '@features/blog/components/common/BlogCommonPagination';
 
 interface BlogSearchPostPaginationContainerClientProps {

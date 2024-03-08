@@ -1,6 +1,6 @@
 import { Key, useState } from 'react';
 import { Autocomplete, AutocompleteItem, Chip } from '@nextui-org/react';
-import { LucideIcon } from '@shared/components/common/LucideIcon';
+import { LucideIcon } from '@common/components/LucideIcon';
 import { TagSearchUiState } from '@shared/domains/tag/tag.uiState';
 
 interface BlogTagSearchProps {

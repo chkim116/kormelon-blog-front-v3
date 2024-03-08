@@ -1,8 +1,8 @@
 'use client';
 
-import { toast } from '@shared/services/ToastService';
-import { useFormActionState } from '@shared/hooks/useFormActionState';
-import { SubmitButton } from '@shared/components/common/SubmitButton';
+import { toast } from '@common/lib/ToastService';
+import { SubmitButton } from '@common/components/SubmitButton';
+import { useFormActionState } from '@common/hooks/useFormActionState';
 import { SettingsCategoryCreator } from '../components/SettingsCategoryCreator';
 import { actCategoryCreate } from '../actions/category.action';
 

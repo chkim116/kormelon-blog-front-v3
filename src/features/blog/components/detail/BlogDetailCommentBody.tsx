@@ -2,7 +2,7 @@
 import { useCallback, useState } from 'react';
 import { Button } from '@nextui-org/react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import { LucideIcon } from '@shared/components/common/LucideIcon';
+import { LucideIcon } from '@common/components/LucideIcon';
 import {
   CommentSearchUiState,
   CommentUpdateUiParams,

@@ -7,7 +7,7 @@ import {
   SubCategoryUpdateParams,
 } from '@core/entities';
 import prisma from '@core/lib/prisma';
-import { prismaResolveHandler } from '@core/network/payloadHandler';
+import { prismaResolveHandler } from '@core/lib/network/payloadHandler';
 import { CategoryRepository } from './category.repo.type';
 
 export class CategoryRepositoryImpl implements CategoryRepository {

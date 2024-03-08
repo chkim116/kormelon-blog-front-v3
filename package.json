@@ -1,9 +1,9 @@
 {
   "name": "kormelon-blog-front-v3",
   "engines": {
-    "node": ">=18.16.0"
+    "node": ">=20"
   },
-  "version": "3.0.0",
+  "version": "3.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",

@@ -3,9 +3,9 @@
 import { useMemo, useState } from 'react';
 import { Button } from '@nextui-org/react';
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
-import { SubmitButton } from '@shared/components/common/SubmitButton';
-import { toast } from '@shared/services/ToastService';
-import { LucideIcon } from '@shared/components/common/LucideIcon';
+import { SubmitButton } from '@common/components/SubmitButton';
+import { LucideIcon } from '@common/components/LucideIcon';
+import { toast } from '@common/lib/ToastService';
 import { BlogWriteCreateUiParams } from '@features/blog/domains/write/blogWrite.uiState';
 import { CategorySearchUiState } from '@features/categories/domains/category.uiState';
 import { BlogDetailUiState } from '@features/blog/domains/detail/blogDetail.uiState';

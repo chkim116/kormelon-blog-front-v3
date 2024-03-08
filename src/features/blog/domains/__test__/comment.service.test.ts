@@ -3,7 +3,7 @@ import {
   createMockFunctionWithResolvedValue,
 } from '@fixtures/tests';
 import { CommentSearchEntity } from '@core/entities';
-import { HttpError } from '@core/network/HttpError';
+import { HttpError } from '@core/lib/network/HttpError';
 import { CommentRepository } from '@core/repositories/comment.repo.type';
 import {
   refineCommentSearchUiParams,

@@ -3,7 +3,7 @@ import { ArgTypes, Meta, StoryFn, StoryObj } from '@storybook/react';
 import { faker } from '@faker-js/faker';
 import { action } from '@storybook/addon-actions';
 import { blogFixtures } from '@fixtures/blog.fixtures';
-import { Markdown } from '@shared/components/common/Markdown';
+import { Markdown } from '@common/components/Markdown';
 import { BlogDetailContentLayout } from '../BlogDetailContentLayout';
 import { BlogDetailContentNavigation } from '../BlogDetailContentNavigation';
 import { BlogDetailContentAction } from '../BlogDetailContentAction';

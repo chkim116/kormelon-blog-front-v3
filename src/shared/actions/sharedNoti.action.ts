@@ -2,7 +2,7 @@
 import 'server-only';
 
 import { toString } from 'safers';
-import { createSafeAction } from '@shared/domains/common/sharedActions.create';
+import { createSafeAction } from '@common/lib/createSafeAction';
 import { notificationService } from '@shared/domains/notification';
 import { getServerUserSession } from './sharedAuth.action';
 

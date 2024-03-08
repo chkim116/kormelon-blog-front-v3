@@ -1,7 +1,7 @@
 'use client';
 
 import { useReportWebVitals } from 'next/web-vitals';
-import { googleTagService } from '@core/services/GoogleTagService';
+import { googleTagService } from '@core/lib/GoogleTagService';
 
 export function useWebVitals() {
   useReportWebVitals((metric) => {

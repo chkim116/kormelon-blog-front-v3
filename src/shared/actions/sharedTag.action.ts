@@ -1,7 +1,8 @@
 'use server';
 import 'server-only';
 
-import { CreateSafeAction } from '@shared/domains/common/sharedActions.uiState';
+import { CreateSafeAction } from '@common/lib/createSafeAction.uiState';
+import { createSafeAction } from '@common/lib/createSafeAction';
 import { tagService } from '@shared/domains/tag';
 import {
   TagSearchUiState,
@@ -9,7 +10,6 @@ import {
   TagWithBlogsSearchUiParams,
   TagSearchWithPostCountUiState,
 } from '@shared/domains/tag/tag.uiState';
-import { createSafeAction } from '@shared/domains/common/sharedActions.create';
 
 export const actTagsSearchLoad: CreateSafeAction<string, TagSearchUiState[]> =
   createSafeAction(async (value) => {

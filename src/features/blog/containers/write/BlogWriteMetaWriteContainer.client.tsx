@@ -1,5 +1,5 @@
 'use client';
-import { useActionState } from '@shared/hooks/useActionState';
+import { useActionState } from '@common/hooks/useActionState';
 import { BlogWriteCategory } from '@features/blog/components/write/BlogWriteCategory';
 import { BlogWriteMeta } from '@features/blog/components/write/BlogWriteMeta';
 import { BlogWriteThumbnail } from '@features/blog/components/write/BlogWriteThumbnail';

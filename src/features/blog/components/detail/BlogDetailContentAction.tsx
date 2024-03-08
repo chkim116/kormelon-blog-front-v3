@@ -1,6 +1,6 @@
 'use client';
 import { Button } from '@nextui-org/react';
-import { LucideIcon } from '@shared/components/common/LucideIcon';
+import { LucideIcon } from '@common/components/LucideIcon';
 
 interface BlogDetailContentActionProps {
   isLiked: boolean;

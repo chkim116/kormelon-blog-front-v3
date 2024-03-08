@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
+import { useFormActionState } from '@common/hooks/useFormActionState';
 import { date } from '@core/lib/date';
-import { tokenProvider } from '@core/storage/tokenProvider';
+import { tokenProvider } from '@core/lib/storage/tokenProvider';
 import { actSharedViewAdd } from '@shared/actions/sharedView.action';
-import { useFormActionState } from './useFormActionState';
 
 export function useBlogViewCount() {
   const { formAction: addView } = useFormActionState(actSharedViewAdd);

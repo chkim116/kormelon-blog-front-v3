@@ -2,12 +2,12 @@
 import { startTransition, useEffect, useRef, useState } from 'react';
 import { useFormState } from 'react-dom';
 import { redirect, useRouter } from 'next/navigation';
+import { toast } from '@common/lib/ToastService';
 import {
   ActionFormStateUiState,
   CreateSafeFormAction,
-} from '@shared/domains/common/sharedActions.uiState';
-import { createActionFormStateUiState } from '@shared/domains/common/sharedActions.create';
-import { toast } from '@shared/services/ToastService';
+} from '@common/lib/createSafeAction.uiState';
+import { createActionFormStateUiState } from '@common/lib/createSafeAction';
 
 interface FormStateServerActionCallback<D> {
   onSuccess?: (state: ActionFormStateUiState<D>) => void;
