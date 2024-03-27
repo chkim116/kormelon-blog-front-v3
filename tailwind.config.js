@@ -6,6 +6,7 @@ module.exports = {
     './src/app/**/*.{js,ts,tsx,mdx}',
     './src/features/**/*.{js,ts,tsx,mdx}',
     './src/shared/**/*.{js,ts,tsx,mdx}',
+    './src/common/**/*.{js,ts,tsx,mdx}',
     './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
