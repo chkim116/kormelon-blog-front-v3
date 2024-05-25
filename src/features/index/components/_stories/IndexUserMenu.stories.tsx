@@ -20,5 +20,5 @@ const Template: StoryFn<StoryProps> = ({ ...props }) => (
 export const Default: StoryObj<StoryProps> = {
   render: Template,
 
-  args: {}
+  args: {},
 };

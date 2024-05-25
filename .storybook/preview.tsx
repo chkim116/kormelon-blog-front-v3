@@ -1,10 +1,11 @@
 import type { Preview } from '@storybook/react';
 import React from 'react';
-import { AppProviderContainer } from '../src/shared/containers/AppProviderContainer';
-import '../src/shared/styles/tailwind.global.css';
+import { AppProvider } from '../src/providers/AppProvider';
 import { useTheme } from 'next-themes';
 import { Button } from '@nextui-org/react';
 import { Sun, Moon } from 'lucide-react';
+
+import '../src/providers/styles/tailwind.global.css';
 
 export const parameters: Preview['parameters'] = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -38,12 +39,12 @@ const GlobalNavForStory = () => {
 export const decorators: Preview['decorators'] = [
   (Story) => {
     return (
-      <AppProviderContainer>
+      <AppProvider>
         <GlobalNavForStory />
         <div className="max-w5xl w-full p-0 m-0">
           <Story />
         </div>
-      </AppProviderContainer>
+      </AppProvider>
     );
   },
 ];
