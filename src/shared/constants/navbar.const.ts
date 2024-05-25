@@ -1,5 +1,10 @@
 export const NAV_BAR_MENU_ITEM_LIST = [
   {
+    label: 'Now',
+    href: '/now',
+    isExternal: false,
+  },
+  {
     label: 'Blog',
     href: '/blog',
     isExternal: false,
@@ -9,11 +14,7 @@ export const NAV_BAR_MENU_ITEM_LIST = [
     href: '/categories',
     isExternal: false,
   },
-  {
-    label: 'Now',
-    href: '/now',
-    isExternal: false,
-  },
+
   // TODO: resume 재단장 후 해제
   // {
   //   label: 'Resume',
