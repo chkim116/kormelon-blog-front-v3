@@ -19,13 +19,13 @@ export const BlogDetailContentNavigation = ({
 }: BlogDetailContentNavigationProps) => {
   const handleAnchorClickCurried =
     (id: string): MouseEventHandler<HTMLAnchorElement> =>
-    (e) => {
+      (e) => {
       /**
        * 해시 조작으로 인한 스크롤 이동을 방지하고 외부로 위임하기 위함
        */
-      e.preventDefault();
-      onClick(id);
-    };
+        e.preventDefault();
+        onClick(id);
+      };
 
   if (anchors.length === 0) {
     return null;
