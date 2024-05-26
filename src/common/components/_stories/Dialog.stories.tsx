@@ -1,20 +1,20 @@
 import { ComponentProps, useEffect, useState } from 'react';
-import { ComponentStory, ComponentMeta, ArgTypes } from '@storybook/react';
+import { StoryFn, Meta, ArgTypes, StoryObj } from '@storybook/react';
 import { Button } from '@nextui-org/react';
 import { Dialog } from '../Dialog';
 
-type MyArgTypes = Partial<
-  Record<keyof ComponentProps<typeof Dialog>, ArgTypes[string]>
->;
+interface StoryProps extends ComponentProps<typeof Dialog> {}
+
+type MyArgTypes = Partial<Record<keyof StoryProps, ArgTypes[string]>>;
 const argTypes: MyArgTypes = {};
 
 export default {
   title: 'common/Dialog',
   component: Dialog,
   argTypes,
-} as ComponentMeta<typeof Dialog>;
+} as Meta<typeof Dialog>;
 
-const Template: ComponentStory<typeof Dialog> = ({ ...props }) => {
+const Template: StoryFn<StoryProps> = ({ ...props }) => {
   const [open, setOpen] = useState(props.open);
 
   useEffect(() => {
@@ -37,20 +37,29 @@ const Template: ComponentStory<typeof Dialog> = ({ ...props }) => {
   );
 };
 
-export const Default = Template.bind({});
-Default.args = {
-  open: true,
-  text: '다이얼로그입니다.',
+export const Default: StoryObj<StoryProps> = {
+  render: Template,
+
+  args: {
+    open: true,
+    text: '다이얼로그입니다.',
+  },
 };
 
-export const LongText = Template.bind({});
-LongText.args = {
-  ...Default.args,
-  text: '다이얼로그입니다다이얼로그입니다다이얼로그입니다다이얼로그입니다다이얼로그입니다다이얼로그입니다다이얼로그입니다다이얼로그입니다다이얼로그입니다다이얼로그입니다다이얼로그입니다.',
+export const LongText: StoryObj<StoryProps> = {
+  render: Template,
+
+  args: {
+    ...Default.args,
+    text: '다이얼로그입니다다이얼로그입니다다이얼로그입니다다이얼로그입니다다이얼로그입니다다이얼로그입니다다이얼로그입니다다이얼로그입니다다이얼로그입니다다이얼로그입니다다이얼로그입니다.',
+  },
 };
 
-export const Trigger = Template.bind({});
-Trigger.args = {
-  ...Default.args,
-  open: false,
+export const Trigger: StoryObj<StoryProps> = {
+  render: Template,
+
+  args: {
+    ...Default.args,
+    open: false,
+  },
 };
