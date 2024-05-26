@@ -1,8 +1,10 @@
 import { ComponentProps } from 'react';
-import { ArgTypes, Meta, StoryFn, StoryObj } from '@storybook/react';
 import { faker } from '@faker-js/faker';
+import { ArgTypes, Meta, StoryFn, StoryObj } from '@storybook/react';
+import { Markdown } from '@common/components/Markdown';
 import { blogFixtures } from '@fixtures/blog.fixtures';
 import { BlogDetailContentHeader } from '../BlogDetailContentHeader';
+import { BlogDetailContentLayout } from '../BlogDetailContentLayout';
 
 interface StoryProps extends ComponentProps<typeof BlogDetailContentHeader> {}
 
@@ -46,5 +48,25 @@ export const Author: StoryObj<StoryProps> = {
   args: {
     ...blogFixtures.getBlogDetail(),
     isAuthor: true,
+  },
+};
+
+const WithContentTemplate: StoryFn<StoryProps> = ({ ...props }) => (
+  <>
+    <BlogDetailContentHeader {...props} />
+    <BlogDetailContentLayout
+      contentComponent={
+        <Markdown content={blogFixtures.getBlogDetail().content} />
+      }
+      navComponent={null}
+    />
+  </>
+);
+
+export const WithContent: StoryObj<StoryProps> = {
+  render: WithContentTemplate,
+
+  args: {
+    ...Default.args,
   },
 };

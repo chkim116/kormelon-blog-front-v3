@@ -27,6 +27,10 @@ export const BlogDetailContentNavigation = ({
         onClick(id);
       };
 
+  if (anchors.length === 0) {
+    return null;
+  }
+
   return (
     <>
       <p className="text-base font-bold uppercase tracking-widest text-primary-800">

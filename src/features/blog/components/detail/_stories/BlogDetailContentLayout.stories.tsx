@@ -28,9 +28,7 @@ export const Default: StoryObj<StoryProps> = {
 
   args: {
     contentComponent: (
-      <>
-        <Markdown content={blogFixtures.getBlogDetail().content} />
-      </>
+      <Markdown content={blogFixtures.getBlogDetail().content} />
     ),
     navComponent: (
       <>
@@ -52,5 +50,14 @@ export const Default: StoryObj<StoryProps> = {
         />
       </>
     ),
+  },
+};
+
+export const Empty: StoryObj<StoryProps> = {
+  render: Template,
+
+  args: {
+    ...Default.args,
+    navComponent: null,
   },
 };
