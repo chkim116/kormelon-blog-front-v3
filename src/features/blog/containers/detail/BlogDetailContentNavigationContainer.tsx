@@ -83,6 +83,10 @@ export const BlogDetailContentNavigationClientContainer = ({
     };
   }, [handleResize, handleScroll]);
 
+  if (anchors.length === 0) {
+    return null;
+  }
+
   return (
     <BlogDetailContentNavigation
       anchors={anchors}
