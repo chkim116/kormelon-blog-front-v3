@@ -1,20 +1,20 @@
 import { ComponentProps } from 'react';
 import { ArgTypes, Meta, StoryFn, StoryObj } from '@storybook/react';
-import { IndexUserMenu } from '../IndexUserMenu';
+import NowSection from '../NowSection';
 
-interface StoryProps extends ComponentProps<typeof IndexUserMenu> {}
+interface StoryProps extends ComponentProps<typeof NowSection> {}
 
 type MyArgTypes = Partial<Record<keyof StoryProps, ArgTypes[string]>>;
 const argTypes: MyArgTypes = {};
 
 export default {
-  title: 'features/index/IndexUserMenu',
-  component: IndexUserMenu,
+  title: 'features/now/NowSection',
+  component: NowSection,
   argTypes,
-} as Meta;
+} as Meta<typeof NowSection>;
 
 const Template: StoryFn<StoryProps> = ({ ...props }) => (
-  <IndexUserMenu {...props} />
+  <NowSection {...props} />
 );
 
 export const Default: StoryObj<StoryProps> = {
