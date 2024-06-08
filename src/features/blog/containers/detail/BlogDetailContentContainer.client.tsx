@@ -15,7 +15,8 @@ import { BlogDetailContentLayout } from '@features/blog/components/detail/BlogDe
 import { BlogDetailContentUserMeta } from '@features/blog/components/detail/BlogDetailContentUserMeta';
 import { BlogDetailUiState } from '@features/blog/domains/detail/blogDetail.uiState';
 import { blogDetailService } from '@features/blog/domains/detail';
-import { BlogDetailContentNavigationClientContainer } from './BlogDetailContentNavigationContainer';
+import { BlogDetailContentNavigation } from '@features/blog/components/detail/BlogDetailContentNavigation';
+import { useBlogDetailToc } from '@features/blog/hooks/useBlogDetailToc';
 
 const Markdown = dynamic(
   () => import('@common/components/Markdown').then((comp) => comp.Markdown),
@@ -74,6 +75,8 @@ export const BlogDetailContentContainerClient = ({
     setIsLiked(blogDetailService.checkLike(blog.id));
   }, [blog.id]);
 
+  const {activeId,anchors,onAnchorClick} = useBlogDetailToc();
+
   return (
     <>
       <BlogDetailContentHeader
@@ -84,15 +87,20 @@ export const BlogDetailContentContainerClient = ({
 
       <BlogDetailContentLayout
         navComponent={
-          <BlogDetailContentNavigationClientContainer
-            actionContents={
-              <BlogDetailContentAction
-                isLiked={isLiked}
-                onLike={handleLike}
-                onShare={handleShare}
-              />
-            }
-          />
+          anchors.length > 0 ? 
+            <BlogDetailContentNavigation
+              anchors={anchors}
+              activeId={activeId}
+              actionContents={
+                <BlogDetailContentAction
+                  isLiked={isLiked}
+                  onLike={handleLike}
+                  onShare={handleShare}
+                />
+              }
+              onClick={onAnchorClick}
+            />
+            : null
         }
         contentComponent={
           <>
