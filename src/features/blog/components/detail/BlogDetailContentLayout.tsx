@@ -1,3 +1,4 @@
+import { cn } from '@nextui-org/react';
 import React, { ReactNode } from 'react';
 
 interface BlogDetailContentLayoutProps {
@@ -9,7 +10,9 @@ export const BlogDetailContentLayout = ({
   contentComponent,
   navComponent,
 }: BlogDetailContentLayoutProps) => {
-  const contentStyle = navComponent ? 'lg:flex-[0.9]' : 'lg:flex-1';
+  const contentStyle = navComponent
+    ? 'lg:flex-[0.9]'
+    : 'lg:max-w-3xl lg:mx-auto lg:flex lg:flex-col lg:flex-1';
 
   return (
     <section id="blogContent" className="py-12 sm:py-16 lg:py-20">
