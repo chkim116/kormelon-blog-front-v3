@@ -1,4 +1,3 @@
-import { cn } from '@nextui-org/react';
 import React, { ReactNode } from 'react';
 
 interface BlogDetailContentLayoutProps {
