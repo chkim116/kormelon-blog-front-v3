@@ -75,7 +75,7 @@ export const BlogDetailContentContainerClient = ({
     setIsLiked(blogDetailService.checkLike(blog.id));
   }, [blog.id]);
 
-  const {activeId,anchors,onAnchorClick} = useBlogDetailToc();
+  const { activeId, anchors, onAnchorClick } = useBlogDetailToc();
 
   return (
     <>
@@ -87,7 +87,7 @@ export const BlogDetailContentContainerClient = ({
 
       <BlogDetailContentLayout
         navComponent={
-          anchors.length > 0 ? 
+          anchors.length > 0 ? (
             <BlogDetailContentNavigation
               anchors={anchors}
               activeId={activeId}
@@ -100,7 +100,7 @@ export const BlogDetailContentContainerClient = ({
               }
               onClick={onAnchorClick}
             />
-            : null
+          ) : null
         }
         contentComponent={
           <>
