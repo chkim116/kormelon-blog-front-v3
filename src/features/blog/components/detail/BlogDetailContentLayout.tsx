@@ -11,7 +11,7 @@ export const BlogDetailContentLayout = ({
 }: BlogDetailContentLayoutProps) => {
   const contentStyle = navComponent
     ? 'mx-auto lg:flex-[0.9]'
-    : 'flex flex-col mx-auto justify-center lg:flex-1';
+    : 'flex flex-col items-center justify-center lg:flex-1';
 
   return (
     <section id="blogContent" className="py-12 sm:py-16 lg:py-20">
