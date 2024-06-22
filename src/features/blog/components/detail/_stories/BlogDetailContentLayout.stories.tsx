@@ -28,7 +28,14 @@ export const Default: StoryObj<StoryProps> = {
 
   args: {
     contentComponent: (
-      <Markdown content={blogFixtures.getBlogDetail().content} />
+      <>
+        <Markdown content={blogFixtures.getBlogDetail().content} />
+        <BlogDetailContentAction
+          isLiked={false}
+          onLike={action('onLike')}
+          onShare={action('onLike')}
+        />
+      </>
     ),
     navComponent: (
       <>
