@@ -9,13 +9,11 @@ export const BlogDetailContentLayout = ({
   contentComponent,
   navComponent,
 }: BlogDetailContentLayoutProps) => {
-  const contentStyle = navComponent
-    ? 'mx-auto lg:flex-[0.9]'
-    : 'flex flex-col items-center justify-center lg:flex-1';
+  const contentStyle = navComponent ? 'lg:flex-[0.9]' : 'lg:flex-1';
 
   return (
     <section id="blogContent" className="py-12 sm:py-16 lg:py-20">
-      <div className="flex justify-center flex-col lg:flex-row items-start gap-y-12 gap-x-16">
+      <div className="flex items-center justify-center flex-col lg:flex-row lg:items-start gap-y-12 gap-x-16">
         {navComponent && (
           <nav
             className="max-w-3xl mx-auto flex-1 w-full lg:sticky lg:flex-[0.3] lg:top-28"
