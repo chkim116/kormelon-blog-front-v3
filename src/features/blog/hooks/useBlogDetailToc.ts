@@ -1,38 +1,17 @@
-'use client';
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useDebounce } from 'use-debounce';
 import { toString } from 'safers';
-import { toBlogDetailAnchorUiStates } from '@features/blog/domains/detail/blogDetail.convert';
+import { toBlogDetailAnchorUiStates } from '../domains/detail/blogDetail.convert';
 import {
   BlogDetailAnchorUiState,
   BlogDetailAnchorUiDto,
-} from '@features/blog/domains/detail/blogDetail.uiState';
-import { BlogDetailContentNavigation } from '@features/blog/components/detail/BlogDetailContentNavigation';
+} from '../domains/detail/blogDetail.uiState';
 
 const DEFAULT_OFFSET_TOP = 100;
 
-interface BlogDetailContentNavigationClientContainerProps {
-  actionContents: ReactNode;
-}
-
-export const BlogDetailContentNavigationClientContainer = ({
-  actionContents,
-}: BlogDetailContentNavigationClientContainerProps) => {
+export function useBlogDetailToc() {
   const [anchors, setAnchors] = useState<BlogDetailAnchorUiState[]>([]);
   const [activeId, setActiveId] = useState('');
-
-  const handleClickAnchor = (id: string) => {
-    const target = anchors.find(({ id: anchorId }) => anchorId === id);
-
-    if (target) {
-      window.scrollTo({
-        behavior: 'smooth',
-        top: target.position - DEFAULT_OFFSET_TOP,
-      });
-
-      history.pushState(null, '', id);
-    }
-  };
 
   const calcAnchors = useCallback(() => {
     const selectHeadElements = () => {
@@ -83,16 +62,22 @@ export const BlogDetailContentNavigationClientContainer = ({
     };
   }, [handleResize, handleScroll]);
 
-  if (anchors.length === 0) {
-    return null;
-  }
+  const handleClickAnchor = (id: string) => {
+    const target = anchors.find(({ id: anchorId }) => anchorId === id);
 
-  return (
-    <BlogDetailContentNavigation
-      anchors={anchors}
-      activeId={activeId}
-      actionContents={actionContents}
-      onClick={handleClickAnchor}
-    />
-  );
-};
+    if (target) {
+      window.scrollTo({
+        behavior: 'smooth',
+        top: target.position - DEFAULT_OFFSET_TOP,
+      });
+
+      history.pushState(null, '', id);
+    }
+  };
+
+  return {
+    anchors,
+    activeId,
+    onAnchorClick: handleClickAnchor,
+  };
+}
